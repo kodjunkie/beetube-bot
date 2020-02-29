@@ -1,17 +1,17 @@
 <h1 align="center">:bee: Beetube :bee: Bot</h1>
 
 <div align="center">
+
 A telegram bot for music, videos and movies download.
 
 <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License: MIT" height="18"></a>
 
 [![https://telegram.me/](https://img.shields.io/badge/💬%20Telegram-Channel-blue.svg?style=flat-square)](https://telegram.me/)
 [![https://telegram.me/](https://img.shields.io/badge/💬%20Telegram-Group-blue.svg?style=flat-square)](https://telegram.me/)
-[![https://telegram.me/kodjunkie](https://img.shields.io/badge/💬%20Telegram-Yago_Perez-blue.svg?style=flat-square)](https://telegram.me/kodjunkie)
 
 </div>
 
-- [:bee: Beetube :bee:](#beetube)
+- [Beetube :bee:](#beetube)
   - [Installation](#installation)
   - [Todo](#todo)
   - [Contribution](#contribution)
@@ -28,9 +28,9 @@ npm install
 npm start
 ```
 
-## Todo
+## Deployed
 
-[ * ] Proper code refactoring
+Checkout the deployed version [here](https://t.me/Beetube_bot)
 
 ## Contribution
 
