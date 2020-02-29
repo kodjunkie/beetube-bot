@@ -1,0 +1,40 @@
+{
+	"name": "beetube",
+	"version": "1.0.0",
+	"description": "A telegram bot for music, videos and movies download.",
+	"main": "index.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"start": "node app.js",
+		"dev": "nodemon app.js",
+		"deploy": "git push heroku dev:master"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/kodjunkie/beetube-bot.git"
+	},
+	"keywords": [
+		"Telegram",
+		"Bot"
+	],
+	"engines": {
+		"node": "12.13.1"
+	},
+	"author": "Lawrence Onah <paplow01@gmail.com>",
+	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/kodjunkie/beetube-bot/issues"
+	},
+	"homepage": "https://github.com/kodjunkie/beetube-bot#readme",
+	"dependencies": {
+		"dotenv": "^8.2.0",
+		"node-telegram-bot-api": "^0.40.0"
+	},
+	"devDependencies": {
+		"eslint": "^6.8.0",
+		"eslint-config-prettier": "^6.10.0",
+		"eslint-plugin-node": "^11.0.0",
+		"eslint-plugin-prettier": "^3.1.2",
+		"prettier": "^1.19.1"
+	}
+}
