@@ -4,6 +4,7 @@ const TelegramBot = require("node-telegram-bot-api");
 // Commands
 const startCommand = require("./commands/start");
 const searchCommand = require("./commands/search");
+
 // Handlers
 const callbackHandler = require("./handlers/callback");
 const messageHandler = require("./handlers/message");
