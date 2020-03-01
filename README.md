@@ -2,7 +2,7 @@
 
 <div align="center">
 
-A telegram bot for music, videos and movies download.
+A telegram bot for music, videos, movies download and more.
 
 <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License: MIT" height="18"></a>
 
