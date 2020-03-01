@@ -11,8 +11,7 @@
 	"scripts": {
 		"test": "jest",
 		"start": "node app.js",
-		"dev": "nodemon app.js",
-		"deploy": "git push heroku dev:master"
+		"dev": "nodemon app.js"
 	},
 	"author": "Lawrence Onah <paplow01@gmail.com>",
 	"license": "MIT",
