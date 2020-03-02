@@ -15,7 +15,7 @@ module.exports = bot => (message, match) => {
 	};
 	bot.sendMessage(
 		chatId,
-		"Here's a list of services \u{2611} we offer \u{2705}",
+		"Here's a list of services we offer \u{2611}",
 		options
 	);
 };
