@@ -2,12 +2,12 @@
 
 <div align="center">
 
-A telegram bot for music, videos, movies download and more.
+A telegram bot for music, video, movie downloads and more.
 
-![Beetube CI](https://github.com/kodjunkie/beetube-bot/workflows/Beetube%20CI/badge.svg) <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License: MIT" height="18"></a>
+[![Beetube CI](https://github.com/kodjunkie/beetube-bot/workflows/Beetube%20CI/badge.svg)](https://github.com/kodjunkie/beetube-bot/actions) <a href="https://github.com/kodjunkie/beetube-bot/blob/master/LICENSE"><img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License: MIT" height="18"></a>
 
-[![https://telegram.me/](https://img.shields.io/badge/💬%20Telegram-Channel-blue.svg?style=flat-square)](https://telegram.me/)
-[![https://telegram.me/](https://img.shields.io/badge/💬%20Telegram-Group-blue.svg?style=flat-square)](https://telegram.me/)
+[![https://github.com/kodjunkie/beetube-bot](https://img.shields.io/badge/💬%20Telegram-Channel-blue.svg?style=flat-square)](https://github.com/kodjunkie/beetube-bot)
+[![https://github.com/kodjunkie/beetube-bot](https://img.shields.io/badge/💬%20Telegram-Group-blue.svg?style=flat-square)](https://github.com/kodjunkie/beetube-bot)
 
 </div>
 

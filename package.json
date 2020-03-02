@@ -1,7 +1,7 @@
 {
 	"name": "beetube",
 	"version": "1.0.0",
-	"description": "A telegram bot for music, videos, movies download and more.",
+	"description": "A telegram bot for music, video, movie downloads and more.",
 	"keywords": [
 		"Telegram",
 		"Bot",
@@ -32,6 +32,7 @@
 		]
 	},
 	"dependencies": {
+		"axios": "^0.19.2",
 		"dotenv": "^8.2.0",
 		"node-telegram-bot-api": "^0.40.0"
 	},
