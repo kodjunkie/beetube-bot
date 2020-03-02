@@ -9,7 +9,7 @@ module.exports = class Movie extends Provider {
 	 * @param  {} message
 	 */
 	async list({ chat }) {
-		const { data } = await axios.get(`${process.env.MOVIES_API}?list=0`);
+		const { data } = await axios.get(`${process.env.MOVIES_API}?list=1`);
 		const options = { parse_mode: "Markdown" };
 
 		_.map(data, (movie, i) => {
@@ -31,14 +31,14 @@ module.exports = class Movie extends Provider {
 
 					options.reply_markup = JSON.stringify({
 						inline_keyboard: [
-							[{ text: "Download", url: downloadLink }],
+							[{ text: `Download ${movie.Size}`, url: downloadLink }],
 							pagination,
 						],
 					});
 
 					this.bot.sendMessage(
 						chat.id,
-						`\u{1F516} *${movie.Title}* _${movie.Size}_ \n\u{1F517} [Download Cover](${movie.CoverPhotoLink})`,
+						`[\u{1F4CC}](${movie.CoverPhotoLink}) *${movie.Title}*`,
 						options
 					);
 				},

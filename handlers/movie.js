@@ -10,7 +10,7 @@ module.exports = bot => async message => {
 	try {
 		new movieProvider(bot).list(message);
 	} catch (error) {
-		bot.sendMessage(chatId, `\u{26A0} An error occurred, try again \u{1F503}`, {
+		bot.sendMessage(chatId, `\u{26A0} An error occurred, try again \u{26A0}`, {
 			parse_mode: "Markdown",
 		});
 	}
