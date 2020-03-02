@@ -2,16 +2,15 @@
  * Matches /start command
  */
 module.exports = bot => message => {
-	const options = {
-		parse_mode: "Markdown",
-		reply_markup: JSON.stringify({
-			keyboard: [
-				["Nice", "Good", "Flat", "Tall"],
-				["Nice", "Good", "Flat", "Tall"],
-			],
-		}),
-	};
-	const response = `Hello [${message.from.first_name}](tg://user?id=${message.from.id}) \n\nWelcome to \u{1F41D} *Beetube* \u{1F41D} *Bot*, we offer free music, videos, movies download and more. directly from __telegram__.`;
+	const chatId = message.chat.id;
+	bot.sendChatAction(chatId, "typing");
 
-	bot.sendMessage(message.chat.id, response, options);
+	const user = message.from;
+	const username = user.first_name
+		? `[${user.first_name}](tg://user?id=${user.id}) ( @${user.username} )`
+		: `@${user.username}`;
+
+	const response = `Hello ${username} \u{1F680} \n\nWelcome to \u{1F41D} *Beetube* \u{1F41D} *Bot*, we offer free music, video, movie downloads and *more* \u{1F3B5} \u{1F3AC}`;
+
+	bot.sendMessage(chatId, response, { parse_mode: "Markdown" });
 };
