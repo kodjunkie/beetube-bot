@@ -1,9 +1,12 @@
 /*
- * Matches "/search [service] [whatever] [service engine]"
+ * Matches "/search [service] [whatever] -[service engine]"
  */
 module.exports = bot => (message, match) => {
+	// console.log(match.groups);
+
 	bot.sendMessage(
 		message.chat.id,
-		`command: ${match[1]} \nservice: ${match[2]} \nquery: ${match[3]} \nengine: ${match[4]}`
+		"```json\n" + JSON.stringify(match.groups) + "```",
+		{ parse_mode: "Markdown" }
 	);
 };
