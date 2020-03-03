@@ -1,7 +1,8 @@
 /*
- * Matches [movies]
+ * Handle [movies]
  */
 const movieProvider = require("../providers/movie");
+const errorHandler = require("../utils/error-handler");
 
 module.exports = bot => async message => {
 	const chatId = message.chat.id;
@@ -10,8 +11,6 @@ module.exports = bot => async message => {
 	try {
 		new movieProvider(bot).list(message);
 	} catch (error) {
-		bot.sendMessage(chatId, `\u{26A0} An error occurred, try again \u{26A0}`, {
-			parse_mode: "Markdown",
-		});
+		errorHandler(bot, chatId, error);
 	}
 };

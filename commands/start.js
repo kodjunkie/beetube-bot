@@ -1,5 +1,5 @@
 /*
- * Matches /start command
+ * Handle /start command
  */
 module.exports = bot => message => {
 	const chatId = message.chat.id;

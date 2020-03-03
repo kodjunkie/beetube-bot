@@ -1,5 +1,5 @@
 /*
- * Matches /list [whatever] command
+ * Handle /list [whatever] command
  */
 module.exports = bot => (message, match) => {
 	const chatId = message.chat.id;

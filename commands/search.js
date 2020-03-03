@@ -1,5 +1,5 @@
 /*
- * Matches "/search [service] [whatever] -[service engine]"
+ * Handle "/search [service] [whatever] -[service engine]"
  */
 module.exports = bot => (message, match) => {
 	// console.log(match.groups);
