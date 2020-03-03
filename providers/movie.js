@@ -7,9 +7,10 @@ module.exports = class Movie extends Provider {
 	/**
 	 * List items
 	 * @param  {} message
+	 * @param  {} list=1
 	 */
-	async list({ chat }) {
-		const { data } = await axios.get(`${process.env.MOVIES_API}?list=1`);
+	async list({ chat }, list = 1) {
+		const { data } = await axios.get(`${process.env.MOVIES_API}?list=${list}`);
 		const options = { parse_mode: "Markdown" };
 
 		_.map(data, (movie, i) => {
@@ -24,8 +25,20 @@ module.exports = class Movie extends Provider {
 
 					const pagination = isLastItem
 						? [
-								{ text: "Previous", callback_data: JSON.stringify({}) },
-								{ text: "Next", callback_data: JSON.stringify({}) },
+								{
+									text: "Previous",
+									callback_data: JSON.stringify({
+										type: "movie",
+										list: list - 1,
+									}),
+								},
+								{
+									text: "Next",
+									callback_data: JSON.stringify({
+										type: "movie",
+										list: list + 1,
+									}),
+								},
 						  ]
 						: [];
 
@@ -42,8 +55,18 @@ module.exports = class Movie extends Provider {
 						options
 					);
 				},
-				isLastItem ? 1000 : 0
+				isLastItem ? 2000 : 0
 			);
 		});
+	}
+
+	/**
+	 * Handle pagination
+	 * @param  {} message
+	 * @param  {} list
+	 */
+	async paginate(message, list) {
+		if (list === 0) return;
+		this.list(message, list);
 	}
 };
