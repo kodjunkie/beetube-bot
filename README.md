@@ -20,17 +20,24 @@ A telegram bot for music, video, movie downloads and more.
 ## Installation
 
 ```bash
-git clone https://github.com/kodjunkie/beetube-bot.git
-cd beetube-bot
-mv .env.example .env
-# Update .env accordingly
-npm install
-npm start
+  git clone https://github.com/kodjunkie/beetube-bot.git
+  cd beetube-bot
+  mv .env.example .env
+  # Update .env accordingly
+  npm install
+  npm start
 ```
 
 ## Deployed
 
 Checkout the deployed version [here](https://t.me/Beetube_bot)
+
+## Todo
+
+[ ] Increment tests
+[ ] Implement video (Youtube) search & download
+[ ] Implement music (search & download)
+[ ] Implement torrent (search & download .torrent)
 
 ## Contribution
 
