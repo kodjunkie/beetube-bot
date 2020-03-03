@@ -18,5 +18,12 @@ module.exports = class Provider {
 	 * List items
 	 * @param  {} message
 	 */
-	static list(message) {}
+	list(message) {}
+
+	/**
+	 * Handle pagination
+	 * @param  {} message
+	 * @param  {} list
+	 */
+	paginate(message, list) {}
 };

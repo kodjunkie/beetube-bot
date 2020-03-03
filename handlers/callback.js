@@ -4,18 +4,19 @@
 const errorHandler = require("../utils/error-handler");
 const movieProvider = require("../providers/movie");
 
-module.exports = bot => cb => {
-	bot.answerCallbackQuery(cb.id);
+module.exports = bot => callbackQuery => {
 	try {
-		const data = JSON.parse(cb.data);
+		const data = JSON.parse(callbackQuery.data);
 		switch (data.type) {
 			case "movie":
-				new movieProvider(bot).paginate(cb.message, data.list);
+				const movie = new movieProvider(bot);
+				movie.paginate(callbackQuery.message, data.list);
 				break;
 			default:
-				console.log("Query Callback: ", cb);
+				console.log("Query Callback: ", callbackQuery);
 		}
 	} catch (error) {
 		errorHandler(bot, chatId, error);
 	}
+	bot.answerCallbackQuery(callbackQuery.id);
 };

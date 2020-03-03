@@ -1,7 +1,7 @@
 /*
- * Handle /list [whatever] command
+ * Handle /list command
  */
-module.exports = bot => (message, match) => {
+module.exports = bot => message => {
 	const chatId = message.chat.id;
 	bot.sendChatAction(chatId, "typing");
 	const options = {

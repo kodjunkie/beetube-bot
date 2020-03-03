@@ -10,6 +10,9 @@ const listCommand = require("./commands/list");
 const callbackHandler = require("./handlers/callback");
 const messageHandler = require("./handlers/message");
 const movieHandler = require("./handlers/movie");
+const musicHandler = require("./handlers/music");
+const videoHandler = require("./handlers/video");
+const torrentHandler = require("./handlers/torrent");
 
 // Configurations
 const bot = new TelegramBot(process.env.BOT_TOKEN, {
@@ -27,5 +30,8 @@ bot.onText(
 
 // Handlers
 bot.onText(/\s(movies)/i, movieHandler(bot));
+bot.onText(/\s(music)/i, musicHandler(bot));
+bot.onText(/\s(videos)/i, videoHandler(bot));
+bot.onText(/\s(torrent)/i, torrentHandler(bot));
 bot.on("message", messageHandler(bot));
 bot.on("callback_query", callbackHandler(bot));

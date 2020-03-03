@@ -65,7 +65,7 @@ module.exports = class Movie extends Provider {
 	 * @param  {} message
 	 * @param  {} list
 	 */
-	async paginate(message, list) {
+	paginate(message, list) {
 		if (list === 0) return;
 		this.list(message, list);
 	}
