@@ -35,8 +35,11 @@ Checkout the deployed version [here](https://t.me/Beetube_bot)
 ## Todo
 
 [ ] Increment tests
+
 [ ] Implement video `Youtube` search & download
+
 [ ] Implement music search & download
+
 [ ] Implement torrent search & download .torrent
 
 ## Contribution
