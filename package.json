@@ -7,11 +7,11 @@
 		"Bot",
 		"Download"
 	],
-	"main": "app.js",
+	"main": "bot.js",
 	"scripts": {
 		"test": "jest",
-		"start": "node app.js",
-		"dev": "nodemon app.js"
+		"start": "node bot.js",
+		"dev": "nodemon bot.js"
 	},
 	"author": "Lawrence Onah <paplow01@gmail.com>",
 	"license": "MIT",
