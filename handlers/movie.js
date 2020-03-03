@@ -1,5 +1,5 @@
 /*
- * Matches [movies]
+ * Handle [movies]
  */
 const movieProvider = require("../providers/movie");
 

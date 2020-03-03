@@ -15,8 +15,8 @@ module.exports = class Movie extends Provider {
 		_.map(data, (movie, i) => {
 			const isLastItem = data.length - 1 === i;
 			/*
-			 * Used setTimeout as a hack
-			 * to ensure all messages are sent pagination
+			 * Used setTimeout as a hack to ensure
+			 * all messages are sent before pagination
 			 */
 			setTimeout(
 				() => {
