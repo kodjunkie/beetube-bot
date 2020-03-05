@@ -25,6 +25,7 @@ cd beetube-bot
 mv .env.example .env
 # Update .env accordingly
 npm install
+# Start mongoDB service
 npm start
 ```
 

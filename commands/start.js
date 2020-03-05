@@ -1,16 +1,33 @@
+const errorHandler = require("../utils/error-handler");
+const User = require("../models/user");
 /*
  * Handle /start command
  */
-module.exports = bot => message => {
+module.exports = bot => async message => {
 	const chatId = message.chat.id;
-	bot.sendChatAction(chatId, "typing");
+	try {
+		bot.sendChatAction(chatId, "typing");
 
-	const user = message.from;
-	const username = user.first_name
-		? `[${user.first_name}](tg://user?id=${user.id})`
-		: `@${user.username}`;
+		const from = message.from;
+		const user = await User.findOne({ _id: from.id });
 
-	const text = `Hello ${username} \u{1F680} \u{1F680} \n\nWelcome to \u{1F41D} *Beetube* \u{1F41D} *Bot*, we offer free music, video, movie downloads and *more* \u{1F3B5} \u{1F3AC} \u{1F4E5}`;
+		if (!user && !from.is_bot) {
+			await new User({
+				_id: from.id,
+				first_name: from.first_name,
+				username: from.username,
+				language_code: from.language_code,
+			}).save();
+		}
 
-	bot.sendMessage(chatId, text, { parse_mode: "Markdown" });
+		const username = from.first_name
+			? `[${from.first_name}](tg://user?id=${from.id})`
+			: `@${from.username}`;
+
+		const text = `Hello ${username} \u{1F680} \u{1F680} \n\nWelcome to \u{1F41D} *Beetube* \u{1F41D} *Bot*, we offer free music, video, movie downloads and *more* \u{1F3B5} \u{1F3AC} \u{1F4E5}`;
+
+		bot.sendMessage(chatId, text, { parse_mode: "Markdown" });
+	} catch (error) {
+		errorHandler(bot, chatId, error);
+	}
 };
