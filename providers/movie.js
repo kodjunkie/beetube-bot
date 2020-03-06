@@ -1,7 +1,7 @@
-require("dotenv").config();
 const _ = require("lodash");
 const axios = require("axios");
 const Provider = require(".");
+const Paginator = require("../models/paginator");
 
 module.exports = class Movie extends Provider {
 	/**
@@ -10,6 +10,11 @@ module.exports = class Movie extends Provider {
 	 * @param  {} list=1
 	 */
 	async list({ chat }, list = 1) {
+		const { message_id } = await this.bot.sendMessage(
+			chat.id,
+			"\u{1F4E1} \u{1F504} Fetching movies..."
+		);
+
 		const { data } = await axios.get(`${process.env.MOVIES_API}?list=${list}`);
 		const options = { parse_mode: "Markdown" };
 
@@ -20,7 +25,7 @@ module.exports = class Movie extends Provider {
 			 * all messages are sent before pagination
 			 */
 			setTimeout(
-				() => {
+				async () => {
 					const downloadLink = `${movie.DownloadLink.Scheme}://${movie.DownloadLink.Host}${movie.DownloadLink.Path}?${movie.DownloadLink.RawQuery}`;
 
 					const pagination = isLastItem
@@ -49,15 +54,23 @@ module.exports = class Movie extends Provider {
 						],
 					});
 
-					this.bot.sendMessage(
+					const msg = await this.bot.sendMessage(
 						chat.id,
-						`[\u{1F4CC}](${movie.CoverPhotoLink}) *${movie.Title}*`,
+						`[\u{1F4C0}](${movie.CoverPhotoLink}) *${movie.Title}*`,
 						options
 					);
+
+					await new Paginator({
+						_id: msg.message_id,
+						type: "movie",
+						user: msg.chat.id,
+					}).save();
 				},
-				isLastItem ? 2000 : 0
+				isLastItem ? 2500 : 0
 			);
 		});
+
+		this.bot.deleteMessage(chat.id, message_id);
 	}
 
 	/**
@@ -65,8 +78,22 @@ module.exports = class Movie extends Provider {
 	 * @param  {} message
 	 * @param  {} list
 	 */
-	paginate(message, list) {
+	async paginate(message, list) {
 		if (list === 0) return;
+		const chatId = message.chat.id;
+		const results = await Paginator.find({
+			user: chatId,
+			type: "movie",
+			createdAt: { $gt: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000) },
+		});
+
+		const IDs = [];
+		_.map(results, result => {
+			IDs.push(result._id);
+			this.bot.deleteMessage(chatId, result._id);
+		});
+
 		this.list(message, list);
+		await Paginator.deleteMany({ _id: { $in: IDs } });
 	}
 };
