@@ -1,9 +1,9 @@
-/*
- * Handle callback queries
- */
 const errorHandler = require("../utils/error-handler");
 const movieProvider = require("../providers/movie");
 
+/*
+ * Handle callback queries
+ */
 module.exports = bot => callbackQuery => {
 	try {
 		const data = JSON.parse(callbackQuery.data);
