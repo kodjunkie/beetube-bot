@@ -16,7 +16,7 @@ module.exports = bot => callbackQuery => {
 				console.log("Query Callback: ", callbackQuery);
 		}
 	} catch (error) {
-		errorHandler(bot, chatId, error);
+		errorHandler(bot, callbackQuery.message.chat.id, error);
 	}
 	bot.answerCallbackQuery(callbackQuery.id);
 };

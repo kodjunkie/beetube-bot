@@ -1,5 +1,3 @@
-require("dotenv").config();
-
 module.exports = (bot, chatId, error) => {
 	if (error && process.env.NODE_ENV !== "production") {
 		console.error(error);
