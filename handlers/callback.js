@@ -1,9 +1,9 @@
-const errorHandler = require("../utils/error-handler");
-const movieProvider = require("../providers/movie");
-
 /*
  * Handle callback queries
  */
+const errorHandler = require("../utils/error-handler");
+const movieProvider = require("../providers/movie");
+
 module.exports = bot => callbackQuery => {
 	try {
 		const data = JSON.parse(callbackQuery.data);
@@ -16,7 +16,7 @@ module.exports = bot => callbackQuery => {
 				console.log("Query Callback: ", callbackQuery);
 		}
 	} catch (error) {
-		errorHandler(bot, chatId, error);
+		errorHandler(bot, callbackQuery.message.chat.id, error);
 	}
 	bot.answerCallbackQuery(callbackQuery.id);
 };
