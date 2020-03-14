@@ -25,7 +25,7 @@ module.exports = bot => async message => {
 			? `[${from.first_name}](tg://user?id=${from.id})`
 			: `@${from.username}`;
 
-		const text = `Hello ${username} \u{1F680} \u{1F680} \n\nWelcome to \u{1F41D} *Beetube* \u{1F41D} *Bot*, we offer free music, video, movie downloads and *more* \u{1F3B5} \u{1F3AC} \u{1F4E5} \u{1F4C0}`;
+		const text = `Hello ${username} \u{1F680} \u{1F680} \n\nWelcome to \u{1F41D} *Beetube* \u{1F41D} *Bot*, we offer free music, video, movie downloads and *more* \u{1F3B5} \u{1F3AC} \u{1F4C0}`;
 
 		bot.sendMessage(chatId, text, { parse_mode: "Markdown" });
 	} catch (error) {

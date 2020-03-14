@@ -12,7 +12,7 @@ module.exports = class Movie extends Provider {
 	async list({ chat }, list = 1) {
 		const { message_id } = await this.bot.sendMessage(
 			chat.id,
-			"\u{1F4E1} \u{1F504} Fetching movies..."
+			"\u{1F504} Fetching movies \u{1F4E1}"
 		);
 
 		const { data } = await axios.get(`${process.env.MOVIES_API}?list=${list}`);
@@ -21,8 +21,7 @@ module.exports = class Movie extends Provider {
 		_.map(data, (movie, i) => {
 			const isLastItem = data.length - 1 === i;
 			/*
-			 * Used setTimeout as a hack to ensure
-			 * all messages are sent before pagination
+			 * Used setTimeout to ensure all messages are sent before pagination
 			 */
 			setTimeout(
 				async () => {
@@ -93,7 +92,7 @@ module.exports = class Movie extends Provider {
 			this.bot.deleteMessage(chatId, result._id);
 		});
 
-		this.list(message, list);
+		await this.list(message, list);
 		await Paginator.deleteMany({ _id: { $in: IDs } });
 	}
 };
