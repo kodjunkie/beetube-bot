@@ -18,7 +18,7 @@ const PaginatorSchema = new Schema(
 			ref: "User",
 		},
 	},
-	{ timestamps: true, _id: false }
+	{ timestamps: { updatedAt: false }, _id: false }
 );
 
 module.exports = mongoose.model("Paginator", PaginatorSchema);

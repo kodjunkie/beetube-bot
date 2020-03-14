@@ -14,7 +14,7 @@ const UserSchema = new Schema(
 		username: String,
 		language_code: String,
 	},
-	{ timestamps: true, _id: false }
+	{ timestamps: { updatedAt: false }, _id: false }
 );
 
 module.exports = mongoose.model("User", UserSchema);
