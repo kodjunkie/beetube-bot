@@ -20,7 +20,7 @@ A telegram bot for music, video, movie downloads and more.
 ## Installation
 
 1.  Create a new bot via [@BotFather](https://telegram.me/BotFather) and note the `token`
-2.  Type `/setcommands` on [@BotFather](https://telegram.me/BotFather)
+2.  Type `/setcommands`
 3.  Select the bot you just created
 4.  Copy and paste the below text as the bot's commands
 
