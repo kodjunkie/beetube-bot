@@ -24,9 +24,13 @@ A telegram bot for music, video, movie downloads and more.
 3.  Select the bot you just created
 4.  Copy and paste the below text as the bot's command
 
-    start - start a conversation with the bot
-    search - search any category for results
-    list - get results from a list of services
+``
+start - start a conversation with the bot
+
+search - search any category for results
+
+list - get results from a list of services
+``
 
 Lastly from you terminal, run the below commands
 
