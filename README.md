@@ -19,6 +19,17 @@ A telegram bot for music, video, movie downloads and more.
 
 ## Installation
 
+- Create a new bot via [@BotFather](https://telegram.me/BotFather) and note the `token`.
+- Type `/setcommands`
+- Select the bot you just created
+- Copy and paste the below text as the bot's command
+
+  start - start a conversation with the bot
+  search - search any category for results
+  list - get results from a list of services
+
+Lastly from you terminal, run the below commands
+
 ```bash
 git clone https://github.com/kodjunkie/beetube-bot.git
 cd beetube-bot
