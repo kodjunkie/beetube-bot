@@ -54,7 +54,7 @@ Checkout the deployed version [here](https://t.me/Beetube_bot)
 
 All contributions of any kind are welcome.
 
-## License (MIT)
+## License
 
 This project is opened under the [MIT 2.0 License](https://github.com/kodjunkie/beetube-bot/blob/master/LICENSE) which allows very broad use for both academic and commercial purposes.
 
