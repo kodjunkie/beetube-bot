@@ -10,7 +10,7 @@ module.exports = bot => callbackQuery => {
 		switch (data.type) {
 			case "movie":
 				const movie = new movieProvider(bot);
-				movie.paginate(callbackQuery.message, data.list);
+				movie.paginate(callbackQuery.message, data.page);
 				break;
 			default:
 				console.log("Query Callback: ", callbackQuery);

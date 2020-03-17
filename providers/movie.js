@@ -2,83 +2,91 @@ const _ = require("lodash");
 const axios = require("axios");
 const Provider = require(".");
 const Paginator = require("../models/paginator");
+const errorHandler = require("../utils/error-handler");
 
 module.exports = class Movie extends Provider {
 	/**
-	 * List items
+	 * List movies
 	 * @param  {} message
-	 * @param  {} list=1
+	 * @param  {} page=1
 	 */
-	async list({ chat }, list = 1) {
-		const { message_id } = await this.bot.sendMessage(
-			chat.id,
-			"\u{1F504} Fetching movies \u{1F4E1}"
-		);
-
-		const { data } = await axios.get(`${process.env.MOVIES_API}list?page=${list}`);
-		const options = { parse_mode: "Markdown" };
-
-		_.map(data, (movie, i) => {
-			const isLastItem = data.length - 1 === i;
-			/*
-			 * Used setTimeout to ensure all messages are sent before pagination
-			 */
-			setTimeout(
-				async () => {
-					const downloadLink = movie.DownloadLink
-
-					const pagination = isLastItem
-						? [
-								{
-									text: "Previous",
-									callback_data: JSON.stringify({
-										type: "movie",
-										list: list - 1,
-									}),
-								},
-								{
-									text: "Next",
-									callback_data: JSON.stringify({
-										type: "movie",
-										list: list + 1,
-									}),
-								},
-						  ]
-						: [];
-
-					options.reply_markup = JSON.stringify({
-						inline_keyboard: [
-							[{ text: `Download ${movie.Size}`, url: downloadLink }],
-							pagination,
-						],
-					});
-
-					const msg = await this.bot.sendMessage(
-						chat.id,
-						`[\u{1F4C0}](${movie.CoverPhotoLink}) *${movie.Title}*`,
-						options
-					);
-
-					await new Paginator({
-						_id: msg.message_id,
-						type: "movie",
-						user: msg.chat.id,
-					}).save();
-				},
-				isLastItem ? 2500 : 0
+	async list({ chat }, page = 1) {
+		try {
+			const { message_id } = await this.bot.sendMessage(
+				chat.id,
+				"\u{1F504} Fetching movies \u{1F4E1}"
 			);
-		});
 
-		this.bot.deleteMessage(chat.id, message_id);
+			const { data } = await axios.get(
+				`${process.env.MOVIES_API}list?page=${page}`
+			);
+
+			const options = { parse_mode: "Markdown" };
+
+			_.map(data, (movie, i) => {
+				const isLastItem = data.length - 1 === i;
+				/*
+				 * Ensure all messages are sent before pagination
+				 */
+				setTimeout(
+					async () => {
+						const pagination = isLastItem
+							? [
+									{
+										text: "Next",
+										callback_data: JSON.stringify({
+											type: "movie",
+											page: page + 1,
+										}),
+									},
+							  ]
+							: [];
+
+						if (page > 1 && pagination.length > 0) {
+							pagination.unshift({
+								text: "Previous",
+								callback_data: JSON.stringify({
+									type: "movie",
+									page: page - 1,
+								}),
+							});
+						}
+
+						options.reply_markup = JSON.stringify({
+							inline_keyboard: [
+								[{ text: `Download ${movie.Size}`, url: movie.DownloadLink }],
+								pagination,
+							],
+						});
+
+						const msg = await this.bot.sendMessage(
+							chat.id,
+							`[\u{1F4C0}](${movie.CoverPhotoLink}) *${movie.Title}*`,
+							options
+						);
+
+						await new Paginator({
+							_id: msg.message_id,
+							type: "movie",
+							user: msg.chat.id,
+						}).save();
+					},
+					isLastItem ? 2500 : 0
+				);
+			});
+
+			this.bot.deleteMessage(chat.id, message_id);
+		} catch (error) {
+			errorHandler(this.bot, chat.id, error);
+		}
 	}
 
 	/**
 	 * Handle pagination
 	 * @param  {} message
-	 * @param  {} list
+	 * @param  {} page
 	 */
-	async paginate(message, list) {
-		if (list === 0) return;
+	async paginate(message, page) {
 		const chatId = message.chat.id;
 		const results = await Paginator.find({
 			user: chatId,
@@ -86,13 +94,15 @@ module.exports = class Movie extends Provider {
 			createdAt: { $gt: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000) },
 		});
 
-		const IDs = [];
-		_.map(results, result => {
-			IDs.push(result._id);
-			this.bot.deleteMessage(chatId, result._id);
-		});
+		if (results.length > 0) {
+			const IDs = [];
+			_.map(results, result => {
+				IDs.push(result._id);
+				this.bot.deleteMessage(chatId, result._id);
+			});
+			await Paginator.deleteMany({ _id: { $in: IDs } });
+		}
 
-		await this.list(message, list);
-		await Paginator.deleteMany({ _id: { $in: IDs } });
+		await this.list(message, page);
 	}
 };

@@ -1,4 +1,4 @@
-<h1 align="center">:bee: Beetube :bee: Bot</h1>
+<h1 align="center">Beetube :bee: Bot</h1>
 
 <div align="center">
 
@@ -57,3 +57,9 @@ All contributions of any kind are welcome.
 ## License (MIT)
 
 This project is opened under the [MIT 2.0 License](https://github.com/kodjunkie/beetube-bot/blob/master/LICENSE) which allows very broad use for both academic and commercial purposes.
+
+## Credits
+
+| Tools                                                                | Use    |
+| -------------------------------------------------------------------- | ------ |
+| [github.com/bisoncorps/gophie](https://github.com/bisoncorps/gophie) | movies |
