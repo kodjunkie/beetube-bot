@@ -15,7 +15,7 @@ module.exports = class Movie extends Provider {
 			"\u{1F504} Fetching movies \u{1F4E1}"
 		);
 
-		const { data } = await axios.get(`${process.env.MOVIES_API}?list=${list}`);
+		const { data } = await axios.get(`${process.env.MOVIES_API}list?page=${list}`);
 		const options = { parse_mode: "Markdown" };
 
 		_.map(data, (movie, i) => {
@@ -25,7 +25,7 @@ module.exports = class Movie extends Provider {
 			 */
 			setTimeout(
 				async () => {
-					const downloadLink = `${movie.DownloadLink.Scheme}://${movie.DownloadLink.Host}${movie.DownloadLink.Path}?${movie.DownloadLink.RawQuery}`;
+					const downloadLink = movie.DownloadLink
 
 					const pagination = isLastItem
 						? [
