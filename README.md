@@ -1,3 +1,9 @@
+<div align="center">
+
+<img src="./assets/logo.png" alt="Logo" height="60" width="auto"></a>
+
+</div>
+
 <h1 align="center">Beetube :bee: Bot</h1>
 
 <div align="center">
