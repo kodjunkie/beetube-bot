@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="./assets/logo.png" alt="Logo" height="100" width="auto"></a>
+<img src="./assets/icon.png" alt="Beetube" height="100" width="auto"></a>
 
 </div>
 
