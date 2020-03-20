@@ -26,7 +26,7 @@ mongoose
 		bot.onText(/\/start/, startCommand(bot));
 		bot.onText(/\/list/, listCommand(bot));
 		bot.onText(
-			/^(?<Action>\/search)(?:\s+(?<Command>\w+)(?:\s+(?<Query>(?:\w|\s)+))?)?(?:\s+-(?<Engine>\w+))?$/,
+			/^(?<Action>\/search)(?:\s+(?<Provider>\w+)(?:\s+(?<Query>(?:\w|\s)+))?)?(?:\s+-(?<Engine>\w+))?$/,
 			searchCommand(bot)
 		);
 
