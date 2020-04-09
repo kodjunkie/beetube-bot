@@ -24,9 +24,9 @@ mongoose
 	.then(() => {
 		// Commands
 		bot.onText(/\/start/, startCommand(bot));
-		bot.onText(/\/list/, listCommand(bot));
+		bot.onText(/^(?<Action>\/list)(?:\s+(?<Provider>\w+))?$/, listCommand(bot));
 		bot.onText(
-			/^(?<Action>\/search)(?:\s+(?<Provider>\w+)(?:\s+(?<Query>(?:\w|\s)+))?)?(?:\s+-(?<Engine>\w+))?$/,
+			/^(?<Action>\/search)(?:\s+(?<Provider>\w+)(?:\s+(?<Query>(?:\w|\s)+))?)?(?:\s+-(?<Server>\w+))?$/,
 			searchCommand(bot)
 		);
 
