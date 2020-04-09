@@ -23,55 +23,57 @@ module.exports = class Movie extends Provider {
 
 			const options = { parse_mode: "Markdown" };
 			_.map(data, (movie, i) => {
-				const isLastItem = data.length - 1 === i;
-				/*
-				 * Ensure all messages are sent before pagination
-				 */
-				setTimeout(
-					async () => {
-						const pagination = isLastItem
-							? [
-									{
-										text: "Next",
-										callback_data: JSON.stringify({
-											type: "movie",
-											page: page + 1,
-										}),
-									},
-							  ]
-							: [];
+				if (movie.Size && movie.CoverPhotoLink) {
+					const isLastItem = data.length - 1 === i;
+					/*
+					 * Ensure all messages are sent before pagination
+					 */
+					setTimeout(
+						async () => {
+							const pagination = isLastItem
+								? [
+										{
+											text: "Next",
+											callback_data: JSON.stringify({
+												type: "movie",
+												page: page + 1,
+											}),
+										},
+								  ]
+								: [];
 
-						if (page > 1 && pagination.length > 0) {
-							pagination.unshift({
-								text: "Previous",
-								callback_data: JSON.stringify({
-									type: "movie",
-									page: page - 1,
-								}),
+							if (page > 1 && pagination.length > 0) {
+								pagination.unshift({
+									text: "Previous",
+									callback_data: JSON.stringify({
+										type: "movie",
+										page: page - 1,
+									}),
+								});
+							}
+
+							options.reply_markup = JSON.stringify({
+								inline_keyboard: [
+									[{ text: `Download ${movie.Size}`, url: movie.DownloadLink }],
+									pagination,
+								],
 							});
-						}
 
-						options.reply_markup = JSON.stringify({
-							inline_keyboard: [
-								[{ text: `Download ${movie.Size}`, url: movie.DownloadLink }],
-								pagination,
-							],
-						});
+							const msg = await this.bot.sendMessage(
+								chat.id,
+								`[\u{1F4C0}](${movie.CoverPhotoLink}) *${movie.Title}*`,
+								options
+							);
 
-						const msg = await this.bot.sendMessage(
-							chat.id,
-							`[\u{1F4C0}](${movie.CoverPhotoLink}) *${movie.Title}*`,
-							options
-						);
-
-						await new Paginator({
-							_id: msg.message_id,
-							type: "movie",
-							user: msg.chat.id,
-						}).save();
-					},
-					isLastItem ? 2500 : 0
-				);
+							await new Paginator({
+								_id: msg.message_id,
+								type: "movie",
+								user: msg.chat.id,
+							}).save();
+						},
+						isLastItem ? 2500 : 0
+					);
+				}
 			});
 
 			this.bot.deleteMessage(chat.id, message_id);
