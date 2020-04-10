@@ -1,13 +1,16 @@
 /*
  * Handle /start command
  */
-const errorHandler = require("../utils/error-handler");
+
 const User = require("../models/user");
+const errorHandler = require("../utils/error-handler");
+const { removeObsoleteRecords } = require("../utils/db-optimizer");
 
 module.exports = bot => async message => {
 	const chatId = message.chat.id;
 	try {
-		bot.sendChatAction(chatId, "typing");
+		// Remove obsolete db records
+		removeObsoleteRecords();
 
 		const from = message.from;
 		const user = await User.findOne({ _id: from.id });
@@ -20,7 +23,7 @@ module.exports = bot => async message => {
 				language_code: from.language_code,
 			}).save();
 		}
-
+		bot.sendChatAction(chatId, "typing");
 		const username = from.first_name
 			? `[${from.first_name}](tg://user?id=${from.id})`
 			: `@${from.username}`;
