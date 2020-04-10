@@ -21,7 +21,9 @@ module.exports = class Movie extends Provider {
 				`${process.env.MOVIES_API}/list?page=${page}`
 			);
 
+			this.bot.sendChatAction(chat.id, "upload_video");
 			const options = { parse_mode: "Markdown" };
+
 			_.map(data, (movie, i) => {
 				if (movie.Size && movie.CoverPhotoLink) {
 					const isLastItem = data.length - 1 === i;
@@ -35,7 +37,7 @@ module.exports = class Movie extends Provider {
 										{
 											text: "Next",
 											callback_data: JSON.stringify({
-												type: "movie",
+												type: "paginate_movies",
 												page: page + 1,
 											}),
 										},
@@ -46,7 +48,7 @@ module.exports = class Movie extends Provider {
 								pagination.unshift({
 									text: "Previous",
 									callback_data: JSON.stringify({
-										type: "movie",
+										type: "paginate_movies",
 										page: page - 1,
 									}),
 								});
@@ -126,6 +128,8 @@ module.exports = class Movie extends Provider {
 			);
 
 			const options = { parse_mode: "Markdown" };
+			this.bot.sendChatAction(chat.id, "upload_video");
+
 			_.map(data, async movie => {
 				if (movie.Size && movie.CoverPhotoLink) {
 					options.reply_markup = JSON.stringify({
