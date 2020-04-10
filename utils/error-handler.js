@@ -3,7 +3,9 @@ module.exports = (bot, chatId, error) => {
 		console.error(error);
 	}
 
-	bot.sendMessage(chatId, `\u{26A0} An error occurred, try again \u{26A0}`, {
-		parse_mode: "Markdown",
-	});
+	bot.sendMessage(
+		chatId,
+		`\u{26A0} An error occurred, please try again \u{26A0}`,
+		{ parse_mode: "Markdown" }
+	);
 };
