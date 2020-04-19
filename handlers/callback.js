@@ -1,22 +1,19 @@
+const movieProvider = require("../providers/movie");
+const errorHandler = require("../utils/error-handler");
+
 /*
  * Handle callback queries
  */
-const errorHandler = require("../utils/error-handler");
-const movieProvider = require("../providers/movie");
-
 module.exports = bot => cbq => {
 	const chatId = cbq.message.chat.id;
 	const data = JSON.parse(cbq.data);
+	const type = data.type;
 
 	try {
-		const movie = new movieProvider(bot);
-
-		switch (data.type) {
-			case "list_movies":
-				movie.list(cbq.message);
-				break;
-			case "paginate_movies":
-				movie.paginate(cbq.message, data.page);
+		switch (type) {
+			case type.match(/_movies$/).input:
+				const movie = new movieProvider(bot);
+				movie.resolve(data, cbq.message);
 				break;
 			default:
 				bot.sendMessage(

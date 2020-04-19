@@ -48,7 +48,7 @@ module.exports = bot => (message, match) => {
 
 			bot.sendMessage(
 				chatId,
-				"Please select the service type \u{1F447}",
+				"Please select the service category \u{1F447}",
 				options
 			);
 
