@@ -175,4 +175,23 @@ module.exports = class Movie extends Provider {
 			this.search(message, { query: reply.text });
 		});
 	}
+
+	/**
+	 * Service resolver
+	 * @param  {} data
+	 * @param  {} message
+	 */
+	resolve(data, message) {
+		switch (data.type) {
+			case "list_movies":
+				this.list(message);
+				break;
+			case "paginate_movies":
+				this.paginate(message, data.page);
+				break;
+			case "search_movies":
+				this.interactiveSearch(message);
+				break;
+		}
+	}
 };

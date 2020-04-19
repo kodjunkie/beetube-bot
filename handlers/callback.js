@@ -5,21 +5,15 @@ const errorHandler = require("../utils/error-handler");
  * Handle callback queries
  */
 module.exports = bot => cbq => {
-	const data = JSON.parse(cbq.data);
 	const chatId = cbq.message.chat.id;
+	const data = JSON.parse(cbq.data);
+	const type = data.type;
 
 	try {
-		const movie = new movieProvider(bot);
-
-		switch (data.type) {
-			case "list_movies":
-				movie.list(cbq.message);
-				break;
-			case "paginate_movies":
-				movie.paginate(cbq.message, data.page);
-				break;
-			case "search_movies":
-				movie.interactiveSearch(cbq.message);
+		switch (type) {
+			case type.match(/_movies$/).input:
+				const movie = new movieProvider(bot);
+				movie.resolve(data, cbq.message);
 				break;
 			default:
 				bot.sendMessage(
