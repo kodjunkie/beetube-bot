@@ -157,4 +157,22 @@ module.exports = class Movie extends Provider {
 			errorHandler(this.bot, chat.id, error);
 		}
 	}
+
+	/**
+	 * Interactive search
+	 * @param  {} message
+	 */
+	async interactiveSearch(message) {
+		const chatId = message.chat.id;
+		const { message_id } = await this.bot.sendMessage(
+			chatId,
+			"Tell me the title of the movie you want \u{1F50E}",
+			{ reply_markup: JSON.stringify({ force_reply: true }) }
+		);
+
+		const listenerId = this.bot.onReplyToMessage(chatId, message_id, reply => {
+			this.bot.removeReplyListener(listenerId);
+			this.search(message, { query: reply.text });
+		});
+	}
 };
