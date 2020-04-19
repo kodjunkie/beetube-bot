@@ -11,7 +11,6 @@ const listCommand = require("./commands/list");
 
 // Handlers
 const callbackHandler = require("./handlers/callback");
-const messageHandler = require("./handlers/message");
 
 // Configurations
 const bot = new TelegramBot(process.env.BOT_TOKEN, config.bot);
@@ -28,7 +27,6 @@ mongoose
 		);
 
 		// Handlers
-		bot.on("message", messageHandler(bot));
 		bot.on("callback_query", callbackHandler(bot));
 	})
 	.catch(error => console.error(error));
