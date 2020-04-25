@@ -38,7 +38,7 @@ Lastly from you terminal, run the below commands
 ```bash
 git clone https://github.com/kodjunkie/beetube-bot.git
 cd beetube-bot
-mv .env.example .env
+cp .env.example .env
 # Update .env accordingly
 npm install
 # Start mongoDB daemon
@@ -66,6 +66,6 @@ This project is opened under the [MIT 2.0 License](https://github.com/kodjunkie/
 
 ## Credits
 
-| Tools                                                                | Use    |
-| -------------------------------------------------------------------- | ------ |
-| [github.com/bisoncorps/gophie](https://github.com/bisoncorps/gophie) | movies |
+| Tools                                                          | Use    |
+| -------------------------------------------------------------- | ------ |
+| [github.com/Go-phie/gophie](https://github.com/Go-phie/gophie) | movies |
