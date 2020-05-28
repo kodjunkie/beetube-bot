@@ -61,9 +61,12 @@ module.exports = class Movie extends Provider {
 								],
 							});
 
+							const description = movie.Description
+								? "\n\n*Description:* " + movie.Description.slice(0, -6)
+								: "";
 							const msg = await this.bot.sendMessage(
 								chat.id,
-								`[\u{1F4C0}](${movie.CoverPhotoLink}) *${movie.Title}*`,
+								`[\u{1F4C0}](${movie.CoverPhotoLink}) *${movie.Title}*${description}`,
 								options
 							);
 
@@ -138,9 +141,12 @@ module.exports = class Movie extends Provider {
 						],
 					});
 
+					const description = movie.Description
+						? "\n\n*Description:* " + movie.Description.slice(0, -6)
+						: "";
 					const msg = await this.bot.sendMessage(
 						chat.id,
-						`[\u{1F4C0}](${movie.CoverPhotoLink}) *${movie.Title}*`,
+						`[\u{1F4C0}](${movie.CoverPhotoLink}) *${movie.Title}*${description}`,
 						options
 					);
 
