@@ -18,7 +18,7 @@ module.exports = class Movie extends Provider {
 			);
 
 			const { data } = await axios.get(
-				`${process.env.MOVIES_API}/list?page=${page}`
+				`${process.env.MOVIES_API}/list?page=${page}&engine=fzmovies`
 			);
 
 			this.bot.sendChatAction(chat.id, "upload_video");
@@ -122,9 +122,9 @@ module.exports = class Movie extends Provider {
 			);
 
 			const query = params.query.replace(" ", "+");
-			const server = params.server ? `&engine=${params.server}` : "";
+			const server = params.server || "fzmovies";
 			const { data } = await axios.get(
-				`${process.env.MOVIES_API}/search?query=${query + server}`
+				`${process.env.MOVIES_API}/search?query=${query}&engine=${server}`
 			);
 
 			const options = { parse_mode: "Markdown" };
@@ -177,7 +177,7 @@ module.exports = class Movie extends Provider {
 	}
 
 	/**
-	 * Service resolver
+	 * Task resolver
 	 * @param  {} data
 	 * @param  {} message
 	 */
