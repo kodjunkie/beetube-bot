@@ -18,7 +18,8 @@ A telegram bot for music, video, movie downloads and more.
   - [Installation](#installation)
   - [Todo](#todo)
   - [Contribution](#contribution)
-  - [License (MIT)](#license-mit)
+  - [License (MIT)](#license)
+  - [Credits](#credits)
 
 ## Installation
 
