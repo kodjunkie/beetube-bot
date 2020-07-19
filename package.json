@@ -35,7 +35,7 @@
 	"dependencies": {
 		"axios": "^0.19.2",
 		"dotenv": "^8.2.0",
-		"lodash": "^4.17.15",
+		"lodash": "^4.17.19",
 		"mongoose": "^5.9.4",
 		"node-telegram-bot-api": "^0.40.0"
 	},
