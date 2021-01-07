@@ -16,12 +16,21 @@ A telegram bot for music, video, movie downloads and more.
 
 - [Beetube :bee:](#beetube)
   - [Installation](#installation)
+    - [Telegram Setup](#installation)
+    - [Install on system](#installation)
+    - [Install via docker](#installation)
+  - [Tests](#tests)
+  - [Deployed Version](#deployed)
   - [Todo](#todo)
   - [Contribution](#contribution)
   - [License (MIT)](#license)
   - [Credits](#credits)
 
 ## Installation
+
+**NOTE:** By default it's already configured to be deployed on [Heroku](https://heroku.com/), you can select either Github or [Heroku](https://heroku.com/) CLI deployment.
+
+### Telegram Setup (required)
 
 1.  Create a new bot via [@BotFather](https://telegram.me/BotFather) and note the `token`
 2.  Type `/setcommands`
@@ -34,16 +43,38 @@ A telegram bot for music, video, movie downloads and more.
   list - get results from a list of services
 ```
 
-Lastly from you terminal, run the below commands
+### Install on Local Machine
 
 ```bash
-git clone https://github.com/kodjunkie/beetube-bot.git
-cd beetube-bot
-cp .env.example .env
-# Update .env accordingly
-npm install
+$ git clone https://github.com/kodjunkie/beetube-bot.git
+$ cd beetube-bot
+$ cp .env.example .env # Update .env accordingly
+$ npm install
 # Start mongoDB daemon
-npm start
+$ npm start
+```
+
+### Docker Installation
+
+```bash
+$ git clone https://github.com/kodjunkie/beetube-bot.git
+$ cd beetube-bot
+$ cp .env.example .env # Update .env accordingly
+
+# To boot-up first time only or whenever docker file is modified (builds the containers)
+$ docker-compose up --build
+
+# To boot-up without building the containers (regular use)
+$ docker-compose up
+
+# To shut-down
+$ docker-compose down
+```
+
+## Tests
+
+```bash
+$ npm test
 ```
 
 ## Deployed
