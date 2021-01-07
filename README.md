@@ -16,9 +16,9 @@ A telegram bot for music, video, movie downloads and more.
 
 - [Beetube :bee:](#beetube)
   - [Installation](#installation)
-    - [Telegram Setup](#telegram)
+    - [Telegram Setup](#installation)
     - [Install on system](#installation)
-    - [Install via docker](#docker)
+    - [Install via docker](#installation)
   - [Tests](#tests)
   - [Deployed Version](#deployed)
   - [Todo](#todo)
