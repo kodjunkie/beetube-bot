@@ -56,7 +56,12 @@ module.exports = class Movie extends Provider {
 
 							options.reply_markup = JSON.stringify({
 								inline_keyboard: [
-									[{ text: `Download ${movie.Size}`, url: movie.DownloadLink }],
+									[
+										{
+											text: `Download (${movie.Size})`,
+											url: movie.DownloadLink,
+										},
+									],
 									pagination,
 								],
 							});
@@ -137,7 +142,7 @@ module.exports = class Movie extends Provider {
 				if (movie.Size && movie.CoverPhotoLink) {
 					options.reply_markup = JSON.stringify({
 						inline_keyboard: [
-							[{ text: `Download ${movie.Size}`, url: movie.DownloadLink }],
+							[{ text: `Download (${movie.Size})`, url: movie.DownloadLink }],
 						],
 					});
 
