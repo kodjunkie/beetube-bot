@@ -28,7 +28,7 @@ A telegram bot for music, video, movie downloads and more.
 
 ## Installation
 
-**NOTE:** By default it's already configured to be deployed on [Heroku](https://heroku.com/), you can select either Github or [Heroku](https://heroku.com/) CLI deployment.
+**NOTE:** By default it's been setup for easy deployment on [Heroku](https://heroku.com/), you can select either Github or [Heroku](https://heroku.com/) CLI deployment method.
 
 ### Telegram Setup (required)
 
