@@ -20,7 +20,7 @@ A telegram bot for music, video, movie downloads and more.
     - [Install on system](#installation)
     - [Install via docker](#installation)
   - [Tests](#tests)
-  - [Deployed Version](#deployed)
+  - [Deployed](#deployed)
   - [Todo](#todo)
   - [Contribution](#contribution)
   - [License (MIT)](#license)
