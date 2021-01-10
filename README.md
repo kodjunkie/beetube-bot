@@ -16,11 +16,11 @@ A telegram bot for music, video, movie downloads and more.
 
 - [Beetube :bee:](#beetube)
   - [Installation](#installation)
-    - [Telegram Setup](#installation)
+    - [Telegram setup](#installation)
     - [Install on system](#installation)
     - [Install via docker](#installation)
   - [Tests](#tests)
-  - [Deployed Version](#deployed)
+  - [Deployed](#deployed)
   - [Todo](#todo)
   - [Contribution](#contribution)
   - [License (MIT)](#license)
