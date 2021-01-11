@@ -4,6 +4,7 @@
 const botMock = {
 	sendMessage: jest.fn(),
 	sendChatAction: jest.fn(),
+
 	/**
 	 * Bot sample response by type
 	 * @param  {} input="/start"
@@ -43,7 +44,7 @@ const botMock = {
 					length: 9,
 					type: "text_mention",
 					user: {
-						id: 561312052,
+						id: 12345,
 						is_bot: false,
 						first_name: "Lawrence",
 						username: "kodjunkie",

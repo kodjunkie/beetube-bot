@@ -29,7 +29,7 @@
 	"jest": {
 		"testEnvironment": "node",
 		"setupFilesAfterEnv": [
-			"./setupTests.js"
+			"./setup-tests.js"
 		]
 	},
 	"dependencies": {
