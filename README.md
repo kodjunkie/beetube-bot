@@ -71,6 +71,8 @@ $ docker-compose up
 $ docker-compose down
 ```
 
+**NOTE:** The command `docker-compose` can be used as `docker compose` depending on your docker version.
+
 ## Tests
 
 ```bash

@@ -24,7 +24,7 @@
 		"url": "git+https://github.com/kodjunkie/beetube-bot.git"
 	},
 	"engines": {
-		"node": "14.x"
+		"node": "15.x"
 	},
 	"jest": {
 		"testEnvironment": "node",
