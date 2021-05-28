@@ -4,7 +4,7 @@ services:
   # Database
   mongo-db:
     container_name: database
-    image: mongo:latest
+    image: mongo:lts
     restart: always
     ports:
       - "27017:27017"
