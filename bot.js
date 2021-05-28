@@ -30,6 +30,6 @@ mongoose
 		bot.on("callback_query", callbackHandler(bot));
 
 		// Success notification message
-		console.log("\u{1F680} \u{1F41D} Listening for commands \u{1F525}");
+		console.log("\u{1F680} Listening for commands \u{1F41D}");
 	})
 	.catch(error => console.error(error));
