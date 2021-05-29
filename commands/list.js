@@ -3,6 +3,7 @@
  */
 
 const movieProvider = require("../providers/movie");
+const musicProvider = require("../providers/music");
 const errorHandler = require("../utils/error-handler");
 
 module.exports = bot => (message, match) => {
@@ -19,7 +20,7 @@ module.exports = bot => (message, match) => {
 						{
 							text: "\u{1F3AC} Movies",
 							callback_data: JSON.stringify({
-								type: "list_movies",
+								type: "list_movie",
 							}),
 						},
 						{
@@ -33,7 +34,7 @@ module.exports = bot => (message, match) => {
 						{
 							text: "\u{1F4F9} Videos",
 							callback_data: JSON.stringify({
-								type: "list_videos",
+								type: "list_video",
 							}),
 						},
 						{
@@ -56,9 +57,13 @@ module.exports = bot => (message, match) => {
 		}
 
 		switch (matches.Provider) {
-			case "movies":
+			case "movie":
 				const movie = new movieProvider(bot);
 				movie.list(message);
+				break;
+			case "music":
+				const music = new musicProvider(bot);
+				music.list(message);
 				break;
 			default:
 				bot.sendMessage(

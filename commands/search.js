@@ -1,4 +1,5 @@
 const movieProvider = require("../providers/movie");
+const musicProvider = require("../providers/music");
 const errorHandler = require("../utils/error-handler");
 
 /*
@@ -18,7 +19,7 @@ module.exports = bot => (message, match) => {
 						{
 							text: "\u{1F3AC} Movies",
 							callback_data: JSON.stringify({
-								type: "search_movies",
+								type: "search_movie",
 							}),
 						},
 						{
@@ -32,7 +33,7 @@ module.exports = bot => (message, match) => {
 						{
 							text: "\u{1F4F9} Videos",
 							callback_data: JSON.stringify({
-								type: "search_videos",
+								type: "search_video",
 							}),
 						},
 						{
@@ -54,16 +55,20 @@ module.exports = bot => (message, match) => {
 			return;
 		}
 
+		const params = { query: matches.Query, server: matches.Server || null };
 		switch (matches.Provider) {
-			case "movies":
-				const params = { query: matches.Query, server: matches.Server || null };
+			case "movie":
 				const movie = new movieProvider(bot);
 				movie.search(message, params);
+				break;
+			case "music":
+				const music = new musicProvider(bot);
+				music.search(message, params);
 				break;
 			default:
 				bot.sendMessage(
 					chatId,
-					"This feature will be available soon \u{1F6A7}"
+					"\u{1F6A7} This feature will be available soon."
 				);
 		}
 	} catch (error) {
