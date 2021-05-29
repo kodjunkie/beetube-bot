@@ -42,7 +42,7 @@ module.exports = class Movie extends Provider {
 										{
 											text: "Next",
 											callback_data: JSON.stringify({
-												type: "paginate_movies",
+												type: "paginate_movie",
 												page: page + 1,
 											}),
 										},
@@ -53,7 +53,7 @@ module.exports = class Movie extends Provider {
 								pagination.unshift({
 									text: "Previous",
 									callback_data: JSON.stringify({
-										type: "paginate_movies",
+										type: "paginate_movie",
 										page: page - 1,
 									}),
 								});
@@ -195,13 +195,13 @@ module.exports = class Movie extends Provider {
 	 */
 	resolve(data, message) {
 		switch (data.type) {
-			case "list_movies":
+			case "list_movie":
 				this.list(message);
 				break;
-			case "paginate_movies":
+			case "paginate_movie":
 				this.paginate(message, data.page);
 				break;
-			case "search_movies":
+			case "search_movie":
 				this.interactiveSearch(message);
 				break;
 		}
