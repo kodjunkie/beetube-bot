@@ -30,6 +30,11 @@ A telegram bot for music, video, movie downloads and more.
 
 **NOTE:** By default it's been setup for easy deployment on [Heroku](https://heroku.com/), you can select either Github or [Heroku](https://heroku.com/) CLI deployment method.
 
+### Requirements
+
+- Node >= `v14.x`
+- Mongo DB
+
 ### Telegram Setup (required)
 
 1.  Create a new bot via [@BotFather](https://telegram.me/BotFather) and note the `token`
@@ -61,10 +66,10 @@ $ git clone https://github.com/kodjunkie/beetube-bot.git
 $ cd beetube-bot
 $ cp .env.example .env # Update .env accordingly
 
-# To boot-up first time only or whenever docker file is modified (builds the containers)
+# To boot-up first time only or whenever docker file is modified (builds the container)
 $ docker-compose up --build
 
-# To boot-up without building the containers (regular use)
+# To boot-up without building the container (regular use)
 $ docker-compose up
 
 # To shut-down
@@ -100,7 +105,8 @@ This project is opened under the [MIT 2.0 License](https://github.com/kodjunkie/
 
 ## Credits
 
-| Tools                                               | Use    |
-| --------------------------------------------------- | ------ |
-| [Go-phie/gophie](https://github.com/Go-phie/gophie) | movies |
-| [Go-phie/mythra](https://github.com/Go-phie/mythra) | music  |
+| Tools                                                                         | Uses         |
+| ----------------------------------------------------------------------------- | ------------ |
+| [yagop/node-telegram-bot-api](https://github.com/yagop/node-telegram-bot-api) | Telegram API |
+| [Go-phie/gophie](https://github.com/Go-phie/gophie)                           | Movies       |
+| [Go-phie/mythra](https://github.com/Go-phie/mythra)                           | Music        |
