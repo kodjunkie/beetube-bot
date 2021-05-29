@@ -5,6 +5,11 @@ const Paginator = require("../models/paginator");
 const errorHandler = require("../utils/error-handler");
 
 module.exports = class Movie extends Provider {
+	// API endpoint
+	get movieApi() {
+		return process.env.MOVIE_API;
+	}
+
 	/**
 	 * List movies
 	 * @param  {} message
@@ -17,9 +22,9 @@ module.exports = class Movie extends Provider {
 				"\u{1F504} Fetching movies \u{1F4E1}"
 			);
 
-			const { data } = await axios.get(
-				`${process.env.MOVIES_API}/list?page=${page}&engine=fzmovies`
-			);
+			const { data } = await axios.get(`${this.movieApi}/list`, {
+				params: { page, engine: "fzmovies" },
+			});
 
 			this.bot.sendChatAction(chat.id, "upload_video");
 			const options = { parse_mode: "Markdown" };
@@ -129,11 +134,12 @@ module.exports = class Movie extends Provider {
 				`\u{1F504} Searching for \`${params.query}\` \u{1F4E1}`
 			);
 
-			const query = params.query.replace(" ", "+");
-			const server = params.server || "fzmovies";
-			const { data } = await axios.get(
-				`${process.env.MOVIES_API}/search?query=${query}&engine=${server}`
-			);
+			const { data } = await axios.get(`${this.movieApi}/search`, {
+				params: {
+					query: params.query.replace(" ", "+"),
+					engine: params.server || "fzmovies",
+				},
+			});
 
 			const options = { parse_mode: "Markdown" };
 			this.bot.sendChatAction(chat.id, "upload_video");
@@ -149,17 +155,12 @@ module.exports = class Movie extends Provider {
 					const description = movie.Description
 						? "\n\n*Description:* " + movie.Description.slice(0, -6)
 						: "";
-					const msg = await this.bot.sendMessage(
+
+					this.bot.sendMessage(
 						chat.id,
 						`[\u{1F4C0}](${movie.CoverPhotoLink}) *${movie.Title}*${description}`,
 						options
 					);
-
-					await new Paginator({
-						_id: msg.message_id,
-						type: "movie",
-						user: msg.chat.id,
-					}).save();
 				}
 			});
 
@@ -177,7 +178,7 @@ module.exports = class Movie extends Provider {
 		const chatId = message.chat.id;
 		const { message_id } = await this.bot.sendMessage(
 			chatId,
-			"Tell me the title of the movie you want \u{1F50E}",
+			"\u{1F50D} Tell me the title of the movie you want",
 			{ reply_markup: JSON.stringify({ force_reply: true }) }
 		);
 
