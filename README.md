@@ -54,7 +54,7 @@ $ npm install
 $ npm start
 ```
 
-### Docker Installation
+### Installation via Docker
 
 ```bash
 $ git clone https://github.com/kodjunkie/beetube-bot.git
@@ -87,7 +87,7 @@ Checkout the deployed version [here](https://t.me/Beetube_bot)
 
 - [ ] Increment tests
 - [ ] Implement video (Youtube) search & download
-- [ ] Implement music (search & download)
+- [x] Implement music (search & download)
 - [ ] Implement torrent (search & download `.torrent`)
 
 ## Contribution
@@ -100,6 +100,7 @@ This project is opened under the [MIT 2.0 License](https://github.com/kodjunkie/
 
 ## Credits
 
-| Tools                                                          | Use    |
-| -------------------------------------------------------------- | ------ |
-| [github.com/Go-phie/gophie](https://github.com/Go-phie/gophie) | movies |
+| Tools                                               | Use    |
+| --------------------------------------------------- | ------ |
+| [Go-phie/gophie](https://github.com/Go-phie/gophie) | movies |
+| [Go-phie/mythra](https://github.com/Go-phie/mythra) | music  |

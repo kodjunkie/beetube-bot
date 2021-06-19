@@ -1,4 +1,4 @@
-FROM node:latest
+FROM node:lts
 
 # Install system dependencies
 RUN npm install -g pm2
