@@ -30,6 +30,11 @@ A telegram bot for music, video, movie downloads and more.
 
 **NOTE:** By default it's been setup for easy deployment on [Heroku](https://heroku.com/), you can select either Github or [Heroku](https://heroku.com/) CLI deployment method.
 
+### Requirements
+
+- Node >= `v14.x`
+- Mongo DB
+
 ### Telegram Setup (required)
 
 1.  Create a new bot via [@BotFather](https://telegram.me/BotFather) and note the `token`
@@ -61,17 +66,15 @@ $ git clone https://github.com/kodjunkie/beetube-bot.git
 $ cd beetube-bot
 $ cp .env.example .env # Update .env accordingly
 
-# To boot-up first time only or whenever docker file is modified (builds the containers)
-$ docker-compose up --build
+# To boot-up first time only or whenever docker file is modified (builds the container)
+$ docker compose up --build
 
-# To boot-up without building the containers (regular use)
-$ docker-compose up
+# To boot-up without building the container (regular use)
+$ docker compose up
 
 # To shut-down
-$ docker-compose down
+$ docker compose down
 ```
-
-**NOTE:** The command `docker-compose` can be used as `docker compose` depending on your docker version.
 
 ## Tests
 
@@ -86,7 +89,6 @@ Checkout the deployed version [here](https://t.me/Beetube_bot)
 ## Todo
 
 - [ ] Increment tests
-- [ ] Implement video (Youtube) search & download
 - [x] Implement music (search & download)
 - [ ] Implement torrent (search & download `.torrent`)
 
@@ -100,7 +102,7 @@ This project is opened under the [MIT 2.0 License](https://github.com/kodjunkie/
 
 ## Credits
 
-| Tools                                               | Use    |
-| --------------------------------------------------- | ------ |
-| [Go-phie/gophie](https://github.com/Go-phie/gophie) | movies |
-| [Go-phie/mythra](https://github.com/Go-phie/mythra) | music  |
+| APIs                                                    | Uses   |
+| ------------------------------------------------------- | ------ |
+| [kodjunkie/raspar](https://github.com/kodjunkie/raspar) | Music  |
+| [Go-phie/gophie](https://github.com/Go-phie/gophie)     | Movies |

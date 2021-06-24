@@ -1,4 +1,5 @@
 const movieProvider = require("../providers/movie");
+const musicProvider = require("../providers/music");
 const errorHandler = require("../utils/error-handler");
 
 /*
@@ -10,11 +11,14 @@ module.exports = bot => cbq => {
 	const type = data.type;
 
 	try {
-		if (type.match(/_movies$/)) {
+		if (type.match(/_movie$/)) {
 			const movie = new movieProvider(bot);
 			movie.resolve(data, cbq.message);
+		} else if (type.match(/_music$/)) {
+			const music = new musicProvider(bot);
+			music.resolve(data, cbq.message);
 		} else {
-			bot.sendMessage(chatId, "This feature will be available soon \u{1F6A7}");
+			bot.sendMessage(chatId, "\u{1F6A7} This feature will be available soon.");
 		}
 	} catch (error) {
 		errorHandler(bot, chatId, error);

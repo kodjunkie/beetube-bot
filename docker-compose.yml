@@ -33,7 +33,5 @@ services:
       - ./.env
     links:
       - mongo-db
-    ports:
-      - "3000:3000"
     volumes:
       - ./:/home/src/bot
