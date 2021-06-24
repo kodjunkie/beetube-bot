@@ -67,16 +67,14 @@ $ cd beetube-bot
 $ cp .env.example .env # Update .env accordingly
 
 # To boot-up first time only or whenever docker file is modified (builds the container)
-$ docker-compose up --build
+$ docker compose up --build
 
 # To boot-up without building the container (regular use)
-$ docker-compose up
+$ docker compose up
 
 # To shut-down
-$ docker-compose down
+$ docker compose down
 ```
-
-**NOTE:** The command `docker-compose` can be used as `docker compose` depending on your docker version.
 
 ## Tests
 
@@ -91,7 +89,6 @@ Checkout the deployed version [here](https://t.me/Beetube_bot)
 ## Todo
 
 - [ ] Increment tests
-- [ ] Implement video (Youtube) search & download
 - [x] Implement music (search & download)
 - [ ] Implement torrent (search & download `.torrent`)
 
@@ -105,8 +102,7 @@ This project is opened under the [MIT 2.0 License](https://github.com/kodjunkie/
 
 ## Credits
 
-| Tools                                                                         | Uses         |
-| ----------------------------------------------------------------------------- | ------------ |
-| [yagop/node-telegram-bot-api](https://github.com/yagop/node-telegram-bot-api) | Telegram API |
-| [Go-phie/gophie](https://github.com/Go-phie/gophie)                           | Movies       |
-| [Go-phie/mythra](https://github.com/Go-phie/mythra)                           | Music        |
+| APIs                                                    | Uses   |
+| ------------------------------------------------------- | ------ |
+| [kodjunkie/raspar](https://github.com/kodjunkie/raspar) | Music  |
+| [Go-phie/gophie](https://github.com/Go-phie/gophie)     | Movies |
