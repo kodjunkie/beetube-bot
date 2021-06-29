@@ -45,6 +45,7 @@
 		"eslint-plugin-node": "^11.1.0",
 		"eslint-plugin-prettier": "^3.1.4",
 		"jest": "^25.5.4",
+		"nodemon": "^2.0.8",
 		"prettier": "^1.19.1"
 	}
 }
