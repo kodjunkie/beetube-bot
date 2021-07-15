@@ -9,7 +9,7 @@ const PaginatorSchema = new Schema(
 		},
 		type: {
 			type: String,
-			enum: ["movie", "video", "music", "torrent"],
+			enum: ["movie", "music", "torrent"],
 			default: "movie",
 		},
 		user: {
