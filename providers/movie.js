@@ -5,9 +5,10 @@ const Paginator = require("../models/paginator");
 const errorHandler = require("../utils/error-handler");
 
 module.exports = class Movie extends Provider {
-	// API endpoint
-	get movieApi() {
-		return process.env.MOVIE_API;
+	constructor(bot) {
+		super(bot);
+		this.type = "movie";
+		this.endpoint = process.env.MOVIE_API;
 	}
 
 	/**
@@ -22,7 +23,7 @@ module.exports = class Movie extends Provider {
 				"\u{1F504} Fetching movies \u{1F4E1}"
 			);
 
-			const { data } = await axios.get(`${this.movieApi}/list`, {
+			const { data } = await axios.get(`${this.endpoint}/list`, {
 				params: { page, engine: "fzmovies" },
 			});
 
@@ -82,7 +83,7 @@ module.exports = class Movie extends Provider {
 
 							await new Paginator({
 								_id: msg.message_id,
-								type: "movie",
+								type: this.type,
 								user: msg.chat.id,
 							}).save();
 						},
@@ -98,31 +99,6 @@ module.exports = class Movie extends Provider {
 	}
 
 	/**
-	 * Handle pagination
-	 * @param  {} message
-	 * @param  {} page
-	 */
-	async paginate(message, page) {
-		const chatId = message.chat.id;
-		const results = await Paginator.find({
-			user: chatId,
-			type: "movie",
-			createdAt: { $gt: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000) },
-		});
-
-		if (results.length > 0) {
-			const IDs = [];
-			_.map(results, result => {
-				IDs.push(result._id);
-				this.bot.deleteMessage(chatId, result._id);
-			});
-			await Paginator.deleteMany({ _id: { $in: IDs } });
-		}
-
-		await this.list(message, page);
-	}
-
-	/**
 	 * Search for movies
 	 * @param  {} message
 	 * @param  {} params
@@ -134,7 +110,7 @@ module.exports = class Movie extends Provider {
 				`\u{1F504} Searching for \`${params.query}\` \u{1F4E1}`
 			);
 
-			const { data } = await axios.get(`${this.movieApi}/search`, {
+			const { data } = await axios.get(`${this.endpoint}/search`, {
 				params: {
 					query: params.query.replace(" ", "+"),
 					engine: params.server || "fzmovies",
@@ -199,7 +175,7 @@ module.exports = class Movie extends Provider {
 				this.list(message);
 				break;
 			case "paginate_movie":
-				this.paginate(message, data.page);
+				this.paginate(message, data.page, "list");
 				break;
 			case "search_movie":
 				this.interactiveSearch(message);
