@@ -8,7 +8,7 @@
 
 <div align="center">
 
-A telegram bot for music, video, movie downloads and more.
+A telegram bot :robot: for music, video, movie downloads and more.
 
 [![https://github.com/kodjunkie/beetube-bot](https://img.shields.io/badge/💬%20Telegram-Channel-blue.svg?style=flat-square)](https://github.com/kodjunkie/beetube-bot) [![Beetube CI](https://github.com/kodjunkie/beetube-bot/workflows/Beetube%20CI/badge.svg)](https://github.com/kodjunkie/beetube-bot/actions) <a href="https://github.com/kodjunkie/beetube-bot/blob/master/LICENSE"><img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License: MIT" height="20"></a>
 
@@ -21,7 +21,6 @@ A telegram bot for music, video, movie downloads and more.
     - [Install via docker](#installation)
   - [Tests](#tests)
   - [Deployed](#deployed)
-  - [Todo](#todo)
   - [Contribution](#contribution)
   - [License (MIT)](#license)
   - [Credits](#credits)
@@ -45,7 +44,7 @@ A telegram bot for music, video, movie downloads and more.
 ```
   start - start a conversation with the bot
   search - search any category for results
-  list - get results from a list of services
+  list - list results from any category
 ```
 
 ### Install on Local Machine
@@ -55,7 +54,7 @@ $ git clone https://github.com/kodjunkie/beetube-bot.git
 $ cd beetube-bot
 $ cp .env.example .env # Update .env accordingly
 $ npm install
-# Start mongoDB daemon
+# Start mongo db daemon
 $ npm start
 ```
 
@@ -86,12 +85,6 @@ $ npm test
 
 Checkout the deployed version [here](https://t.me/Beetube_bot)
 
-## Todo
-
-- [ ] Increment tests
-- [x] Implement music (search & download)
-- [ ] Implement torrent (search & download `.torrent`)
-
 ## Contribution
 
 All contributions of any kind are welcome.
@@ -102,7 +95,7 @@ This project is opened under the [MIT 2.0 License](https://github.com/kodjunkie/
 
 ## Credits
 
-| APIs                                                    | Uses   |
-| ------------------------------------------------------- | ------ |
-| [kodjunkie/raspar](https://github.com/kodjunkie/raspar) | Music  |
-| [Go-phie/gophie](https://github.com/Go-phie/gophie)     | Movies |
+| Tools                                                   | Uses           |
+| ------------------------------------------------------- | -------------- |
+| [kodjunkie/raspar](https://github.com/kodjunkie/raspar) | Music, Torrent |
+| [Go-phie/gophie](https://github.com/Go-phie/gophie)     | Movies         |
