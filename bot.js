@@ -29,7 +29,7 @@ mongoose
 		// Handlers
 		bot.on("callback_query", callbackHandler(bot));
 
-		// Success notification message
+		// Successful connection
 		console.log("\u{1F41D} Listening for commands \u{1F680}");
 	})
 	.catch(error => console.error(error));
