@@ -3,6 +3,7 @@ const axios = require("axios");
 const Provider = require(".");
 const Paginator = require("../models/paginator");
 const errorHandler = require("../utils/error-handler");
+const keyboardMarkup = require("../utils/keyboard");
 
 module.exports = class Movie extends Provider {
 	constructor(bot) {
@@ -20,7 +21,8 @@ module.exports = class Movie extends Provider {
 		try {
 			const { message_id } = await this.bot.sendMessage(
 				chat.id,
-				"\u{1F504} Fetching movies \u{1F4E1}"
+				"\u{1F504} Fetching movies \u{1F4E1}",
+				keyboardMarkup
 			);
 
 			const { data } = await axios.get(`${this.endpoint}/list`, {
@@ -107,7 +109,8 @@ module.exports = class Movie extends Provider {
 		try {
 			const { message_id } = await this.bot.sendMessage(
 				chat.id,
-				`\u{1F504} Searching for \`${params.query}\` \u{1F4E1}`
+				`\u{1F504} Searching for \`${params.query}\` \u{1F4E1}`,
+				keyboardMarkup
 			);
 
 			const { data } = await axios.get(`${this.endpoint}/search`, {

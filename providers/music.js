@@ -3,6 +3,7 @@ const axios = require("axios");
 const Provider = require(".");
 const Paginator = require("../models/paginator");
 const errorHandler = require("../utils/error-handler");
+const keyboardMarkup = require("../utils/keyboard");
 
 module.exports = class Music extends Provider {
 	constructor(bot) {
@@ -19,7 +20,8 @@ module.exports = class Music extends Provider {
 	async list({ chat }, page = 1) {
 		await this.bot.sendMessage(
 			chat.id,
-			"\u{1F50D} We only support music search for now."
+			"\u{1F50D} We only support music search for now.",
+			keyboardMarkup
 		);
 	}
 
@@ -32,7 +34,8 @@ module.exports = class Music extends Provider {
 		try {
 			const { message_id } = await this.bot.sendMessage(
 				chat.id,
-				`\u{1F504} Searching for \`${params.query}\` \u{1F4E1}`
+				`\u{1F504} Searching for \`${params.query}\` \u{1F4E1}`,
+				keyboardMarkup
 			);
 
 			const page = params.page;
