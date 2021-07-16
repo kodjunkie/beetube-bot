@@ -43,8 +43,9 @@ A telegram bot :robot: for music, video, movie downloads and more.
 
 ```
   start - start a conversation with the bot
-  search - search any category for results
-  list - list results from any category
+  search - search through any category
+  keyboard - show custom keyboard
+  about - about this bot
 ```
 
 ### Install on Local Machine
