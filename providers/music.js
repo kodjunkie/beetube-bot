@@ -15,18 +15,112 @@ module.exports = class Music extends Provider {
 	/**
 	 * List music
 	 * @param  {} message
-	 * @param  {} page=1
+	 * @param  {} params
 	 */
-	async list({ chat }, page = 1) {
-		await this.bot.sendMessage(
-			chat.id,
-			"\u{1F50D} We only support music search for now.",
-			keyboardMarkup
-		);
+	async list({ chat }, params) {
+		try {
+			const { message_id } = await this.bot.sendMessage(
+				chat.id,
+				"\u{1F504} Fetching music \u{1F4E1}",
+				keyboardMarkup
+			);
+
+			const response = await axios.get(`${this.endpoint}/list`, { params });
+			const data = response.data.data;
+			const genre = params.genre || false;
+			const page = params.page;
+
+			await this.bot.sendChatAction(chat.id, "upload_voice");
+			const options = { parse_mode: "html" };
+
+			if (genre) {
+				_.map(data, (music, i) => {
+					const isLastItem = data.length - 1 === i;
+					/*
+					 * Ensure all messages are sent before pagination
+					 */
+					setTimeout(
+						async () => {
+							const pagination = isLastItem
+								? [
+										{
+											text: "Next",
+											callback_data: JSON.stringify({
+												type: "paginate_music",
+												page: page + 1,
+												genre,
+											}),
+										},
+								  ]
+								: [];
+
+							if (page > 1 && pagination.length > 0) {
+								pagination.unshift({
+									text: "Previous",
+									callback_data: JSON.stringify({
+										type: "paginate_music",
+										page: page - 1,
+										genre,
+									}),
+								});
+							}
+
+							options.reply_markup = JSON.stringify({
+								inline_keyboard: [
+									[
+										{
+											text: `Download (${music.size})`,
+											url: music.url,
+										},
+									],
+									pagination,
+								],
+							});
+
+							const msg = await this.bot.sendMessage(
+								chat.id,
+								`\u{1F4BF} ${music.name}`,
+								options
+							);
+
+							await new Paginator({
+								_id: msg.message_id,
+								type: this.type,
+								user: msg.chat.id,
+							}).save();
+						},
+						isLastItem ? 2500 : 0
+					);
+				});
+			} else {
+				const keyboardLayout = data.map(gnr => ({
+					text: gnr.name,
+					callback_data: JSON.stringify({
+						type: "list_music",
+						genre: gnr.name,
+						page: 1,
+					}),
+				}));
+
+				options.reply_markup = JSON.stringify({
+					inline_keyboard: _.chunk(keyboardLayout, 4),
+				});
+
+				await this.bot.sendMessage(
+					chat.id,
+					"Select a genre \u{1F447}",
+					options
+				);
+			}
+
+			await this.bot.deleteMessage(chat.id, message_id);
+		} catch (error) {
+			await errorHandler(this.bot, chat.id, error);
+		}
 	}
 
 	/**
-	 * Search for movies
+	 * Search for music
 	 * @param  {} message
 	 * @param  {} params
 	 */
@@ -45,8 +139,8 @@ module.exports = class Music extends Provider {
 			});
 			const data = response.data.data;
 
+			await this.bot.sendChatAction(chat.id, "upload_voice");
 			const options = { parse_mode: "html" };
-			this.bot.sendChatAction(chat.id, "upload_voice");
 
 			_.map(data, (music, i) => {
 				const isLastItem = data.length - 1 === i;
@@ -107,9 +201,9 @@ module.exports = class Music extends Provider {
 				);
 			});
 
-			this.bot.deleteMessage(chat.id, message_id);
+			await this.bot.deleteMessage(chat.id, message_id);
 		} catch (error) {
-			errorHandler(this.bot, chat.id, error);
+			await errorHandler(this.bot, chat.id, error);
 		}
 	}
 
@@ -126,10 +220,14 @@ module.exports = class Music extends Provider {
 			{ reply_markup: JSON.stringify({ force_reply: true }) }
 		);
 
-		const listenerId = this.bot.onReplyToMessage(chatId, message_id, reply => {
-			this.bot.removeReplyListener(listenerId);
-			this.search(message, { query: reply.text, page });
-		});
+		const listenerId = this.bot.onReplyToMessage(
+			chatId,
+			message_id,
+			async reply => {
+				this.bot.removeReplyListener(listenerId);
+				await this.search(message, { query: reply.text, page });
+			}
+		);
 	}
 
 	/**
@@ -137,16 +235,19 @@ module.exports = class Music extends Provider {
 	 * @param  {} data
 	 * @param  {} message
 	 */
-	resolve(data, message) {
+	async resolve(data, message) {
 		switch (data.type) {
 			case "list_music":
-				this.list(message);
+				await this.list(message, data);
+				break;
+			case "paginate_music":
+				await this.paginate(message, data, "list");
 				break;
 			case "search_music":
-				this.interactiveSearch(message, data.page);
+				await this.interactiveSearch(message, data.page);
 				break;
 			case "paginate_search_music":
-				this.paginate(message, data, "search");
+				await this.paginate(message, data, "search");
 				break;
 		}
 	}
