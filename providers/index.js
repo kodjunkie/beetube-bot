@@ -39,9 +39,9 @@ module.exports = class Provider {
 
 		if (results.length > 0) {
 			const IDs = [];
-			_.map(results, result => {
+			_.map(results, async result => {
 				IDs.push(result._id);
-				this.bot.deleteMessage(chatId, result._id);
+				await this.bot.deleteMessage(chatId, result._id);
 			});
 			await Paginator.deleteMany({ _id: { $in: IDs } });
 		}

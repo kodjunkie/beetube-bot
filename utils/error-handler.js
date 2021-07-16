@@ -1,9 +1,9 @@
-module.exports = (bot, chatId, error) => {
+module.exports = async (bot, chatId, error) => {
 	if (error && process.env.NODE_ENV !== "production") {
 		console.error(error);
 	}
 
-	bot.sendMessage(
+	await bot.sendMessage(
 		chatId,
 		`\u{26A0} An error occurred, please try again \u{26A0}`
 	);
