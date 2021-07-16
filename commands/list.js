@@ -2,11 +2,11 @@
  * Handle list command
  */
 
-const movieProvider = require("../providers/movie");
-const musicProvider = require("../providers/music");
+const MovieProvider = require("../providers/movie");
+const MusicProvider = require("../providers/music");
 const errorHandler = require("../utils/error-handler");
 
-module.exports = bot => (message, match) => {
+module.exports = bot => async (message, match) => {
 	const chatId = message.chat.id;
 	try {
 		const provider = match.groups.Provider.trim();
@@ -14,13 +14,15 @@ module.exports = bot => (message, match) => {
 
 		switch (provider) {
 			case "Movies":
-				new movieProvider(bot).list(message);
+				const movie = new MovieProvider(bot);
+				await movie.list(message);
 				break;
 			case "Music":
-				new musicProvider(bot).list(message);
+				const music = new MusicProvider(bot);
+				await music.list(message, { page: 1 });
 				break;
 		}
 	} catch (error) {
-		errorHandler(bot, chatId, error);
+		await errorHandler(bot, chatId, error);
 	}
 };

@@ -22,7 +22,7 @@ mongoose
 	.connect(process.env.MONGODB_URI, config.mongodb)
 	.then(() => {
 		// Commands
-		bot.onText(/Search/, searchCommand(bot));
+		bot.onText(/Search/i, searchCommand(bot));
 		bot.onText(/\/start/, startCommand(bot));
 		bot.onText(/Settings/, settingsCommand(bot));
 		bot.onText(/\/keyboard/, keyboardCommand(bot));

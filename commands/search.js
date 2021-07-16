@@ -3,7 +3,7 @@ const errorHandler = require("../utils/error-handler");
 /*
  * Handle search command"
  */
-module.exports = bot => message => {
+module.exports = bot => async message => {
 	const chatId = message.chat.id;
 
 	try {
@@ -35,9 +35,9 @@ module.exports = bot => message => {
 			}),
 		};
 
-		bot.sendChatAction(chatId, "typing");
-		bot.sendMessage(chatId, "Please select the category \u{1F447}", options);
+		await bot.sendChatAction(chatId, "typing");
+		await bot.sendMessage(chatId, "Select the category \u{1F447}", options);
 	} catch (error) {
-		errorHandler(bot, chatId, error);
+		await errorHandler(bot, chatId, error);
 	}
 };

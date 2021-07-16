@@ -29,7 +29,7 @@ module.exports = class Movie extends Provider {
 				params: { page, engine: "fzmovies" },
 			});
 
-			this.bot.sendChatAction(chat.id, "upload_video");
+			await this.bot.sendChatAction(chat.id, "upload_video");
 			const options = { parse_mode: "Markdown" };
 
 			_.map(data, (movie, i) => {
@@ -94,9 +94,9 @@ module.exports = class Movie extends Provider {
 				}
 			});
 
-			this.bot.deleteMessage(chat.id, message_id);
+			await this.bot.deleteMessage(chat.id, message_id);
 		} catch (error) {
-			errorHandler(this.bot, chat.id, error);
+			await errorHandler(this.bot, chat.id, error);
 		}
 	}
 
@@ -120,8 +120,8 @@ module.exports = class Movie extends Provider {
 				},
 			});
 
+			await this.bot.sendChatAction(chat.id, "upload_video");
 			const options = { parse_mode: "Markdown" };
-			this.bot.sendChatAction(chat.id, "upload_video");
 
 			_.map(data, async movie => {
 				if (movie.Size && movie.CoverPhotoLink) {
@@ -135,7 +135,7 @@ module.exports = class Movie extends Provider {
 						? "\n\n*Description:* " + movie.Description.slice(0, -6)
 						: "";
 
-					this.bot.sendMessage(
+					await this.bot.sendMessage(
 						chat.id,
 						`[\u{1F4C0}](${movie.CoverPhotoLink}) *${movie.Title}*${description}`,
 						options
@@ -143,9 +143,9 @@ module.exports = class Movie extends Provider {
 				}
 			});
 
-			this.bot.deleteMessage(chat.id, message_id);
+			await this.bot.deleteMessage(chat.id, message_id);
 		} catch (error) {
-			errorHandler(this.bot, chat.id, error);
+			await errorHandler(this.bot, chat.id, error);
 		}
 	}
 
@@ -161,10 +161,14 @@ module.exports = class Movie extends Provider {
 			{ reply_markup: JSON.stringify({ force_reply: true }) }
 		);
 
-		const listenerId = this.bot.onReplyToMessage(chatId, message_id, reply => {
-			this.bot.removeReplyListener(listenerId);
-			this.search(message, { query: reply.text });
-		});
+		const listenerId = this.bot.onReplyToMessage(
+			chatId,
+			message_id,
+			async reply => {
+				this.bot.removeReplyListener(listenerId);
+				await this.search(message, { query: reply.text });
+			}
+		);
 	}
 
 	/**
@@ -172,16 +176,16 @@ module.exports = class Movie extends Provider {
 	 * @param  {} data
 	 * @param  {} message
 	 */
-	resolve(data, message) {
+	async resolve(data, message) {
 		switch (data.type) {
 			case "list_movie":
-				this.list(message);
+				await this.list(message);
 				break;
 			case "paginate_movie":
-				this.paginate(message, data.page, "list");
+				await this.paginate(message, data.page, "list");
 				break;
 			case "search_movie":
-				this.interactiveSearch(message);
+				await this.interactiveSearch(message);
 				break;
 		}
 	}
