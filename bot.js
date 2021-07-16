@@ -5,9 +5,12 @@ const config = require("./config");
 const mongoose = require("mongoose");
 
 // Commands
+const listCommand = require("./commands/list");
+const aboutCommand = require("./commands/about");
 const startCommand = require("./commands/start");
 const searchCommand = require("./commands/search");
-const listCommand = require("./commands/list");
+const keyboardCommand = require("./commands/keyboard");
+const settingsCommand = require("./commands/settings");
 
 // Handlers
 const callbackHandler = require("./handlers/callback");
@@ -19,12 +22,12 @@ mongoose
 	.connect(process.env.MONGODB_URI, config.mongodb)
 	.then(() => {
 		// Commands
+		bot.onText(/Search/, searchCommand(bot));
 		bot.onText(/\/start/, startCommand(bot));
-		bot.onText(/^(?<Action>\/list)(?:\s+(?<Provider>\w+))?$/, listCommand(bot));
-		bot.onText(
-			/^(?<Action>\/search)(?:\s+(?<Provider>\w+)(?:\s+(?<Query>(?:\w|\s)+))?)?(?:\s+-(?<Server>\w+))?$/,
-			searchCommand(bot)
-		);
+		bot.onText(/Settings/, settingsCommand(bot));
+		bot.onText(/\/keyboard/, keyboardCommand(bot));
+		bot.onText(/(\/about|About$)/, aboutCommand(bot));
+		bot.onText(/(?<Provider>(Movies|Music|Torrent)$)/, listCommand(bot));
 
 		// Handlers
 		bot.on("callback_query", callbackHandler(bot));
