@@ -47,7 +47,7 @@ module.exports = class Torrent extends Provider {
 
 				const description = torrent.description
 					? "<b>Description:</b> " + torrent.description
-					: "";
+					: torrent.magnetic_link;
 
 				await this.bot.sendMessage(
 					chat.id,
@@ -132,7 +132,7 @@ module.exports = class Torrent extends Provider {
 
 						const description = torrent.description
 							? "<b>Description:</b> " + torrent.description
-							: "";
+							: torrent.magnetic_link;
 
 						const msg = await this.bot.sendMessage(
 							chat.id,
