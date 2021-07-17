@@ -8,7 +8,7 @@ module.exports = {
 				{ text: "\u{1F3B5} Music" },
 				{ text: "\u{1F30D} Torrent" },
 			],
-			[{ text: "\u{1F4E1} Search for anything..." }],
+			[{ text: "\u{1F4E1} Search for anything" }],
 			[{ text: "\u{2699} Settings" }, { text: "\u{1F4CC} About" }],
 		],
 	}),

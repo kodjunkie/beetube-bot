@@ -116,7 +116,7 @@ module.exports = class Movie extends Provider {
 			const { data } = await axios.get(`${this.endpoint}/search`, {
 				params: {
 					query: params.query.replace(" ", "+"),
-					engine: params.server || "fzmovies",
+					engine: "fzmovies",
 				},
 			});
 

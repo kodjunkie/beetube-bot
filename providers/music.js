@@ -126,18 +126,16 @@ module.exports = class Music extends Provider {
 	 */
 	async search({ chat }, params) {
 		try {
+			const query = params.query;
 			const { message_id } = await this.bot.sendMessage(
 				chat.id,
-				`\u{1F504} Searching for \`${params.query}\` \u{1F4E1}`,
+				`\u{1F504} Searching for \`${query}\` \u{1F4E1}`,
 				keyboardMarkup
 			);
 
-			const page = params.page;
-			const query = params.query.replace(" ", "+");
-			const response = await axios.get(`${this.endpoint}/search`, {
-				params: { query, page },
-			});
+			const response = await axios.get(`${this.endpoint}/search`, { params });
 			const data = response.data.data;
+			const page = params.page;
 
 			await this.bot.sendChatAction(chat.id, "upload_voice");
 			const options = { parse_mode: "html" };
