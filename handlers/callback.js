@@ -1,5 +1,6 @@
 const MovieProvider = require("../providers/movie");
 const MusicProvider = require("../providers/music");
+const TorrentProvider = require("../providers/torrent");
 const errorHandler = require("../utils/error-handler");
 
 /*
@@ -19,6 +20,9 @@ module.exports = bot => async cbq => {
 		} else if (type.match(/_music$/)) {
 			const music = new MusicProvider(bot);
 			await music.resolve(data, cbq.message);
+		} else if (type.match(/_torrent$/)) {
+			const torrent = new TorrentProvider(bot);
+			await torrent.resolve(data, cbq.message);
 		} else
 			await bot.sendMessage(
 				chatId,

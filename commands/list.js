@@ -4,6 +4,7 @@
 
 const MovieProvider = require("../providers/movie");
 const MusicProvider = require("../providers/music");
+const TorrentProvider = require("../providers/torrent");
 const errorHandler = require("../utils/error-handler");
 
 module.exports = bot => async (message, match) => {
@@ -20,6 +21,10 @@ module.exports = bot => async (message, match) => {
 			case "Music":
 				const music = new MusicProvider(bot);
 				await music.list(message, { page: 1 });
+				break;
+			case "Torrent":
+				const torrent = new TorrentProvider(bot);
+				await torrent.list(message);
 				break;
 		}
 	} catch (error) {
