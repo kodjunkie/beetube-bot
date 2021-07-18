@@ -19,7 +19,7 @@ module.exports = bot => async message => {
 							}),
 						},
 						{
-							text: "\u{1F3B5} Music",
+							text: "\u{1F4C0} Music",
 							callback_data: JSON.stringify({
 								type: "search_music",
 							}),

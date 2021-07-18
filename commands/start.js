@@ -21,8 +21,8 @@ module.exports = bot => async message => {
 			? `[${from.first_name}](tg://user?id=${from.id})`
 			: `@${from.username}`;
 
-		const text = `Hello ${username} \u{1F680} \u{1F680} 
-		\nWelcome to \u{1F41D} *${process.env.BOT_NAME}* \u{1F41D}\nwe offer free \u{1F3B5} music, \u{1F4C0} movies, torrent \u{1F30D} downloads and *more* \u{1F4E1}`;
+		const text = `Hi ${username} \u{1F680} \u{1F680} 
+		\nWelcome to \u{1F41D} *${process.env.BOT_NAME}*\n\`we offer free \u{1F4C0} music, \u{1F3AC} movies, \u{1F30D} torrent, \u{1F3B5} EDM tracks, \u{1F4F9} video downloads and more...\``;
 
 		await bot.sendMessage(chatId, text, keyboardMarkup);
 	} catch (error) {

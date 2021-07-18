@@ -51,7 +51,7 @@ module.exports = class Torrent extends Provider {
 
 				await this.bot.sendMessage(
 					chat.id,
-					`\u{1F4BF} ${torrent.name}
+					`\u{1F30D} ${torrent.name}
 					\n\u{2B06} Seeds: ${torrent.seeds} \u{2B07} leeches: ${torrent.leeches}
 					\n${description}`,
 					options
@@ -136,7 +136,7 @@ module.exports = class Torrent extends Provider {
 
 						const msg = await this.bot.sendMessage(
 							chat.id,
-							`\u{1F4BF} ${torrent.name}
+							`\u{1F30D} ${torrent.name}
 							\n\u{2B06} Seeds: ${torrent.seeds} \u{2B07} leeches: ${torrent.leeches}
 							\n${description}`,
 							options

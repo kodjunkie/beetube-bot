@@ -79,7 +79,7 @@ module.exports = class Movie extends Provider {
 								: "";
 							const msg = await this.bot.sendMessage(
 								chat.id,
-								`[\u{1F4C0}](${movie.CoverPhotoLink}) *${movie.Title}*${description}`,
+								`[\u{1F3AC}](${movie.CoverPhotoLink}) *${movie.Title}*${description}`,
 								options
 							);
 
@@ -137,7 +137,7 @@ module.exports = class Movie extends Provider {
 
 					await this.bot.sendMessage(
 						chat.id,
-						`[\u{1F4C0}](${movie.CoverPhotoLink}) *${movie.Title}*${description}`,
+						`[\u{1F3AC}](${movie.CoverPhotoLink}) *${movie.Title}*${description}`,
 						options
 					);
 				}
