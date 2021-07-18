@@ -21,4 +21,11 @@ const PaginatorSchema = new Schema(
 	{ timestamps: { updatedAt: false }, _id: false }
 );
 
+// Remove obsolete pagination records
+PaginatorSchema.statics.removeObsoleteRecords = async function() {
+	await this.deleteMany({
+		createdAt: { $lt: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000) },
+	});
+};
+
 module.exports = mongoose.model("Paginator", PaginatorSchema);

@@ -1,7 +1,6 @@
-const errorHandler = require("../utils/error-handler");
-const { firstOrCreate } = require("../utils/user-helper");
-const { removeObsoleteRecords } = require("../utils/db-optimizer");
+const User = require("../models/user");
 const keyboardMarkup = require("../utils/keyboard");
+const errorHandler = require("../utils/error-handler");
 
 /*
  * Handle /start command
@@ -9,13 +8,9 @@ const keyboardMarkup = require("../utils/keyboard");
 module.exports = bot => async message => {
 	const chatId = message.chat.id;
 	try {
-		// Remove obsolete db records
-		await removeObsoleteRecords();
-
 		const from = message.from;
-		await firstOrCreate(from);
-
 		await bot.sendChatAction(chatId, "typing");
+		await User.firstOrCreate(from);
 
 		const username = from.first_name
 			? `[${from.first_name}](tg://user?id=${from.id})`
