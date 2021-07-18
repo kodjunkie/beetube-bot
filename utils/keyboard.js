@@ -5,7 +5,7 @@ module.exports = {
 		keyboard: [
 			[
 				{ text: "\u{1F3AC} Movies" },
-				{ text: "\u{1F3B5} Music" },
+				{ text: "\u{1F4C0} Music" },
 				{ text: "\u{1F30D} Torrent" },
 			],
 			[{ text: "\u{1F4E1} Search for anything" }],
