@@ -3,8 +3,5 @@ module.exports = async (bot, chatId, error) => {
 		console.error(error);
 	}
 
-	await bot.sendMessage(
-		chatId,
-		`\u{26A0} An error occurred, please try again \u{26A0}`
-	);
+	await bot.sendMessage(chatId, "\u{1F6AB} An error occurred, try again.");
 };
