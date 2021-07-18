@@ -5,7 +5,11 @@
 	"keywords": [
 		"Telegram",
 		"Bot",
-		"Download"
+		"Download",
+		"Free",
+		"Movies",
+		"Music",
+		"Torrent"
 	],
 	"main": "bot.js",
 	"scripts": {
