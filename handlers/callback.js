@@ -1,16 +1,16 @@
+/*
+ * Handle callback queries
+ */
 const MovieProvider = require("../providers/movie");
 const MusicProvider = require("../providers/music");
 const TorrentProvider = require("../providers/torrent");
 const errorHandler = require("../utils/error-handler");
 
-/*
- * Handle callback queries
- */
 module.exports = bot => async cbq => {
-	await bot.answerCallbackQuery(cbq.id);
 	const chatId = cbq.message.chat.id;
-
 	try {
+		await bot.answerCallbackQuery(cbq.id);
+
 		const data = JSON.parse(cbq.data);
 		const type = data.type;
 

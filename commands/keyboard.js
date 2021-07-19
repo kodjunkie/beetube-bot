@@ -1,7 +1,6 @@
 /*
  * Handle keyboard command
  */
-
 const keyboardMarkup = require("../utils/keyboard");
 
 module.exports = bot => async message => {
