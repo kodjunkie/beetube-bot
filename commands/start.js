@@ -1,10 +1,10 @@
+/*
+ * Handle start command
+ */
 const User = require("../models/user");
 const keyboardMarkup = require("../utils/keyboard");
 const errorHandler = require("../utils/error-handler");
 
-/*
- * Handle /start command
- */
 module.exports = bot => async message => {
 	const chatId = message.chat.id;
 	try {

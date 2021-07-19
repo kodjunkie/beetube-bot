@@ -1,7 +1,6 @@
 /*
  * Handle list command
  */
-
 const MovieProvider = require("../providers/movie");
 const MusicProvider = require("../providers/music");
 const TorrentProvider = require("../providers/torrent");
