@@ -25,7 +25,7 @@ mongoose
 		bot.onText(/\/start/, startCommand(bot));
 		bot.onText(/about$/i, aboutCommand(bot));
 		bot.onText(/Search$/i, searchCommand(bot));
-		bot.onText(/Settings$/, settingsCommand(bot));
+		bot.onText(/Settings/, settingsCommand(bot));
 		bot.onText(/\/keyboard/, keyboardCommand(bot));
 		bot.onText(/(?<Provider>(Movies|Music|Torrent)$)/, listCommand(bot));
 
