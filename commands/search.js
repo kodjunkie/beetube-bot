@@ -1,7 +1,6 @@
 /*
  * Handle search command"
  */
-const errorHandler = require("../utils/error-handler");
 
 module.exports = bot => async message => {
 	const chatId = message.chat.id;
@@ -11,7 +10,7 @@ module.exports = bot => async message => {
 			inline_keyboard: [
 				[
 					{
-						text: "\u{1F3AC} Movies",
+						text: "\u{1F3AC} Movie",
 						callback_data: JSON.stringify({
 							type: "search_movie",
 						}),
@@ -22,10 +21,18 @@ module.exports = bot => async message => {
 							type: "search_music",
 						}),
 					},
+				],
+				[
 					{
 						text: "\u{1F30D} Torrent",
 						callback_data: JSON.stringify({
 							type: "search_torrent",
+						}),
+					},
+					{
+						text: "\u{1F3A1} Anime",
+						callback_data: JSON.stringify({
+							type: "search_anime",
 						}),
 					},
 				],

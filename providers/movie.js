@@ -3,7 +3,6 @@ const axios = require("axios");
 const Provider = require(".");
 const Paginator = require("../models/paginator");
 const keyboardMarkup = require("../utils/keyboard");
-const errorHandler = require("../utils/error-handler");
 
 module.exports = class Movie extends Provider {
 	constructor(bot) {
@@ -43,7 +42,7 @@ module.exports = class Movie extends Provider {
 									{
 										text: "Next",
 										callback_data: JSON.stringify({
-											type: "paginate_movie",
+											type: `paginate_${this.type}`,
 											page: page + 1,
 										}),
 									},
@@ -54,7 +53,7 @@ module.exports = class Movie extends Provider {
 							pagination.unshift({
 								text: "Previous",
 								callback_data: JSON.stringify({
-									type: "paginate_movie",
+									type: `paginate_${this.type}`,
 									page: page - 1,
 								}),
 							});
@@ -159,28 +158,5 @@ module.exports = class Movie extends Provider {
 				await this.search(message, { query: reply.text });
 			}
 		);
-	}
-
-	/**
-	 * Task resolver
-	 * @param  {} data
-	 * @param  {} message
-	 */
-	async resolve(data, message) {
-		try {
-			switch (data.type) {
-				case "list_movie":
-					await this.list(message);
-					break;
-				case "paginate_movie":
-					await this.paginate(message, data.page, "list");
-					break;
-				case "search_movie":
-					await this.interactiveSearch(message);
-					break;
-			}
-		} catch (error) {
-			await errorHandler(this.bot, message.chat.id, error);
-		}
 	}
 };

@@ -92,7 +92,7 @@ module.exports = class Torrent extends Provider {
 								{
 									text: "Next",
 									callback_data: JSON.stringify({
-										type: "paginate_search_torrent",
+										type: `paginate_search_${this.type}`,
 										page: page + 1,
 										query,
 									}),
@@ -104,7 +104,7 @@ module.exports = class Torrent extends Provider {
 						pagination.unshift({
 							text: "Previous",
 							callback_data: JSON.stringify({
-								type: "paginate_search_torrent",
+								type: `paginate_search_${this.type}`,
 								page: page - 1,
 								query,
 							}),
@@ -179,13 +179,13 @@ module.exports = class Torrent extends Provider {
 	async resolve(data, message) {
 		try {
 			switch (data.type) {
-				case "list_torrent":
+				case `list_${this.type}`:
 					await this.list(message);
 					break;
-				case "search_torrent":
+				case `search_${this.type}`:
 					await this.interactiveSearch(message, data.page);
 					break;
-				case "paginate_search_torrent":
+				case `paginate_search_${this.type}`:
 					await this.paginate(message, data, "search");
 					break;
 			}

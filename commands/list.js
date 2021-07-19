@@ -1,9 +1,6 @@
 /*
  * Handle list command
  */
-const MovieProvider = require("../providers/movie");
-const MusicProvider = require("../providers/music");
-const TorrentProvider = require("../providers/torrent");
 const errorHandler = require("../utils/error-handler");
 
 module.exports = bot => async (message, match) => {
@@ -13,18 +10,14 @@ module.exports = bot => async (message, match) => {
 		if (!provider) return;
 
 		switch (provider) {
-			case "Movies":
-				const movie = new MovieProvider(bot);
-				await movie.list(message);
-				break;
 			case "Music":
+				const MusicProvider = require("../providers/music");
 				const music = new MusicProvider(bot);
 				await music.list(message, { page: 1 });
 				break;
-			case "Torrent":
-				const torrent = new TorrentProvider(bot);
-				await torrent.list(message);
-				break;
+			default:
+				const Provider = require(`../providers/${provider.toLowerCase()}`);
+				await new Provider(bot).list(message);
 		}
 	} catch (error) {
 		await errorHandler(bot, chatId, error);

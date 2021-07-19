@@ -1,5 +1,6 @@
 const _ = require("lodash");
 const Paginator = require("../models/paginator");
+const errorHandler = require("../utils/error-handler");
 
 module.exports = class Provider {
 	/**
@@ -8,6 +9,7 @@ module.exports = class Provider {
 	 */
 	constructor(bot) {
 		this.bot = bot;
+		this.type = "";
 	}
 
 	/**
@@ -47,5 +49,28 @@ module.exports = class Provider {
 		}
 
 		await this[method](message, data);
+	}
+
+	/**
+	 * Task resolver
+	 * @param  {} data
+	 * @param  {} message
+	 */
+	async resolve(data, message) {
+		try {
+			switch (data.type) {
+				case `list_${this.type}`:
+					await this.list(message);
+					break;
+				case `paginate_${this.type}`:
+					await this.paginate(message, data.page, "list");
+					break;
+				case `search_${this.type}`:
+					await this.interactiveSearch(message);
+					break;
+			}
+		} catch (error) {
+			await errorHandler(this.bot, message.chat.id, error);
+		}
 	}
 };
