@@ -44,7 +44,7 @@ module.exports = class Music extends Provider {
 									{
 										text: "Next",
 										callback_data: JSON.stringify({
-											type: "paginate_music",
+											type: `paginate_${this.type}`,
 											page: page + 1,
 											genre,
 										}),
@@ -56,7 +56,7 @@ module.exports = class Music extends Provider {
 							pagination.unshift({
 								text: "Previous",
 								callback_data: JSON.stringify({
-									type: "paginate_music",
+									type: `paginate_${this.type}`,
 									page: page - 1,
 									genre,
 								}),
@@ -141,7 +141,7 @@ module.exports = class Music extends Provider {
 								{
 									text: "Next",
 									callback_data: JSON.stringify({
-										type: "paginate_search_music",
+										type: `paginate_search_${this.type}`,
 										page: page + 1,
 										query,
 									}),
@@ -153,7 +153,7 @@ module.exports = class Music extends Provider {
 						pagination.unshift({
 							text: "Previous",
 							callback_data: JSON.stringify({
-								type: "paginate_search_music",
+								type: `paginate_search_${this.type}`,
 								page: page - 1,
 								query,
 							}),
@@ -222,16 +222,16 @@ module.exports = class Music extends Provider {
 	async resolve(data, message) {
 		try {
 			switch (data.type) {
-				case "list_music":
+				case `list_${this.type}`:
 					await this.list(message, data);
 					break;
-				case "paginate_music":
+				case `paginate_${this.type}`:
 					await this.paginate(message, data, "list");
 					break;
-				case "search_music":
+				case `search_${this.type}`:
 					await this.interactiveSearch(message, data.page);
 					break;
-				case "paginate_search_music":
+				case `paginate_search_${this.type}`:
 					await this.paginate(message, data, "search");
 					break;
 			}

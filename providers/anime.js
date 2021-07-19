@@ -3,7 +3,6 @@ const axios = require("axios");
 const Provider = require(".");
 const Paginator = require("../models/paginator");
 const keyboardMarkup = require("../utils/keyboard");
-const errorHandler = require("../utils/error-handler");
 
 module.exports = class Anime extends Provider {
 	constructor(bot) {
@@ -154,28 +153,5 @@ module.exports = class Anime extends Provider {
 				await this.search(message, { query: reply.text });
 			}
 		);
-	}
-
-	/**
-	 * Task resolver
-	 * @param  {} data
-	 * @param  {} message
-	 */
-	async resolve(data, message) {
-		try {
-			switch (data.type) {
-				case `list_${this.type}`:
-					await this.list(message);
-					break;
-				case `paginate_${this.type}`:
-					await this.paginate(message, data.page, "list");
-					break;
-				case `search_${this.type}`:
-					await this.interactiveSearch(message);
-					break;
-			}
-		} catch (error) {
-			await errorHandler(this.bot, message.chat.id, error);
-		}
 	}
 };

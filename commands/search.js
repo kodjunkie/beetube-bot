@@ -10,7 +10,7 @@ module.exports = bot => async message => {
 			inline_keyboard: [
 				[
 					{
-						text: "\u{1F3AC} Movies",
+						text: "\u{1F3AC} Movie",
 						callback_data: JSON.stringify({
 							type: "search_movie",
 						}),

@@ -4,7 +4,7 @@ module.exports = {
 		resize_keyboard: true,
 		keyboard: [
 			[
-				{ text: "\u{1F3AC} Movies" },
+				{ text: "\u{1F3AC} Movie" },
 				{ text: "\u{1F4C0} Music" },
 				{ text: "\u{1F30D} Torrent" },
 			],
