@@ -19,7 +19,7 @@ module.exports = class Anime extends Provider {
 	async list({ chat }, page = 1) {
 		const { message_id } = await this.bot.sendMessage(
 			chat.id,
-			"\u{1F504} Fetching anime \u{1F4E1}",
+			"\u{1F4E1} Fetching latest anime",
 			keyboardMarkup
 		);
 
@@ -27,9 +27,9 @@ module.exports = class Anime extends Provider {
 		const { data } = await axios.get(`${this.endpoint}/list`, {
 			params: { page, engine: "animeout" },
 		});
-		const options = { parse_mode: "html" };
 
 		_.map(data, (anime, i) => {
+			const options = { parse_mode: "html" };
 			const isLastItem = data.length - 1 === i;
 			/*
 			 * Ensure all messages are sent before pagination
@@ -71,8 +71,9 @@ module.exports = class Anime extends Provider {
 					});
 
 					const description = anime.Description
-						? "\n\n<b>Description:</b> " + anime.Description
+						? `\n\n<b>Description:</b> <em>${anime.Description}</em>`
 						: "";
+
 					const msg = await this.bot.sendMessage(
 						chat.id,
 						`<a href="${anime.CoverPhotoLink}">\u{1F3A1}</a> <b>${anime.Title}</b>${description}`,
@@ -100,7 +101,7 @@ module.exports = class Anime extends Provider {
 	async search({ chat }, params) {
 		const { message_id } = await this.bot.sendMessage(
 			chat.id,
-			`\u{1F504} Searching for \`${params.query}\` \u{1F4E1}`,
+			`\u{1F4E1} Searching for \`${params.query}\``,
 			keyboardMarkup
 		);
 
@@ -111,9 +112,9 @@ module.exports = class Anime extends Provider {
 				engine: "animeout",
 			},
 		});
-		const options = { parse_mode: "html" };
 
 		_.map(data, async anime => {
+			const options = { parse_mode: "html" };
 			options.reply_markup = JSON.stringify({
 				inline_keyboard: [
 					[{ text: "\u{2B07} Download", url: anime.DownloadLink }],
@@ -121,8 +122,9 @@ module.exports = class Anime extends Provider {
 			});
 
 			const description = anime.Description
-				? "\n\n<b>Description:</b> " + anime.Description
+				? `\n\n<b>Description:</b> <em>${anime.Description}</em>`
 				: "";
+
 			await this.bot.sendMessage(
 				chat.id,
 				`<a href="${anime.CoverPhotoLink}">\u{1F3A1}</a> <b>${anime.Title}</b>${description}`,

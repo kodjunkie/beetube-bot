@@ -19,7 +19,7 @@ module.exports = class Movie extends Provider {
 	async list({ chat }, page = 1) {
 		const { message_id } = await this.bot.sendMessage(
 			chat.id,
-			"\u{1F504} Fetching movies \u{1F4E1}",
+			"\u{1F4E1} Fetching latest movies",
 			keyboardMarkup
 		);
 
@@ -27,10 +27,10 @@ module.exports = class Movie extends Provider {
 		const { data } = await axios.get(`${this.endpoint}/list`, {
 			params: { page, engine: "fzmovies" },
 		});
-		const options = { parse_mode: "Markdown" };
 
 		_.map(data, (movie, i) => {
 			if (movie.Size && movie.CoverPhotoLink) {
+				const options = { parse_mode: "html" };
 				const isLastItem = data.length - 1 === i;
 				/*
 				 * Ensure all messages are sent before pagination
@@ -72,11 +72,15 @@ module.exports = class Movie extends Provider {
 						});
 
 						const description = movie.Description
-							? "\n\n*Description:* " + movie.Description.slice(0, -6)
+							? `\n\n<b>Description:</b> <em>${movie.Description.slice(
+									0,
+									-6
+							  )}</em>`
 							: "";
+
 						const msg = await this.bot.sendMessage(
 							chat.id,
-							`[\u{1F3AC}](${movie.CoverPhotoLink}) *${movie.Title}*${description}`,
+							`<a href="${movie.CoverPhotoLink}">\u{1F3AC}</a> <b>${movie.Title}</b>${description}`,
 							options
 						);
 
@@ -102,7 +106,7 @@ module.exports = class Movie extends Provider {
 	async search({ chat }, params) {
 		const { message_id } = await this.bot.sendMessage(
 			chat.id,
-			`\u{1F504} Searching for \`${params.query}\` \u{1F4E1}`,
+			`\u{1F4E1} Searching for \`${params.query}\``,
 			keyboardMarkup
 		);
 
@@ -113,10 +117,10 @@ module.exports = class Movie extends Provider {
 				engine: "fzmovies",
 			},
 		});
-		const options = { parse_mode: "Markdown" };
 
 		_.map(data, async movie => {
 			if (movie.Size && movie.CoverPhotoLink) {
+				const options = { parse_mode: "html" };
 				options.reply_markup = JSON.stringify({
 					inline_keyboard: [
 						[{ text: `Download (${movie.Size})`, url: movie.DownloadLink }],
@@ -124,12 +128,12 @@ module.exports = class Movie extends Provider {
 				});
 
 				const description = movie.Description
-					? "\n\n*Description:* " + movie.Description.slice(0, -6)
+					? `\n\n<b>Description:</b> <em>${movie.Description.slice(0, -6)}</em>`
 					: "";
 
 				await this.bot.sendMessage(
 					chat.id,
-					`[\u{1F3AC}](${movie.CoverPhotoLink}) *${movie.Title}*${description}`,
+					`<a href="${movie.CoverPhotoLink}">\u{1F3AC}</a> <b>${movie.Title}</b>${description}`,
 					options
 				);
 			}

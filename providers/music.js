@@ -20,7 +20,7 @@ module.exports = class Music extends Provider {
 	async list({ chat }, params) {
 		const { message_id } = await this.bot.sendMessage(
 			chat.id,
-			"\u{1F504} Fetching music \u{1F4E1}",
+			"\u{1F4E1} Fetching latest music",
 			keyboardMarkup
 		);
 
@@ -29,11 +29,11 @@ module.exports = class Music extends Provider {
 		const data = response.data.data;
 		const genre = params.genre || false;
 		const page = params.page;
-		const options = { parse_mode: "html" };
 
 		if (genre) {
 			_.map(data, (music, i) => {
 				const isLastItem = data.length - 1 === i;
+				const options = { parse_mode: "html" };
 				/*
 				 * Ensure all messages are sent before pagination
 				 */
@@ -77,7 +77,7 @@ module.exports = class Music extends Provider {
 
 						const msg = await this.bot.sendMessage(
 							chat.id,
-							`\u{1F4BF} ${music.name}`,
+							`\u{1F4BF} <b>${music.name}</b>`,
 							options
 						);
 
@@ -100,11 +100,12 @@ module.exports = class Music extends Provider {
 				}),
 			}));
 
-			options.reply_markup = JSON.stringify({
-				inline_keyboard: _.chunk(keyboardLayout, 4),
+			await this.bot.sendMessage(chat.id, "Select a genre \u{1F447}", {
+				parse_mode: "html",
+				reply_markup: JSON.stringify({
+					inline_keyboard: _.chunk(keyboardLayout, 4),
+				}),
 			});
-
-			await this.bot.sendMessage(chat.id, "Select a genre \u{1F447}", options);
 		}
 
 		await this.bot.deleteMessage(chat.id, message_id);
@@ -119,7 +120,7 @@ module.exports = class Music extends Provider {
 		const query = params.query;
 		const { message_id } = await this.bot.sendMessage(
 			chat.id,
-			`\u{1F504} Searching for \`${query}\` \u{1F4E1}`,
+			`\u{1F4E1} Searching for \`${query}\``,
 			keyboardMarkup
 		);
 
@@ -127,10 +128,10 @@ module.exports = class Music extends Provider {
 		const response = await axios.get(`${this.endpoint}/search`, { params });
 		const data = response.data.data;
 		const page = params.page;
-		const options = { parse_mode: "html" };
 
 		_.map(data, (music, i) => {
 			const isLastItem = data.length - 1 === i;
+			const options = { parse_mode: "html" };
 			/*
 			 * Ensure all messages are sent before pagination
 			 */
@@ -174,7 +175,7 @@ module.exports = class Music extends Provider {
 
 					const msg = await this.bot.sendMessage(
 						chat.id,
-						`\u{1F4BF} ${music.name}`,
+						`\u{1F4BF} <b>${music.name}</b>`,
 						options
 					);
 
