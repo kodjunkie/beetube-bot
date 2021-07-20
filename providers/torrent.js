@@ -9,7 +9,7 @@ module.exports = class Torrent extends Provider {
 	constructor(bot) {
 		super(bot);
 		this.type = "torrent";
-		this.endpoint = process.env.TORRENT_API;
+		this.endpoint = process.env.RASPAR_API;
 	}
 
 	/**

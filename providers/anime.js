@@ -8,7 +8,7 @@ module.exports = class Anime extends Provider {
 	constructor(bot) {
 		super(bot);
 		this.type = "anime";
-		this.endpoint = process.env.MOVIE_API;
+		this.endpoint = process.env.GOPHIE_API;
 	}
 
 	/**
