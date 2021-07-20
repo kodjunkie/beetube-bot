@@ -20,7 +20,7 @@ module.exports = class Torrent extends Provider {
 	async list({ chat }) {
 		const { message_id } = await this.bot.sendMessage(
 			chat.id,
-			"\u{1F504} Fetching torrent \u{1F4E1}",
+			"\u{1F4E1} Fetching latest torrents",
 			keyboardMarkup
 		);
 
@@ -29,9 +29,9 @@ module.exports = class Torrent extends Provider {
 			params: { driver: "1337x" },
 		});
 		const data = response.data.data;
-		const options = { parse_mode: "html" };
 
 		_.map(data, async torrent => {
+			const options = { parse_mode: "html" };
 			options.reply_markup = JSON.stringify({
 				inline_keyboard: [
 					[
@@ -44,12 +44,12 @@ module.exports = class Torrent extends Provider {
 			});
 
 			const description = torrent.description
-				? "<b>Description:</b> " + torrent.description
+				? `<b>Description:</b> <em>${torrent.description}</em>`
 				: `<em>${torrent.magnetic_link}</em>`;
 
 			await this.bot.sendMessage(
 				chat.id,
-				`\u{1F30D} ${torrent.name}
+				`\u{1F30D} <b>${torrent.name}</b>
 					\n\u{2B06} Seeds: ${torrent.seeds} \u{2B07} leeches: ${torrent.leeches}
 					\n${description}`,
 				options
@@ -68,7 +68,7 @@ module.exports = class Torrent extends Provider {
 		const query = params.query;
 		const { message_id } = await this.bot.sendMessage(
 			chat.id,
-			`\u{1F504} Searching for \`${query}\` \u{1F4E1}`,
+			`\u{1F4E1} Searching for \`${query}\``,
 			keyboardMarkup
 		);
 
@@ -78,10 +78,10 @@ module.exports = class Torrent extends Provider {
 		});
 		const data = response.data.data;
 		const page = params.page;
-		const options = { parse_mode: "html" };
 
 		_.map(data, (torrent, i) => {
 			const isLastItem = data.length - 1 === i;
+			const options = { parse_mode: "html" };
 			/*
 			 * Ensure all messages are sent before pagination
 			 */
@@ -124,12 +124,12 @@ module.exports = class Torrent extends Provider {
 					});
 
 					const description = torrent.description
-						? "<b>Description:</b> " + torrent.description
+						? `<b>Description:</b> <em>${torrent.description}</em>`
 						: `<em>${torrent.magnetic_link}</em>`;
 
 					const msg = await this.bot.sendMessage(
 						chat.id,
-						`\u{1F30D} ${torrent.name}
+						`\u{1F30D} <b>${torrent.name}</b>
 							\n\u{2B06} Seeds: ${torrent.seeds} \u{2B07} leeches: ${torrent.leeches}
 							\n${description}`,
 						options

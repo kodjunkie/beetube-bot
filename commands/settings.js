@@ -15,7 +15,8 @@ module.exports = bot => async message => {
 
 		await bot.sendMessage(
 			chatId,
-			"\u{1F6A7} This feature will be available soon.",
+			`\u{1F41D} You need to join [@${process.env.BOT_CHANNEL}](https://t.me/beetubers) to use this feature, it is exclusive only to our channel subscribers.
+			\nBeing a part of the community makes you aware of new *updates*, *features* and *bugfixes* happening on \`${process.env.BOT_NAME}\` bot \u{1F680} \u{1F680}`,
 			keyboardMarkup
 		);
 	} catch (error) {
