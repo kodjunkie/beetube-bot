@@ -9,7 +9,7 @@ module.exports = class Music extends Provider {
 	constructor(bot) {
 		super(bot);
 		this.type = "music";
-		this.endpoint = process.env.MUSIC_API;
+		this.endpoint = process.env.RASPAR_API;
 	}
 
 	/**
