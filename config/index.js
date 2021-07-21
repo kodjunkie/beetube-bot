@@ -3,6 +3,7 @@ module.exports = {
 	bot: {
 		polling: true,
 		onlyFirstMatch: true,
+		filepath: false,
 	},
 
 	// MongoDB config
