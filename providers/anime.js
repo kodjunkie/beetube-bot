@@ -2,7 +2,7 @@ const _ = require("lodash");
 const axios = require("axios");
 const Provider = require(".");
 const Paginator = require("../models/paginator");
-const keyboardMarkup = require("../utils/keyboard");
+const { keyboard } = require("../utils/bot-helper");
 
 module.exports = class Anime extends Provider {
 	constructor(bot) {
@@ -20,7 +20,7 @@ module.exports = class Anime extends Provider {
 		const { message_id } = await this.bot.sendMessage(
 			chat.id,
 			"\u{1F4E1} Fetching latest anime",
-			keyboardMarkup
+			keyboard
 		);
 
 		await this.bot.sendChatAction(chat.id, "upload_video");
@@ -28,69 +28,103 @@ module.exports = class Anime extends Provider {
 			params: { page, engine: "animeout" },
 		});
 
-		_.map(data, (anime, i) => {
+		const pages = [],
+			promises = [],
+			paging = data.pop();
+
+		_.map(data, anime => {
 			const options = { parse_mode: "html" };
-			const isLastItem = data.length - 1 === i;
-			/*
-			 * Ensure all messages are sent before pagination
-			 */
-			setTimeout(
-				async () => {
-					const pagination = isLastItem
-						? [
-								{
-									text: "Next",
-									callback_data: JSON.stringify({
-										type: `paginate_${this.type}`,
-										page: page + 1,
-									}),
-								},
-						  ]
-						: [];
+			options.reply_markup = JSON.stringify({
+				inline_keyboard: [
+					[{ text: "\u{2B07} Download", url: anime.DownloadLink }],
+				],
+			});
 
-					if (page > 1 && pagination.length > 0) {
-						pagination.unshift({
-							text: "Previous",
-							callback_data: JSON.stringify({
-								type: `paginate_${this.type}`,
-								page: page - 1,
-							}),
-						});
-					}
-
-					options.reply_markup = JSON.stringify({
-						inline_keyboard: [
-							[
-								{
-									text: "\u{2B07} Download",
-									url: anime.DownloadLink,
-								},
-							],
-							pagination,
-						],
-					});
-
-					const description = anime.Description
-						? `\n\n<b>Description:</b> <em>${anime.Description}</em>`
-						: "";
-
-					const msg = await this.bot.sendMessage(
+			promises.push(
+				this.bot
+					.sendMessage(
 						chat.id,
-						`<a href="${anime.CoverPhotoLink}">\u{1F3A1}</a> <b>${anime.Title}</b>${description}`,
+						`<a href="${anime.CoverPhotoLink}">\u{1F3A1}</a> <b>${
+							anime.Title
+						}</b>${
+							anime.Description
+								? `\n\n<b>Description:</b> <em>${anime.Description}</em>`
+								: ""
+						}`,
 						options
-					);
-
-					await new Paginator({
-						_id: msg.message_id,
-						type: this.type,
-						user: msg.chat.id,
-					}).save();
-				},
-				isLastItem ? 2500 : 0
+					)
+					.then(msg => {
+						pages.push({
+							insertOne: {
+								document: {
+									_id: msg.message_id,
+									type: this.type,
+									user: msg.chat.id,
+								},
+							},
+						});
+					})
 			);
 		});
 
+		await Promise.all(promises);
+		/*
+		 * Ensure all messages are sent before pagination
+		 */
+		const pagination = [
+			{
+				text: "Next",
+				callback_data: JSON.stringify({
+					type: `paginate_${this.type}`,
+					page: page + 1,
+				}),
+			},
+		];
+
+		if (page > 1) {
+			pagination.unshift({
+				text: "Previous",
+				callback_data: JSON.stringify({
+					type: `paginate_${this.type}`,
+					page: page - 1,
+				}),
+			});
+		}
+
+		await this.bot
+			.sendMessage(
+				chat.id,
+				`<a href="${paging.CoverPhotoLink}">\u{1F3A1}</a> <b>${
+					paging.Title
+				}</b>${
+					paging.Description
+						? `\n\n<b>Description:</b> <em>${paging.Description}</em>`
+						: ""
+				}`,
+				{
+					parse_mode: "html",
+					reply_markup: JSON.stringify({
+						inline_keyboard: [
+							[{ text: "\u{2B07} Download", url: paging.DownloadLink }],
+							pagination,
+						],
+					}),
+				}
+			)
+			.then(msg => {
+				pages.push({
+					insertOne: {
+						document: {
+							_id: msg.message_id,
+							type: this.type,
+							user: msg.chat.id,
+						},
+					},
+				});
+			});
+
 		await this.bot.deleteMessage(chat.id, message_id);
+		await Paginator.bulkWrite(pages);
 	}
 
 	/**
@@ -102,7 +136,7 @@ module.exports = class Anime extends Provider {
 		const { message_id } = await this.bot.sendMessage(
 			chat.id,
 			`\u{1F4E1} Searching for \`${params.query}\``,
-			keyboardMarkup
+			keyboard
 		);
 
 		await this.bot.sendChatAction(chat.id, "upload_video");
@@ -121,13 +155,13 @@ module.exports = class Anime extends Provider {
 				],
 			});
 
-			const description = anime.Description
-				? `\n\n<b>Description:</b> <em>${anime.Description}</em>`
-				: "";
-
 			await this.bot.sendMessage(
 				chat.id,
-				`<a href="${anime.CoverPhotoLink}">\u{1F3A1}</a> <b>${anime.Title}</b>${description}`,
+				`<a href="${anime.CoverPhotoLink}">\u{1F3A1}</a> <b>${anime.Title}</b>${
+					anime.Description
+						? `\n\n<b>Description:</b> <em>${anime.Description}</em>`
+						: ""
+				}`,
 				options
 			);
 		});

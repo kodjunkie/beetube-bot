@@ -2,7 +2,7 @@ const _ = require("lodash");
 const axios = require("axios");
 const Provider = require(".");
 const Paginator = require("../models/paginator");
-const keyboardMarkup = require("../utils/keyboard");
+const { keyboard } = require("../utils/bot-helper");
 
 module.exports = class Movie extends Provider {
 	constructor(bot) {
@@ -20,7 +20,7 @@ module.exports = class Movie extends Provider {
 		const { message_id } = await this.bot.sendMessage(
 			chat.id,
 			"\u{1F4E1} Fetching latest movies",
-			keyboardMarkup
+			keyboard
 		);
 
 		await this.bot.sendChatAction(chat.id, "upload_video");
@@ -28,74 +28,109 @@ module.exports = class Movie extends Provider {
 			params: { page, engine: "fzmovies" },
 		});
 
-		_.map(data, (movie, i) => {
-			if (movie.Size && movie.CoverPhotoLink) {
-				const options = { parse_mode: "html" };
-				const isLastItem = data.length - 1 === i;
-				/*
-				 * Ensure all messages are sent before pagination
-				 */
-				setTimeout(
-					async () => {
-						const pagination = isLastItem
-							? [
-									{
-										text: "Next",
-										callback_data: JSON.stringify({
-											type: `paginate_${this.type}`,
-											page: page + 1,
-										}),
-									},
-							  ]
-							: [];
+		const pages = [],
+			promises = [],
+			paging = data.pop();
 
-						if (page > 1 && pagination.length > 0) {
-							pagination.unshift({
-								text: "Previous",
-								callback_data: JSON.stringify({
-									type: `paginate_${this.type}`,
-									page: page - 1,
-								}),
-							});
-						}
+		_.map(data, movie => {
+			const options = { parse_mode: "html" };
+			options.reply_markup = JSON.stringify({
+				inline_keyboard: [
+					[{ text: `Download (${movie.Size})`, url: movie.DownloadLink }],
+				],
+			});
 
-						options.reply_markup = JSON.stringify({
-							inline_keyboard: [
-								[
-									{
-										text: `Download (${movie.Size})`,
-										url: movie.DownloadLink,
-									},
-								],
-								pagination,
-							],
+			promises.push(
+				this.bot
+					.sendMessage(
+						chat.id,
+						`<a href="${movie.CoverPhotoLink}">\u{1F3AC}</a> <b>${
+							movie.Title
+						}</b>${
+							movie.Description
+								? `\n\n<b>Description:</b> <em>${movie.Description.slice(
+										0,
+										-6
+								  )}</em>`
+								: ""
+						}`,
+						options
+					)
+					.then(msg => {
+						pages.push({
+							insertOne: {
+								document: {
+									_id: msg.message_id,
+									type: this.type,
+									user: msg.chat.id,
+								},
+							},
 						});
+					})
+			);
+		});
 
-						const description = movie.Description
-							? `\n\n<b>Description:</b> <em>${movie.Description.slice(
-									0,
-									-6
-							  )}</em>`
-							: "";
+		await Promise.all(promises);
+		/*
+		 * Ensure all messages are sent before pagination
+		 */
+		const pagination = [
+			{
+				text: "Next",
+				callback_data: JSON.stringify({
+					type: `paginate_${this.type}`,
+					page: page + 1,
+				}),
+			},
+		];
 
-						const msg = await this.bot.sendMessage(
-							chat.id,
-							`<a href="${movie.CoverPhotoLink}">\u{1F3AC}</a> <b>${movie.Title}</b>${description}`,
-							options
-						);
+		if (page > 1) {
+			pagination.unshift({
+				text: "Previous",
+				callback_data: JSON.stringify({
+					type: `paginate_${this.type}`,
+					page: page - 1,
+				}),
+			});
+		}
 
-						await new Paginator({
+		await this.bot
+			.sendMessage(
+				chat.id,
+				`<a href="${paging.CoverPhotoLink}">\u{1F3AC}</a> <b>${
+					paging.Title
+				}</b>${
+					paging.Description
+						? `\n\n<b>Description:</b> <em>${paging.Description.slice(
+								0,
+								-6
+						  )}</em>`
+						: ""
+				}`,
+				{
+					parse_mode: "html",
+					reply_markup: JSON.stringify({
+						inline_keyboard: [
+							[{ text: `Download (${paging.Size})`, url: paging.DownloadLink }],
+							pagination,
+						],
+					}),
+				}
+			)
+			.then(msg => {
+				pages.push({
+					insertOne: {
+						document: {
 							_id: msg.message_id,
 							type: this.type,
 							user: msg.chat.id,
-						}).save();
+						},
 					},
-					isLastItem ? 2500 : 0
-				);
-			}
-		});
+				});
+			});
 
 		await this.bot.deleteMessage(chat.id, message_id);
+		await Paginator.bulkWrite(pages);
 	}
 
 	/**
@@ -107,7 +142,7 @@ module.exports = class Movie extends Provider {
 		const { message_id } = await this.bot.sendMessage(
 			chat.id,
 			`\u{1F4E1} Searching for \`${params.query}\``,
-			keyboardMarkup
+			keyboard
 		);
 
 		await this.bot.sendChatAction(chat.id, "upload_video");
@@ -127,13 +162,18 @@ module.exports = class Movie extends Provider {
 					],
 				});
 
-				const description = movie.Description
-					? `\n\n<b>Description:</b> <em>${movie.Description.slice(0, -6)}</em>`
-					: "";
-
 				await this.bot.sendMessage(
 					chat.id,
-					`<a href="${movie.CoverPhotoLink}">\u{1F3AC}</a> <b>${movie.Title}</b>${description}`,
+					`<a href="${movie.CoverPhotoLink}">\u{1F3AC}</a> <b>${
+						movie.Title
+					}</b>${
+						movie.Description
+							? `\n\n<b>Description:</b> <em>${movie.Description.slice(
+									0,
+									-6
+							  )}</em>`
+							: ""
+					}`,
 					options
 				);
 			}

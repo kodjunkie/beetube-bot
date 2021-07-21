@@ -2,7 +2,7 @@
  * Handle start command
  */
 const User = require("../models/user");
-const keyboardMarkup = require("../utils/keyboard");
+const { keyboard } = require("../utils/bot-helper");
 const errorHandler = require("../utils/error-handler");
 
 module.exports = bot => async message => {
@@ -20,7 +20,7 @@ module.exports = bot => async message => {
 		\nWelcome to \u{1F41D} ${process.env.BOT_NAME} bot\n\`we offer free \u{1F4C0} music, \u{1F3AC} movies, \u{1F30D} torrent, \u{1F3B5} EDM tracks, \u{1F4F9} video downloads and more...\`
 		\nJoin our channel: @${process.env.BOT_CHANNEL}`;
 
-		await bot.sendMessage(chatId, text, keyboardMarkup);
+		await bot.sendMessage(chatId, text, keyboard);
 	} catch (error) {
 		await errorHandler(bot, chatId, error);
 	}
