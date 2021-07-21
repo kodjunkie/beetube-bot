@@ -2,7 +2,7 @@
  * Handle about command
  */
 const { homepage } = require("../package.json");
-const keyboardMarkup = require("../utils/keyboard");
+const { keyboard } = require("../utils/bot-helper");
 
 module.exports = bot => async message => {
 	const chatId = message.chat.id;
@@ -13,6 +13,6 @@ module.exports = bot => async message => {
 		\n\`If you find this bot useful, feel free to give us \u{2B50}\u{2B50}\u{2B50}\u{2B50}\u{2B50}\`
 		\nWant to contribute to the development of this project? PRs are always welcome.
 		\nChannel: @${process.env.BOT_CHANNEL}\nGithub: [kodjunkie/beetube-bot](${homepage})`,
-		keyboardMarkup
+		keyboard
 	);
 };

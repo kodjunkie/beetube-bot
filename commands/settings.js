@@ -2,7 +2,7 @@
  * Handle settings command
  */
 const Paginator = require("../models/paginator");
-const keyboardMarkup = require("../utils/keyboard");
+const { keyboard } = require("../utils/bot-helper");
 const errorHandler = require("../utils/error-handler");
 
 module.exports = bot => async message => {
@@ -17,7 +17,7 @@ module.exports = bot => async message => {
 			chatId,
 			`\u{1F41D} You need to join [@${process.env.BOT_CHANNEL}](https://t.me/beetubers) to use this feature, it is exclusive only to our channel subscribers.
 			\nBeing a part of the community makes you aware of new *updates*, *features* and *bugfixes* happening on \`${process.env.BOT_NAME}\` bot \u{1F680} \u{1F680}`,
-			keyboardMarkup
+			keyboard
 		);
 	} catch (error) {
 		await errorHandler(bot, chatId, error);

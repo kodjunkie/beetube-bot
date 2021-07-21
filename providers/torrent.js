@@ -2,7 +2,7 @@ const _ = require("lodash");
 const axios = require("axios");
 const Provider = require(".");
 const Paginator = require("../models/paginator");
-const keyboardMarkup = require("../utils/keyboard");
+const { keyboard } = require("../utils/bot-helper");
 const errorHandler = require("../utils/error-handler");
 
 module.exports = class Torrent extends Provider {
@@ -21,7 +21,7 @@ module.exports = class Torrent extends Provider {
 		const { message_id } = await this.bot.sendMessage(
 			chat.id,
 			"\u{1F4E1} Fetching latest torrents",
-			keyboardMarkup
+			keyboard
 		);
 
 		await this.bot.sendChatAction(chat.id, "typing");
@@ -43,15 +43,15 @@ module.exports = class Torrent extends Provider {
 				],
 			});
 
-			const description = torrent.description
-				? `<b>Description:</b> <em>${torrent.description}</em>`
-				: `<em>${torrent.magnetic_link}</em>`;
-
 			await this.bot.sendMessage(
 				chat.id,
 				`\u{1F30D} <b>${torrent.name}</b>
 					\n\u{2B06} Seeds: ${torrent.seeds} \u{2B07} leeches: ${torrent.leeches}
-					\n${description}`,
+					\n${
+						torrent.description
+							? `<b>Description:</b> <em>${torrent.description}</em>`
+							: `<em>${torrent.magnetic_link}</em>`
+					}`,
 				options
 			);
 		});
@@ -69,7 +69,7 @@ module.exports = class Torrent extends Provider {
 		const { message_id } = await this.bot.sendMessage(
 			chat.id,
 			`\u{1F4E1} Searching for \`${query}\``,
-			keyboardMarkup
+			keyboard
 		);
 
 		await this.bot.sendChatAction(chat.id, "typing");
@@ -78,74 +78,115 @@ module.exports = class Torrent extends Provider {
 		});
 		const data = response.data.data;
 		const page = params.page;
+		const pages = [],
+			promises = [],
+			paging = data.pop();
 
-		_.map(data, (torrent, i) => {
-			const isLastItem = data.length - 1 === i;
+		_.map(data, torrent => {
 			const options = { parse_mode: "html" };
-			/*
-			 * Ensure all messages are sent before pagination
-			 */
-			setTimeout(
-				async () => {
-					const pagination = isLastItem
-						? [
-								{
-									text: "Next",
-									callback_data: JSON.stringify({
-										type: `paginate_search_${this.type}`,
-										page: page + 1,
-										query,
-									}),
+			options.reply_markup = JSON.stringify({
+				inline_keyboard: [
+					[
+						{
+							text: `\u{1F9F2} Download (${torrent.size})`,
+							url: torrent.url,
+						},
+					],
+				],
+			});
+
+			promises.push(
+				this.bot
+					.sendMessage(
+						chat.id,
+						`\u{1F30D} <b>${torrent.name}</b>
+					\n\u{2B06} Seeds: ${torrent.seeds} \u{2B07} leeches: ${torrent.leeches}
+					\n${
+						torrent.description
+							? `<b>Description:</b> <em>${torrent.description}</em>`
+							: `<em>${torrent.magnetic_link}</em>`
+					}`,
+						options
+					)
+					.then(msg => {
+						pages.push({
+							insertOne: {
+								document: {
+									_id: msg.message_id,
+									type: this.type,
+									user: msg.chat.id,
 								},
-						  ]
-						: [];
-
-					if (page > 1 && pagination.length > 0) {
-						pagination.unshift({
-							text: "Previous",
-							callback_data: JSON.stringify({
-								type: `paginate_search_${this.type}`,
-								page: page - 1,
-								query,
-							}),
+							},
 						});
-					}
+					})
+			);
+		});
 
-					options.reply_markup = JSON.stringify({
+		await Promise.all(promises);
+		/*
+		 * Ensure all messages are sent before pagination
+		 */
+		const pagination = [
+			{
+				text: "Next",
+				callback_data: JSON.stringify({
+					type: `paginate_search_${this.type}`,
+					page: page + 1,
+					query,
+				}),
+			},
+		];
+
+		if (page > 1) {
+			pagination.unshift({
+				text: "Previous",
+				callback_data: JSON.stringify({
+					type: `paginate_search_${this.type}`,
+					page: page - 1,
+					query,
+				}),
+			});
+		}
+
+		await this.bot
+			.sendMessage(
+				chat.id,
+				`\u{1F30D} <b>${paging.name}</b>
+					\n\u{2B06} Seeds: ${paging.seeds} \u{2B07} leeches: ${paging.leeches}
+					\n${
+						paging.description
+							? `<b>Description:</b> <em>${paging.description}</em>`
+							: `<em>${paging.magnetic_link}</em>`
+					}`,
+				{
+					parse_mode: "html",
+					reply_markup: JSON.stringify({
 						inline_keyboard: [
 							[
 								{
-									text: `\u{1F9F2} Download (${torrent.size})`,
-									url: torrent.url,
+									text: `\u{1F9F2} Download (${paging.size})`,
+									url: paging.url,
 								},
 							],
 							pagination,
 						],
-					});
-
-					const description = torrent.description
-						? `<b>Description:</b> <em>${torrent.description}</em>`
-						: `<em>${torrent.magnetic_link}</em>`;
-
-					const msg = await this.bot.sendMessage(
-						chat.id,
-						`\u{1F30D} <b>${torrent.name}</b>
-							\n\u{2B06} Seeds: ${torrent.seeds} \u{2B07} leeches: ${torrent.leeches}
-							\n${description}`,
-						options
-					);
-
-					await new Paginator({
-						_id: msg.message_id,
-						type: this.type,
-						user: msg.chat.id,
-					}).save();
-				},
-				isLastItem ? 2500 : 0
-			);
-		});
+					}),
+				}
+			)
+			.then(msg => {
+				pages.push({
+					insertOne: {
+						document: {
+							_id: msg.message_id,
+							type: this.type,
+							user: msg.chat.id,
+						},
+					},
+				});
+			});
 
 		await this.bot.deleteMessage(chat.id, message_id);
+		await Paginator.bulkWrite(pages);
 	}
 
 	/**

@@ -1,4 +1,4 @@
-module.exports = {
+exports.keyboard = {
 	parse_mode: "Markdown",
 	reply_markup: JSON.stringify({
 		resize_keyboard: true,
