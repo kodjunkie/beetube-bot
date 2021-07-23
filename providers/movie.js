@@ -2,7 +2,7 @@ const _ = require("lodash");
 const axios = require("axios");
 const Provider = require(".");
 const Paginator = require("../models/paginator");
-const { keyboard } = require("../utils/bot-helper");
+const { keyboard, keypad } = require("../utils/bot-helper");
 
 module.exports = class Movie extends Provider {
 	constructor(bot) {
@@ -36,7 +36,12 @@ module.exports = class Movie extends Provider {
 			const options = { parse_mode: "html" };
 			options.reply_markup = JSON.stringify({
 				inline_keyboard: [
-					[{ text: `Download (${movie.Size})`, url: movie.DownloadLink }],
+					[
+						{
+							text: `${keypad.download} (${movie.Size})`,
+							url: movie.DownloadLink,
+						},
+					],
 				],
 			});
 
@@ -76,7 +81,7 @@ module.exports = class Movie extends Provider {
 		 */
 		const pagination = [
 			{
-				text: "Next",
+				text: keypad.next,
 				callback_data: JSON.stringify({
 					type: `paginate_${this.type}`,
 					page: page + 1,
@@ -86,7 +91,7 @@ module.exports = class Movie extends Provider {
 
 		if (page > 1) {
 			pagination.unshift({
-				text: "Previous",
+				text: keypad.previous,
 				callback_data: JSON.stringify({
 					type: `paginate_${this.type}`,
 					page: page - 1,
@@ -111,7 +116,12 @@ module.exports = class Movie extends Provider {
 					parse_mode: "html",
 					reply_markup: JSON.stringify({
 						inline_keyboard: [
-							[{ text: `Download (${paging.Size})`, url: paging.DownloadLink }],
+							[
+								{
+									text: `${keypad.download} (${paging.Size})`,
+									url: paging.DownloadLink,
+								},
+							],
 							pagination,
 						],
 					}),
@@ -158,7 +168,12 @@ module.exports = class Movie extends Provider {
 				const options = { parse_mode: "html" };
 				options.reply_markup = JSON.stringify({
 					inline_keyboard: [
-						[{ text: `Download (${movie.Size})`, url: movie.DownloadLink }],
+						[
+							{
+								text: `${keypad.download} (${movie.Size})`,
+								url: movie.DownloadLink,
+							},
+						],
 					],
 				});
 

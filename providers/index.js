@@ -9,7 +9,7 @@ module.exports = class Provider {
 	 */
 	constructor(bot) {
 		this.bot = bot;
-		this.type = "";
+		this.endpoint = process.env.RASPAR_API;
 	}
 
 	/**
