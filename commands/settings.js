@@ -12,10 +12,11 @@ module.exports = bot => async message => {
 
 		// Remove obsolete db records
 		await Paginator.removeObsoleteRecords();
+		const botChannel = process.env.BOT_CHANNEL;
 
 		await bot.sendMessage(
 			chatId,
-			`\u{1F41D} You need to join [@${process.env.BOT_CHANNEL}](https://t.me/beetubers) to use this feature, it is exclusive only to our channel subscribers.
+			`\u{1F41D} You need to join [@${botChannel}](https://t.me/${botChannel}) to use this feature, it is exclusive only to our channel subscribers.
 			\nBeing a part of the community makes you aware of new *updates*, *features* and *bugfixes* happening on \`${process.env.BOT_NAME}\` bot \u{1F680} \u{1F680}`,
 			keyboard
 		);

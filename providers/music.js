@@ -2,14 +2,13 @@ const _ = require("lodash");
 const axios = require("axios");
 const Provider = require(".");
 const Paginator = require("../models/paginator");
-const { keyboard } = require("../utils/bot-helper");
 const errorHandler = require("../utils/error-handler");
+const { keyboard, keypad } = require("../utils/bot-helper");
 
 module.exports = class Music extends Provider {
 	constructor(bot) {
 		super(bot);
 		this.type = "music";
-		this.endpoint = process.env.RASPAR_API;
 	}
 
 	/**
@@ -39,7 +38,7 @@ module.exports = class Music extends Provider {
 				const options = { parse_mode: "html" };
 				options.reply_markup = JSON.stringify({
 					inline_keyboard: [
-						[{ text: `Download (${music.size})`, url: music.url }],
+						[{ text: `${keypad.download} (${music.size})`, url: music.url }],
 					],
 				});
 
@@ -66,7 +65,7 @@ module.exports = class Music extends Provider {
 			 */
 			const pagination = [
 				{
-					text: "Next",
+					text: keypad.next,
 					callback_data: JSON.stringify({
 						type: `paginate_${this.type}`,
 						page: page + 1,
@@ -77,7 +76,7 @@ module.exports = class Music extends Provider {
 
 			if (page > 1) {
 				pagination.unshift({
-					text: "Previous",
+					text: keypad.previous,
 					callback_data: JSON.stringify({
 						type: `paginate_${this.type}`,
 						page: page - 1,
@@ -91,7 +90,12 @@ module.exports = class Music extends Provider {
 					parse_mode: "html",
 					reply_markup: JSON.stringify({
 						inline_keyboard: [
-							[{ text: `Download (${paging.size})`, url: paging.url }],
+							[
+								{
+									text: `${keypad.download} (${paging.size})`,
+									url: paging.url,
+								},
+							],
 							pagination,
 						],
 					}),
@@ -154,7 +158,7 @@ module.exports = class Music extends Provider {
 			const options = { parse_mode: "html" };
 			options.reply_markup = JSON.stringify({
 				inline_keyboard: [
-					[{ text: `Download (${music.size})`, url: music.url }],
+					[{ text: `${keypad.download} (${music.size})`, url: music.url }],
 				],
 			});
 
@@ -181,7 +185,7 @@ module.exports = class Music extends Provider {
 		 */
 		const pagination = [
 			{
-				text: "Next",
+				text: keypad.next,
 				callback_data: JSON.stringify({
 					type: `paginate_search_${this.type}`,
 					page: page + 1,
@@ -192,7 +196,7 @@ module.exports = class Music extends Provider {
 
 		if (page > 1) {
 			pagination.unshift({
-				text: "Previous",
+				text: keypad.previous,
 				callback_data: JSON.stringify({
 					type: `paginate_search_${this.type}`,
 					page: page - 1,
@@ -206,7 +210,7 @@ module.exports = class Music extends Provider {
 				parse_mode: "html",
 				reply_markup: JSON.stringify({
 					inline_keyboard: [
-						[{ text: `Download (${paging.size})`, url: paging.url }],
+						[{ text: `${keypad.download} (${paging.size})`, url: paging.url }],
 						pagination,
 					],
 				}),

@@ -2,7 +2,9 @@ const _ = require("lodash");
 const axios = require("axios");
 const Provider = require(".");
 const Paginator = require("../models/paginator");
-const { keyboard } = require("../utils/bot-helper");
+const { keyboard, keypad } = require("../utils/bot-helper");
+
+const botTGname = process.env.TG_BOT_NAME;
 
 module.exports = class Anime extends Provider {
 	constructor(bot) {
@@ -36,7 +38,13 @@ module.exports = class Anime extends Provider {
 			const options = { parse_mode: "html" };
 			options.reply_markup = JSON.stringify({
 				inline_keyboard: [
-					[{ text: "\u{2B07} Download", url: anime.DownloadLink }],
+					[
+						{ text: keypad.download, url: anime.DownloadLink },
+						{
+							text: "Share",
+							url: `https://t.me/share/url?url=${anime.DownloadLink}&text=Downloaded%20from%20@${botTGname}`,
+						},
+					],
 				],
 			});
 
@@ -73,7 +81,7 @@ module.exports = class Anime extends Provider {
 		 */
 		const pagination = [
 			{
-				text: "Next",
+				text: keypad.next,
 				callback_data: JSON.stringify({
 					type: `paginate_${this.type}`,
 					page: page + 1,
@@ -83,7 +91,7 @@ module.exports = class Anime extends Provider {
 
 		if (page > 1) {
 			pagination.unshift({
-				text: "Previous",
+				text: keypad.previous,
 				callback_data: JSON.stringify({
 					type: `paginate_${this.type}`,
 					page: page - 1,
@@ -105,7 +113,13 @@ module.exports = class Anime extends Provider {
 					parse_mode: "html",
 					reply_markup: JSON.stringify({
 						inline_keyboard: [
-							[{ text: "\u{2B07} Download", url: paging.DownloadLink }],
+							[
+								{ text: keypad.download, url: paging.DownloadLink },
+								{
+									text: "Share",
+									url: `https://t.me/share/url?url=${paging.DownloadLink}&text=Downloaded%20from%20@${botTGname}`,
+								},
+							],
 							pagination,
 						],
 					}),
@@ -151,7 +165,13 @@ module.exports = class Anime extends Provider {
 			const options = { parse_mode: "html" };
 			options.reply_markup = JSON.stringify({
 				inline_keyboard: [
-					[{ text: "\u{2B07} Download", url: anime.DownloadLink }],
+					[
+						{ text: keypad.download, url: anime.DownloadLink },
+						{
+							text: "Share",
+							url: `https://t.me/share/url?url=${anime.DownloadLink}&text=Downloaded%20from%20@${botTGname}`,
+						},
+					],
 				],
 			});
 

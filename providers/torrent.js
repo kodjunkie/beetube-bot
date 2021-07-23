@@ -2,14 +2,13 @@ const _ = require("lodash");
 const axios = require("axios");
 const Provider = require(".");
 const Paginator = require("../models/paginator");
-const { keyboard } = require("../utils/bot-helper");
 const errorHandler = require("../utils/error-handler");
+const { keyboard, keypad } = require("../utils/bot-helper");
 
 module.exports = class Torrent extends Provider {
 	constructor(bot) {
 		super(bot);
 		this.type = "torrent";
-		this.endpoint = process.env.RASPAR_API;
 	}
 
 	/**
@@ -36,7 +35,7 @@ module.exports = class Torrent extends Provider {
 				inline_keyboard: [
 					[
 						{
-							text: `\u{1F9F2} Download (${torrent.size})`,
+							text: `\u{1F9F2} ${keypad.download} (${torrent.size})`,
 							url: torrent.url,
 						},
 					],
@@ -88,7 +87,7 @@ module.exports = class Torrent extends Provider {
 				inline_keyboard: [
 					[
 						{
-							text: `\u{1F9F2} Download (${torrent.size})`,
+							text: `\u{1F9F2} ${keypad.download} (${torrent.size})`,
 							url: torrent.url,
 						},
 					],
@@ -128,7 +127,7 @@ module.exports = class Torrent extends Provider {
 		 */
 		const pagination = [
 			{
-				text: "Next",
+				text: keypad.next,
 				callback_data: JSON.stringify({
 					type: `paginate_search_${this.type}`,
 					page: page + 1,
@@ -139,7 +138,7 @@ module.exports = class Torrent extends Provider {
 
 		if (page > 1) {
 			pagination.unshift({
-				text: "Previous",
+				text: keypad.previous,
 				callback_data: JSON.stringify({
 					type: `paginate_search_${this.type}`,
 					page: page - 1,
@@ -164,7 +163,7 @@ module.exports = class Torrent extends Provider {
 						inline_keyboard: [
 							[
 								{
-									text: `\u{1F9F2} Download (${paging.size})`,
+									text: `\u{1F9F2} ${keypad.download} (${paging.size})`,
 									url: paging.url,
 								},
 							],

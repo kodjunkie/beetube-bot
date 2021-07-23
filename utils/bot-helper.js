@@ -13,3 +13,9 @@ exports.keyboard = {
 		],
 	}),
 };
+
+exports.keypad = {
+	next: "Next \u{27A1}",
+	previous: "\u{2B05} Previous",
+	download: "Download",
+};
