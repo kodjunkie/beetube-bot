@@ -41,5 +41,9 @@ module.exports = bot => async message => {
 	};
 
 	await bot.sendChatAction(chatId, "typing");
-	await bot.sendMessage(chatId, "Select a category \u{1F447}", options);
+	await bot.sendMessage(
+		chatId,
+		"Select a category to proceed \u{1F447}",
+		options
+	);
 };

@@ -121,12 +121,16 @@ module.exports = class Music extends Provider {
 				}),
 			}));
 
-			await this.bot.sendMessage(chat.id, "Select a genre \u{1F447}", {
-				parse_mode: "html",
-				reply_markup: JSON.stringify({
-					inline_keyboard: _.chunk(keyboardLayout, 4),
-				}),
-			});
+			await this.bot.sendMessage(
+				chat.id,
+				"Select a genre to proceed \u{1F447}",
+				{
+					parse_mode: "html",
+					reply_markup: JSON.stringify({
+						inline_keyboard: _.chunk(keyboardLayout, 4),
+					}),
+				}
+			);
 		}
 
 		await this.bot.deleteMessage(chat.id, message_id);
