@@ -1,6 +1,8 @@
 require("dotenv").config();
 
 const TelegramBot = require("node-telegram-bot-api");
+TelegramBot.Promise = require("bluebird");
+
 const config = require("./config");
 const mongoose = require("mongoose");
 

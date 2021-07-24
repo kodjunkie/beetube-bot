@@ -38,6 +38,7 @@
 	},
 	"dependencies": {
 		"axios": "^0.21.1",
+		"bluebird": "^3.7.2",
 		"dotenv": "^8.2.0",
 		"lodash": "^4.17.20",
 		"mongoose": "^5.13.3",
