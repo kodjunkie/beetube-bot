@@ -96,7 +96,7 @@ This project is opened under the [MIT 2.0 License](https://github.com/kodjunkie/
 
 ## Credits
 
-| External APIs                                           | Uses           |
-| ------------------------------------------------------- | -------------- |
-| [kodjunkie/raspar](https://github.com/kodjunkie/raspar) | Music, Torrent |
-| [Go-phie/gophie](https://github.com/Go-phie/gophie)     | Movie, Anime   |
+| External APIs                                                     | Uses           |
+| ----------------------------------------------------------------- | -------------- |
+| [kodjunkie/node-raspar](https://github.com/kodjunkie/node-raspar) | Music, Torrent |
+| [Go-phie/gophie](https://github.com/Go-phie/gophie)               | Movie, Anime   |
