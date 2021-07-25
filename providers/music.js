@@ -23,7 +23,7 @@ module.exports = class Music extends Provider {
 			keyboard
 		);
 
-		await this.bot.sendChatAction(chat.id, "upload_voice");
+		await this.bot.sendChatAction(chat.id, "typing");
 		const response = await axios.get(`${this.endpoint}/list`, { params });
 		const data = response.data.data;
 		const genre = params.genre || false;
@@ -150,7 +150,7 @@ module.exports = class Music extends Provider {
 			keyboard
 		);
 
-		await this.bot.sendChatAction(chat.id, "upload_voice");
+		await this.bot.sendChatAction(chat.id, "typing");
 		const response = await axios.get(`${this.endpoint}/search`, { params });
 		const data = response.data.data;
 		const page = params.page;

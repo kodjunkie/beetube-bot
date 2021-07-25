@@ -25,7 +25,7 @@ module.exports = class Anime extends Provider {
 			keyboard
 		);
 
-		await this.bot.sendChatAction(chat.id, "upload_video");
+		await this.bot.sendChatAction(chat.id, "typing");
 		const { data } = await axios.get(`${this.endpoint}/list`, {
 			params: { page, engine: "animeout" },
 		});
@@ -153,7 +153,7 @@ module.exports = class Anime extends Provider {
 			keyboard
 		);
 
-		await this.bot.sendChatAction(chat.id, "upload_video");
+		await this.bot.sendChatAction(chat.id, "typing");
 		const { data } = await axios.get(`${this.endpoint}/search`, {
 			params: {
 				query: params.query.replace(" ", "+"),
