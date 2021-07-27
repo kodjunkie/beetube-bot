@@ -23,7 +23,7 @@ module.exports = class Torrent extends Provider {
 			keyboard
 		);
 
-		await this.bot.sendChatAction(chat.id, "typing");
+		this.bot.sendChatAction(chat.id, "typing");
 		const response = await axios.get(`${this.endpoint}/list`, {
 			params: { driver: "1337x" },
 		});
@@ -81,7 +81,7 @@ module.exports = class Torrent extends Provider {
 			keyboard
 		);
 
-		await this.bot.sendChatAction(chat.id, "typing");
+		this.bot.sendChatAction(chat.id, "typing");
 		const response = await axios.get(`${this.endpoint}/search`, {
 			params: { ...params, driver: "1337x" },
 		});
@@ -91,7 +91,7 @@ module.exports = class Torrent extends Provider {
 			await this.bot.deleteMessage(chat.id, message_id);
 			await this.bot.sendMessage(
 				chat.id,
-				"\u{26A0} No result found.",
+				"\u{26A0} No results found.",
 				keyboard
 			);
 			return;

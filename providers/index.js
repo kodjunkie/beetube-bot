@@ -43,7 +43,7 @@ module.exports = class Provider {
 			const IDs = [];
 			_.map(results, async result => {
 				IDs.push(result._id);
-				await this.bot.deleteMessage(chatId, result._id);
+				this.bot.deleteMessage(chatId, result._id);
 			});
 			await Paginator.deleteMany({ _id: { $in: IDs } });
 		}
@@ -62,7 +62,7 @@ module.exports = class Provider {
 				case `list_${this.type}`:
 					await this.list(message);
 					break;
-				case `paginate_${this.type}`:
+				case `paginate_list_${this.type}`:
 					await this.paginate(message, data.page, "list");
 					break;
 				case `search_${this.type}`:

@@ -25,7 +25,7 @@ module.exports = class Anime extends Provider {
 			keyboard
 		);
 
-		await this.bot.sendChatAction(chat.id, "typing");
+		this.bot.sendChatAction(chat.id, "typing");
 		const { data } = await axios.get(`${this.endpoint}/list`, {
 			params: { page, engine: "animeout" },
 		});
@@ -93,7 +93,7 @@ module.exports = class Anime extends Provider {
 			{
 				text: keypad.next,
 				callback_data: JSON.stringify({
-					type: `paginate_${this.type}`,
+					type: `paginate_list_${this.type}`,
 					page: page + 1,
 				}),
 			},
@@ -103,7 +103,7 @@ module.exports = class Anime extends Provider {
 			pagination.unshift({
 				text: keypad.previous,
 				callback_data: JSON.stringify({
-					type: `paginate_${this.type}`,
+					type: `paginate_list_${this.type}`,
 					page: page - 1,
 				}),
 			});
@@ -163,7 +163,7 @@ module.exports = class Anime extends Provider {
 			keyboard
 		);
 
-		await this.bot.sendChatAction(chat.id, "typing");
+		this.bot.sendChatAction(chat.id, "typing");
 		const { data } = await axios.get(`${this.endpoint}/search`, {
 			params: {
 				query: params.query.replace(" ", "+"),
@@ -175,7 +175,7 @@ module.exports = class Anime extends Provider {
 			await this.bot.deleteMessage(chat.id, message_id);
 			await this.bot.sendMessage(
 				chat.id,
-				"\u{26A0} No result found.",
+				"\u{26A0} No results found.",
 				keyboard
 			);
 			return;
