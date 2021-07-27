@@ -251,7 +251,7 @@ module.exports = class Torrent extends Provider {
 					break;
 			}
 		} catch (error) {
-			await errorHandler(this.bot, message.chat.id, error);
+			errorHandler(this.bot, message.chat.id, error);
 		}
 	}
 };

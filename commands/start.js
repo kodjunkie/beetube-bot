@@ -26,6 +26,6 @@ module.exports = bot => async message => {
 
 		await bot.sendMessage(chatId, text, keyboard);
 	} catch (error) {
-		await errorHandler(bot, chatId, error);
+		errorHandler(bot, chatId, error);
 	}
 };

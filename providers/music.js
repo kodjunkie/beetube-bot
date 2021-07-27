@@ -302,7 +302,7 @@ module.exports = class Music extends Provider {
 					break;
 			}
 		} catch (error) {
-			await errorHandler(this.bot, message.chat.id, error);
+			errorHandler(this.bot, message.chat.id, error);
 		}
 	}
 };
