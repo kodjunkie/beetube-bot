@@ -21,7 +21,7 @@ const PaginatorSchema = new Schema(
 	{ timestamps: { updatedAt: false }, _id: false }
 );
 
-// Remove obsolete pagination records
+// Remove messages sent past the last 48hours
 PaginatorSchema.statics.removeObsoleteRecords = async function() {
 	await this.deleteMany({
 		createdAt: { $lt: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000) },

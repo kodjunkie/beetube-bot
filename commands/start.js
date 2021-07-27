@@ -8,8 +8,9 @@ const errorHandler = require("../utils/error-handler");
 module.exports = bot => async message => {
 	const chatId = message.chat.id;
 	try {
+		bot.sendChatAction(chatId, "typing");
+
 		const from = message.from;
-		await bot.sendChatAction(chatId, "typing");
 		await User.firstOrCreate(from);
 
 		const botName = process.env.BOT_NAME;

@@ -13,10 +13,16 @@ const UserSchema = new Schema(
 		},
 		username: String,
 		language_code: String,
+		status: {
+			type: String,
+			enum: ["active", "blocked", "deactivated"],
+			default: "active",
+		},
 	},
-	{ timestamps: { updatedAt: false }, _id: false }
+	{ timestamps: true, _id: false }
 );
 
+// First check if the user exists else create a new user
 UserSchema.statics.firstOrCreate = async function(from) {
 	const user = await this.findById(from.id);
 	if (!user && !from.is_bot) {

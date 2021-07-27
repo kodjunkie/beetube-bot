@@ -25,10 +25,20 @@ module.exports = class Anime extends Provider {
 			keyboard
 		);
 
-		await this.bot.sendChatAction(chat.id, "typing");
+		this.bot.sendChatAction(chat.id, "typing");
 		const { data } = await axios.get(`${this.endpoint}/list`, {
 			params: { page, engine: "animeout" },
 		});
+
+		if (data.length < 1) {
+			await this.bot.deleteMessage(chat.id, message_id);
+			await this.bot.sendMessage(
+				chat.id,
+				"\u{26A0} You've reached the end of the list.",
+				keyboard
+			);
+			return;
+		}
 
 		const pages = [],
 			promises = [],
@@ -41,7 +51,7 @@ module.exports = class Anime extends Provider {
 					[
 						{ text: keypad.download, url: anime.DownloadLink },
 						{
-							text: "Share",
+							text: keypad.share,
 							url: `https://t.me/share/url?url=${anime.DownloadLink}&text=Downloaded%20from%20@${botTGname}`,
 						},
 					],
@@ -83,7 +93,7 @@ module.exports = class Anime extends Provider {
 			{
 				text: keypad.next,
 				callback_data: JSON.stringify({
-					type: `paginate_${this.type}`,
+					type: `paginate_list_${this.type}`,
 					page: page + 1,
 				}),
 			},
@@ -93,7 +103,7 @@ module.exports = class Anime extends Provider {
 			pagination.unshift({
 				text: keypad.previous,
 				callback_data: JSON.stringify({
-					type: `paginate_${this.type}`,
+					type: `paginate_list_${this.type}`,
 					page: page - 1,
 				}),
 			});
@@ -116,7 +126,7 @@ module.exports = class Anime extends Provider {
 							[
 								{ text: keypad.download, url: paging.DownloadLink },
 								{
-									text: "Share",
+									text: keypad.share,
 									url: `https://t.me/share/url?url=${paging.DownloadLink}&text=Downloaded%20from%20@${botTGname}`,
 								},
 							],
@@ -142,7 +152,7 @@ module.exports = class Anime extends Provider {
 	}
 
 	/**
-	 * Search for movies
+	 * Search for anime
 	 * @param  {} message
 	 * @param  {} params
 	 */
@@ -153,13 +163,23 @@ module.exports = class Anime extends Provider {
 			keyboard
 		);
 
-		await this.bot.sendChatAction(chat.id, "typing");
+		this.bot.sendChatAction(chat.id, "typing");
 		const { data } = await axios.get(`${this.endpoint}/search`, {
 			params: {
 				query: params.query.replace(" ", "+"),
 				engine: "animeout",
 			},
 		});
+
+		if (data.length < 1) {
+			await this.bot.deleteMessage(chat.id, message_id);
+			await this.bot.sendMessage(
+				chat.id,
+				"\u{26A0} No results found.",
+				keyboard
+			);
+			return;
+		}
 
 		_.map(data, async anime => {
 			const options = { parse_mode: "html" };
@@ -168,7 +188,7 @@ module.exports = class Anime extends Provider {
 					[
 						{ text: keypad.download, url: anime.DownloadLink },
 						{
-							text: "Share",
+							text: keypad.share,
 							url: `https://t.me/share/url?url=${anime.DownloadLink}&text=Downloaded%20from%20@${botTGname}`,
 						},
 					],

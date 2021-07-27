@@ -23,11 +23,21 @@ module.exports = class Torrent extends Provider {
 			keyboard
 		);
 
-		await this.bot.sendChatAction(chat.id, "typing");
+		this.bot.sendChatAction(chat.id, "typing");
 		const response = await axios.get(`${this.endpoint}/list`, {
 			params: { driver: "1337x" },
 		});
 		const data = response.data.data;
+
+		if (data.length < 1) {
+			await this.bot.deleteMessage(chat.id, message_id);
+			await this.bot.sendMessage(
+				chat.id,
+				"\u{26A0} You've reached the end of the list.",
+				keyboard
+			);
+			return;
+		}
 
 		_.map(data, async torrent => {
 			const options = { parse_mode: "html" };
@@ -71,11 +81,22 @@ module.exports = class Torrent extends Provider {
 			keyboard
 		);
 
-		await this.bot.sendChatAction(chat.id, "typing");
+		this.bot.sendChatAction(chat.id, "typing");
 		const response = await axios.get(`${this.endpoint}/search`, {
 			params: { ...params, driver: "1337x" },
 		});
 		const data = response.data.data;
+
+		if (data.length < 1) {
+			await this.bot.deleteMessage(chat.id, message_id);
+			await this.bot.sendMessage(
+				chat.id,
+				"\u{26A0} No results found.",
+				keyboard
+			);
+			return;
+		}
+
 		const page = params.page;
 		const pages = [],
 			promises = [],

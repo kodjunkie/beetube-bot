@@ -8,9 +8,9 @@ const errorHandler = require("../utils/error-handler");
 module.exports = bot => async message => {
 	const chatId = message.chat.id;
 	try {
-		await bot.sendChatAction(chatId, "typing");
+		bot.sendChatAction(chatId, "typing");
 
-		// Remove obsolete db records
+		// Remove obsolete records
 		await Paginator.removeObsoleteRecords();
 		const botChannel = process.env.BOT_CHANNEL;
 
