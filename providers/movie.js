@@ -28,6 +28,16 @@ module.exports = class Movie extends Provider {
 			params: { page, engine: "fzmovies" },
 		});
 
+		if (data.length < 1) {
+			await this.bot.deleteMessage(chat.id, message_id);
+			await this.bot.sendMessage(
+				chat.id,
+				"\u{26A0} You've reached the end of the list.",
+				keyboard
+			);
+			return;
+		}
+
 		const pages = [],
 			promises = [],
 			paging = data.pop();
@@ -162,6 +172,16 @@ module.exports = class Movie extends Provider {
 				engine: "fzmovies",
 			},
 		});
+
+		if (data.length < 1) {
+			await this.bot.deleteMessage(chat.id, message_id);
+			await this.bot.sendMessage(
+				chat.id,
+				"\u{26A0} No result found.",
+				keyboard
+			);
+			return;
+		}
 
 		_.map(data, async movie => {
 			if (movie.Size && movie.CoverPhotoLink) {

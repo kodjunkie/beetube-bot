@@ -30,6 +30,16 @@ module.exports = class Anime extends Provider {
 			params: { page, engine: "animeout" },
 		});
 
+		if (data.length < 1) {
+			await this.bot.deleteMessage(chat.id, message_id);
+			await this.bot.sendMessage(
+				chat.id,
+				"\u{26A0} You've reached the end of the list.",
+				keyboard
+			);
+			return;
+		}
+
 		const pages = [],
 			promises = [],
 			paging = data.pop();
@@ -41,7 +51,7 @@ module.exports = class Anime extends Provider {
 					[
 						{ text: keypad.download, url: anime.DownloadLink },
 						{
-							text: "Share",
+							text: keypad.share,
 							url: `https://t.me/share/url?url=${anime.DownloadLink}&text=Downloaded%20from%20@${botTGname}`,
 						},
 					],
@@ -116,7 +126,7 @@ module.exports = class Anime extends Provider {
 							[
 								{ text: keypad.download, url: paging.DownloadLink },
 								{
-									text: "Share",
+									text: keypad.share,
 									url: `https://t.me/share/url?url=${paging.DownloadLink}&text=Downloaded%20from%20@${botTGname}`,
 								},
 							],
@@ -142,7 +152,7 @@ module.exports = class Anime extends Provider {
 	}
 
 	/**
-	 * Search for movies
+	 * Search for anime
 	 * @param  {} message
 	 * @param  {} params
 	 */
@@ -161,6 +171,16 @@ module.exports = class Anime extends Provider {
 			},
 		});
 
+		if (data.length < 1) {
+			await this.bot.deleteMessage(chat.id, message_id);
+			await this.bot.sendMessage(
+				chat.id,
+				"\u{26A0} No result found.",
+				keyboard
+			);
+			return;
+		}
+
 		_.map(data, async anime => {
 			const options = { parse_mode: "html" };
 			options.reply_markup = JSON.stringify({
@@ -168,7 +188,7 @@ module.exports = class Anime extends Provider {
 					[
 						{ text: keypad.download, url: anime.DownloadLink },
 						{
-							text: "Share",
+							text: keypad.share,
 							url: `https://t.me/share/url?url=${anime.DownloadLink}&text=Downloaded%20from%20@${botTGname}`,
 						},
 					],

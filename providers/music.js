@@ -26,6 +26,17 @@ module.exports = class Music extends Provider {
 		await this.bot.sendChatAction(chat.id, "typing");
 		const response = await axios.get(`${this.endpoint}/list`, { params });
 		const data = response.data.data;
+
+		if (data.length < 1) {
+			await this.bot.deleteMessage(chat.id, message_id);
+			await this.bot.sendMessage(
+				chat.id,
+				"\u{26A0} You've reached the end of the list.",
+				keyboard
+			);
+			return;
+		}
+
 		const genre = params.genre || false;
 		const page = params.page;
 		const pages = [];
@@ -153,6 +164,17 @@ module.exports = class Music extends Provider {
 		await this.bot.sendChatAction(chat.id, "typing");
 		const response = await axios.get(`${this.endpoint}/search`, { params });
 		const data = response.data.data;
+
+		if (data.length < 1) {
+			await this.bot.deleteMessage(chat.id, message_id);
+			await this.bot.sendMessage(
+				chat.id,
+				"\u{26A0} No result found.",
+				keyboard
+			);
+			return;
+		}
+
 		const page = params.page;
 		const pages = [],
 			promises = [],

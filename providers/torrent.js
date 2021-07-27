@@ -29,6 +29,16 @@ module.exports = class Torrent extends Provider {
 		});
 		const data = response.data.data;
 
+		if (data.length < 1) {
+			await this.bot.deleteMessage(chat.id, message_id);
+			await this.bot.sendMessage(
+				chat.id,
+				"\u{26A0} You've reached the end of the list.",
+				keyboard
+			);
+			return;
+		}
+
 		_.map(data, async torrent => {
 			const options = { parse_mode: "html" };
 			options.reply_markup = JSON.stringify({
@@ -76,6 +86,17 @@ module.exports = class Torrent extends Provider {
 			params: { ...params, driver: "1337x" },
 		});
 		const data = response.data.data;
+
+		if (data.length < 1) {
+			await this.bot.deleteMessage(chat.id, message_id);
+			await this.bot.sendMessage(
+				chat.id,
+				"\u{26A0} No result found.",
+				keyboard
+			);
+			return;
+		}
+
 		const page = params.page;
 		const pages = [],
 			promises = [],

@@ -15,7 +15,8 @@ exports.keyboard = {
 };
 
 exports.keypad = {
+	share: "Share",
+	download: "Download",
 	next: "Next \u{27A1}",
 	previous: "\u{2B05} Previous",
-	download: "Download",
 };
