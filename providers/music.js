@@ -138,7 +138,7 @@ module.exports = class Music extends Provider {
 				{
 					parse_mode: "html",
 					reply_markup: JSON.stringify({
-						inline_keyboard: _.chunk(keyboardLayout, 4),
+						inline_keyboard: _.chunk(_.uniqBy(keyboardLayout, "text"), 3),
 					}),
 				}
 			);
@@ -302,7 +302,7 @@ module.exports = class Music extends Provider {
 					break;
 			}
 		} catch (error) {
-			await errorHandler(this.bot, message.chat.id, error);
+			errorHandler(this.bot, message.chat.id, error);
 		}
 	}
 };

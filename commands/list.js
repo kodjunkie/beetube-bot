@@ -20,6 +20,6 @@ module.exports = bot => async (message, match) => {
 				await new Provider(bot).list(message);
 		}
 	} catch (error) {
-		await errorHandler(bot, chatId, error);
+		errorHandler(bot, chatId, error);
 	}
 };
