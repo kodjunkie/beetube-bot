@@ -15,7 +15,7 @@ const UserSchema = new Schema(
 		language_code: String,
 		status: {
 			type: String,
-			enum: ["active", "blocked", "deactivated"],
+			enum: ["active", "blocked"],
 			default: "active",
 		},
 	},
