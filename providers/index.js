@@ -1,5 +1,6 @@
 const _ = require("lodash");
 const Paginator = require("../models/paginator");
+const { keyboard } = require("../utils/bot-helper");
 const errorHandler = require("../utils/error-handler");
 
 module.exports = class Provider {
@@ -9,15 +10,14 @@ module.exports = class Provider {
 	 */
 	constructor(bot) {
 		this.bot = bot;
-		this.endpoint = process.env.RASPAR_API;
 	}
 
 	/**
 	 * Search items
 	 * @param  {} message
-	 * @param  {} match
+	 * @param  {} params
 	 */
-	search(message, match) {}
+	search(message, params) {}
 
 	/**
 	 * List items
@@ -72,5 +72,19 @@ module.exports = class Provider {
 		} catch (error) {
 			errorHandler(this.bot, message.chat.id, error);
 		}
+	}
+
+	/**
+	 * @param  {} chat_id
+	 * @param  {} message_id
+	 * @param  {} message
+	 */
+	emptyAPIResponse(
+		chat_id,
+		message_id,
+		message = "The list is empty or limit reached."
+	) {
+		this.bot.deleteMessage(chat_id, message_id);
+		this.bot.sendMessage(chat_id, "\u{26A0} " + message, keyboard);
 	}
 };
