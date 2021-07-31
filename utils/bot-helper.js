@@ -20,3 +20,29 @@ exports.keypad = {
 	next: "Next \u{27A1}",
 	previous: "\u{2B05} Previous",
 };
+
+exports.settings = {
+	text: `\u{2699} *Settings*
+	\nUse this section to apply personalized tweaks to \u{1F41D} \`${process.env.BOT_NAME}\` bot`,
+	keyboard: {
+		parse_mode: "Markdown",
+		reply_markup: JSON.stringify({
+			inline_keyboard: [
+				[
+					{
+						text: "\u{1F4C0} Music",
+						callback_data: JSON.stringify({
+							type: "music_settings",
+						}),
+					},
+					{
+						text: "\u{23E9} Pagination",
+						callback_data: JSON.stringify({
+							type: "pagination_settings",
+						}),
+					},
+				],
+			],
+		}),
+	},
+};
