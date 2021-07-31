@@ -9,6 +9,7 @@ module.exports = class Torrent extends Provider {
 	constructor(bot) {
 		super(bot);
 		this.type = "torrent";
+		this.endpoint = process.env.RASPAR_API;
 	}
 
 	/**
@@ -30,13 +31,7 @@ module.exports = class Torrent extends Provider {
 		const data = response.data.data;
 
 		if (data.length < 1) {
-			await this.bot.deleteMessage(chat.id, message_id);
-			await this.bot.sendMessage(
-				chat.id,
-				"\u{26A0} You've reached the end of the list.",
-				keyboard
-			);
-			return;
+			return this.emptyAPIResponse(chat.id, message_id);
 		}
 
 		_.map(data, async torrent => {
@@ -88,13 +83,7 @@ module.exports = class Torrent extends Provider {
 		const data = response.data.data;
 
 		if (data.length < 1) {
-			await this.bot.deleteMessage(chat.id, message_id);
-			await this.bot.sendMessage(
-				chat.id,
-				"\u{26A0} No results found.",
-				keyboard
-			);
-			return;
+			return this.emptyAPIResponse(chat.id, message_id, "No results found.");
 		}
 
 		const page = params.page;

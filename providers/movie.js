@@ -29,13 +29,7 @@ module.exports = class Movie extends Provider {
 		});
 
 		if (data.length < 1) {
-			await this.bot.deleteMessage(chat.id, message_id);
-			await this.bot.sendMessage(
-				chat.id,
-				"\u{26A0} You've reached the end of the list.",
-				keyboard
-			);
-			return;
+			return this.emptyAPIResponse(chat.id, message_id);
 		}
 
 		const pages = [],
@@ -174,13 +168,7 @@ module.exports = class Movie extends Provider {
 		});
 
 		if (data.length < 1) {
-			await this.bot.deleteMessage(chat.id, message_id);
-			await this.bot.sendMessage(
-				chat.id,
-				"\u{26A0} No results found.",
-				keyboard
-			);
-			return;
+			return this.emptyAPIResponse(chat.id, message_id, "No results found.");
 		}
 
 		_.map(data, async movie => {
