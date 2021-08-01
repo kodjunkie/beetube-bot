@@ -30,7 +30,7 @@ exports.settings = {
 			inline_keyboard: [
 				[
 					{
-						text: "\u{1F4C0} Music",
+						text: "\u{1F4C0} Music Download",
 						callback_data: JSON.stringify({
 							type: "music_settings",
 						}),
