@@ -57,10 +57,7 @@ module.exports = class Movie extends Provider {
 							movie.Title
 						}</b>${
 							movie.Description
-								? `\n\n<b>Description:</b> <em>${movie.Description.slice(
-										0,
-										-6
-								  )}</em>`
+								? `\n\n<b>Description:</b> <em>${movie.Description}</em>`
 								: ""
 						}`,
 						options
@@ -191,10 +188,7 @@ module.exports = class Movie extends Provider {
 						movie.Title
 					}</b>${
 						movie.Description
-							? `\n\n<b>Description:</b> <em>${movie.Description.slice(
-									0,
-									-6
-							  )}</em>`
+							? `\n\n<b>Description:</b> <em>${movie.Description}</em>`
 							: ""
 					}`,
 					options

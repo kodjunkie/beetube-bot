@@ -60,7 +60,10 @@ module.exports = class Anime extends Provider {
 							anime.Title
 						}</b>${
 							anime.Description
-								? `\n\n<b>Description:</b> <em>${anime.Description}</em>`
+								? `\n\n<b>Description:</b> <em>${anime.Description.substr(
+										0,
+										400
+								  )}...</em>`
 								: ""
 						}`,
 						options
@@ -187,7 +190,10 @@ module.exports = class Anime extends Provider {
 				chat.id,
 				`<a href="${anime.CoverPhotoLink}">\u{1F3A1}</a> <b>${anime.Title}</b>${
 					anime.Description
-						? `\n\n<b>Description:</b> <em>${anime.Description}</em>`
+						? `\n\n<b>Description:</b> <em>${anime.Description.substr(
+								0,
+								400
+						  )}...</em>`
 						: ""
 				}`,
 				options
