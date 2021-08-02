@@ -53,7 +53,10 @@ module.exports = class Torrent extends Provider {
 					\n\u{2B06} Seeds: ${torrent.seeds} \u{2B07} leeches: ${torrent.leeches}
 					\n${
 						torrent.description
-							? `<b>Description:</b> <em>${torrent.description}</em>`
+							? `<b>Description:</b> <em>${torrent.description.substr(
+									0,
+									400
+							  )}...</em>`
 							: `<em>${torrent.magnetic_link}</em>`
 					}`,
 				options
@@ -112,7 +115,10 @@ module.exports = class Torrent extends Provider {
 					\n\u{2B06} Seeds: ${torrent.seeds} \u{2B07} leeches: ${torrent.leeches}
 					\n${
 						torrent.description
-							? `<b>Description:</b> <em>${torrent.description}</em>`
+							? `<b>Description:</b> <em>${torrent.description.substr(
+									0,
+									400
+							  )}...</em>`
 							: `<em>${torrent.magnetic_link}</em>`
 					}`,
 						options
