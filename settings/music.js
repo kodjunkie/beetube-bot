@@ -7,7 +7,7 @@ module.exports = class MusicSettings extends Settings {
 	 * @param  {} {chat
 	 * @param  {} message_id}
 	 */
-	async music({ chat, message_id }) {
+	async home({ chat, message_id }) {
 		await this.bot.editMessageText(
 			`\u{2B07} <b>Download music from chat</b>
             \nEnabling this will allow you download music directly from chat (<em>experimental</em>)`,
@@ -48,7 +48,7 @@ module.exports = class MusicSettings extends Settings {
 		try {
 			switch (data.type) {
 				case `music_${this.type}`:
-					await this.music(message);
+					await this.home(message);
 					break;
 				default:
 					if (data.type.match(/(true|false)$/)) {
