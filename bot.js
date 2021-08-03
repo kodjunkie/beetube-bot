@@ -1,7 +1,8 @@
 require("dotenv").config();
-
 const TelegramBot = require("node-telegram-bot-api");
-TelegramBot.Promise = require("bluebird");
+TelegramBot.Promise = require("bluebird").config({
+	cancellation: true,
+});
 
 const config = require("./config");
 const mongoose = require("mongoose");
@@ -38,6 +39,6 @@ mongoose
 		bot.on("error", botErrorHandler);
 
 		// Successful connection
-		console.log("\u{1F41D} Listening for commands \u{1F680}");
+		console.log("\u{1F41D} \u{1F41D} Listening for commands");
 	})
 	.catch(error => console.error(error));

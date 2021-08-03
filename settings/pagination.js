@@ -7,7 +7,7 @@ module.exports = class PaginationSettings extends Settings {
 	 * @param  {} {chat
 	 * @param  {} message_id}
 	 */
-	async pagination({ chat, message_id }) {
+	async home({ chat, message_id }) {
 		await this.bot.editMessageText(
 			`\u{23E9} *Delete previous page results*
             \nBy default previous results are removed during pagination to ease chat scrolling, use this section to change this behaviour.`,
@@ -48,7 +48,7 @@ module.exports = class PaginationSettings extends Settings {
 		try {
 			switch (data.type) {
 				case `pagination_${this.type}`:
-					await this.pagination(message, data);
+					await this.home(message, data);
 					break;
 				default:
 					if (data.type.match(/(true|false)$/)) {
