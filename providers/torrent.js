@@ -55,7 +55,7 @@ module.exports = class Torrent extends Provider {
 						torrent.description
 							? `<b>Description:</b> <em>${torrent.description.substr(
 									0,
-									400
+									300
 							  )}...</em>`
 							: `<em>${torrent.magnetic_link}</em>`
 					}`,
@@ -117,7 +117,7 @@ module.exports = class Torrent extends Provider {
 						torrent.description
 							? `<b>Description:</b> <em>${torrent.description.substr(
 									0,
-									400
+									300
 							  )}...</em>`
 							: `<em>${torrent.magnetic_link}</em>`
 					}`,
@@ -170,7 +170,10 @@ module.exports = class Torrent extends Provider {
 					\n\u{2B06} Seeds: ${paging.seeds} \u{2B07} leeches: ${paging.leeches}
 					\n${
 						paging.description
-							? `<b>Description:</b> <em>${paging.description}</em>`
+							? `<b>Description:</b> <em>${paging.description.substr(
+									0,
+									300
+							  )}...</em>`
 							: `<em>${paging.magnetic_link}</em>`
 					}`,
 				{

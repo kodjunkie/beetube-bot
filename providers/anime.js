@@ -62,7 +62,7 @@ module.exports = class Anime extends Provider {
 							anime.Description
 								? `\n\n<b>Description:</b> <em>${anime.Description.substr(
 										0,
-										400
+										300
 								  )}...</em>`
 								: ""
 						}`,
@@ -113,7 +113,10 @@ module.exports = class Anime extends Provider {
 					paging.Title
 				}</b>${
 					paging.Description
-						? `\n\n<b>Description:</b> <em>${paging.Description}</em>`
+						? `\n\n<b>Description:</b> <em>${paging.Description.substr(
+								0,
+								300
+						  )}...</em>`
 						: ""
 				}`,
 				{
@@ -192,7 +195,7 @@ module.exports = class Anime extends Provider {
 					anime.Description
 						? `\n\n<b>Description:</b> <em>${anime.Description.substr(
 								0,
-								400
+								300
 						  )}...</em>`
 						: ""
 				}`,
