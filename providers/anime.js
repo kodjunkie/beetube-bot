@@ -46,7 +46,9 @@ module.exports = class Anime extends Provider {
 						{ text: keypad.download, url: anime.DownloadLink },
 						{
 							text: keypad.share,
-							url: `https://t.me/share/url?url=${anime.DownloadLink}&text=Downloaded%20from%20@${botTGname}`,
+							url: `https://t.me/share/url?url=${encodeURIComponent(
+								anime.DownloadLink
+							)}&text=Downloaded%20from%20@${botTGname}`,
 						},
 					],
 				],
@@ -127,7 +129,9 @@ module.exports = class Anime extends Provider {
 								{ text: keypad.download, url: paging.DownloadLink },
 								{
 									text: keypad.share,
-									url: `https://t.me/share/url?url=${paging.DownloadLink}&text=Downloaded%20from%20@${botTGname}`,
+									url: `https://t.me/share/url?url=${encodeURIComponent(
+										paging.DownloadLink
+									)}&text=Downloaded%20from%20@${botTGname}`,
 								},
 							],
 							pagination,
@@ -183,7 +187,9 @@ module.exports = class Anime extends Provider {
 						{ text: keypad.download, url: anime.DownloadLink },
 						{
 							text: keypad.share,
-							url: `https://t.me/share/url?url=${anime.DownloadLink}&text=Downloaded%20from%20@${botTGname}`,
+							url: `https://t.me/share/url?url=${encodeURIComponent(
+								anime.DownloadLink
+							)}&text=Downloaded%20from%20@${botTGname}`,
 						},
 					],
 				],
@@ -223,6 +229,7 @@ module.exports = class Anime extends Provider {
 			message_id,
 			async reply => {
 				this.bot.removeReplyListener(listenerId);
+				// TODO: Make sure the search query is not empty
 				await this.search(message, { query: reply.text });
 			}
 		);
