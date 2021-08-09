@@ -16,8 +16,8 @@ const keyboardCommand = require("./commands/keyboard");
 const settingsCommand = require("./commands/settings");
 
 // Handlers
-const callbackHandler = require("./handlers/callback");
 const botErrorHandler = require("./handlers/bot-error");
+const callbackQueryHandler = require("./handlers/callback-query");
 
 // Configurations
 const bot = new TelegramBot(process.env.BOT_TOKEN, config.bot);
@@ -34,11 +34,11 @@ mongoose
 		bot.onText(/(?<Provider>(Movie|Music|Torrent|Anime)$)/, listCommand(bot));
 
 		// Handlers
-		bot.on("callback_query", callbackHandler(bot));
+		bot.on("callback_query", callbackQueryHandler(bot));
 		bot.on("polling_error", botErrorHandler);
 		bot.on("error", botErrorHandler);
 
 		// Successful connection
-		console.log("\u{1F41D} \u{1F41D} Listening for commands");
+		console.log("\u{1F41D} Listening for commands");
 	})
 	.catch(error => console.error(error));
