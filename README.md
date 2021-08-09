@@ -15,6 +15,7 @@ A telegram bot :robot: for music, videos, movies, EDM tracks, torrent downloads 
 </div>
 
 - [Beetube :bee:](#beetube)
+  - [Features](#features)
   - [Installation](#installation)
     - [Telegram setup](#installation)
     - [Install on system](#installation)
@@ -24,6 +25,15 @@ A telegram bot :robot: for music, videos, movies, EDM tracks, torrent downloads 
   - [Contribution](#contribution)
   - [License (MIT)](#license)
   - [Credits](#credits)
+
+## Features
+
+- Search, list and download all kinds of `movies`
+- Search, list and download all kinds of `anime`
+- Browse, list and download all types of `music` and supports using genre
+- Search, list and download `torrent` files
+- Ability to paginate when searching / retrieving list
+- Supports personalized configurations
 
 ## Installation
 
