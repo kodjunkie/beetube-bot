@@ -106,6 +106,6 @@ module.exports = class Provider {
 		message = "The list is empty or limit reached."
 	) {
 		this.bot.deleteMessage(chat_id, message_id);
-		this.bot.sendMessage(chat_id, "\u{26A0} " + message, keyboard);
+		this.bot.sendMessage(chat_id, "\u{1F6AB} " + message, keyboard);
 	}
 };
