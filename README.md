@@ -28,12 +28,10 @@ A telegram bot :robot: for music, videos, movies, EDM tracks, torrent downloads 
 
 ## Features
 
-- Search, list and download all kinds of `movies`
-- Search, list and download all kinds of `anime`
-- Browse, list and download all types of `music` and supports using genre
-- Search, list and download `torrent` files
-- Ability to paginate list / search results
-- Supports personalized configurations
+- Browse and download `movies`, `music`, `anime` and `torrent`
+- Ability to browse `music` by different genres
+- Ability to paginate all returned results
+- Supports personalized settings
 
 ## Installation
 
