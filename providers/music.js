@@ -264,7 +264,7 @@ module.exports = class Music extends Provider {
 			message_id,
 			async reply => {
 				this.bot.removeReplyListener(listenerId);
-				await this.search(message, { query: reply.text, page });
+				await this.searchQueryValidator(reply, message);
 			}
 		);
 	}

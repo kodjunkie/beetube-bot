@@ -229,8 +229,7 @@ module.exports = class Anime extends Provider {
 			message_id,
 			async reply => {
 				this.bot.removeReplyListener(listenerId);
-				// TODO: Make sure the search query is not empty
-				await this.search(message, { query: reply.text });
+				await this.searchQueryValidator(reply, message);
 			}
 		);
 	}

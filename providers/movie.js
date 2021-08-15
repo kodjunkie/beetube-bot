@@ -216,7 +216,7 @@ module.exports = class Movie extends Provider {
 			message_id,
 			async reply => {
 				this.bot.removeReplyListener(listenerId);
-				await this.search(message, { query: reply.text });
+				await this.searchQueryValidator(reply, message);
 			}
 		);
 	}

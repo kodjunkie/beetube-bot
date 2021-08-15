@@ -26,6 +26,12 @@ module.exports = class Provider {
 	list(message) {}
 
 	/**
+	 * Interactive search
+	 * @param  {} message
+	 */
+	interactiveSearch(message) {}
+
+	/**
 	 * Handle pagination
 	 * @param  {} message
 	 * @param  {} data
@@ -72,6 +78,21 @@ module.exports = class Provider {
 		} catch (error) {
 			errorHandler(this.bot, message.chat.id, error);
 		}
+	}
+
+	/**
+	 * @param  {} reply
+	 * @param  {} message
+	 */
+	async searchQueryValidator(reply, message) {
+		const query = reply.text;
+		if (query && query.length >= 2) await this.search(message, { query });
+		else
+			this.bot.sendMessage(
+				message.chat.id,
+				"\u{1F6AB} Input must be more than a character.",
+				keyboard
+			);
 	}
 
 	/**
