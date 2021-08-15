@@ -6,7 +6,7 @@ const errorHandler = require("../utils/error-handler");
 module.exports = bot => async cbq => {
 	const chatId = cbq.message.chat.id;
 	try {
-		await bot.answerCallbackQuery(cbq.id, { text: "\u{1F41D} done" });
+		bot.answerCallbackQuery(cbq.id);
 
 		const data = JSON.parse(cbq.data);
 		let name = data.type.match(/(movie|music|torrent|anime)$/);
