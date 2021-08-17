@@ -84,9 +84,9 @@ module.exports = class Provider {
 	 * @param  {} reply
 	 * @param  {} message
 	 */
-	async searchQueryValidator(reply, message) {
+	async searchQueryValidator(reply, message, page = 1) {
 		const query = reply.text;
-		if (query && query.length >= 2) await this.search(message, { query });
+		if (query && query.length >= 2) await this.search(message, { query, page });
 		else
 			this.bot.sendMessage(
 				message.chat.id,

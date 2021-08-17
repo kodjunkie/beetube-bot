@@ -17,7 +17,14 @@ const SettingSchema = new Schema(
 			ref: "User",
 		},
 	},
-	{ timestamps: { createdAt: false }, _id: false }
+	{ timestamps: { createdAt: false } }
 );
+
+SettingSchema.statics.firstOrCreate = async function(userId) {
+	let settings = await this.findOne({ user: userId });
+	if (!settings) settings = await new this({ user: userId }).save();
+
+	return settings;
+};
 
 module.exports = mongoose.model("Setting", SettingSchema);
