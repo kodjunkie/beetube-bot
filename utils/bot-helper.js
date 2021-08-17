@@ -30,15 +30,15 @@ exports.settings = {
 			inline_keyboard: [
 				[
 					{
-						text: "\u{1F4C0} Music Download",
-						callback_data: JSON.stringify({
-							type: "music_setting",
-						}),
-					},
-					{
 						text: "\u{23E9} Pagination",
 						callback_data: JSON.stringify({
 							type: "page_setting",
+						}),
+					},
+					{
+						text: "\u{1F4C0} Music Download",
+						callback_data: JSON.stringify({
+							type: "music_setting",
 						}),
 					},
 				],

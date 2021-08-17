@@ -1,13 +1,17 @@
-const Settings = require(".");
+const Base = require(".");
+const Setting = require("../models/setting");
 const errorHandler = require("../utils/error-handler");
 
-module.exports = class PaginationSettings extends Settings {
+module.exports = class PaginationSettings extends Base {
 	/**
 	 * Pagination settings
 	 * @param  {} {chat
 	 * @param  {} message_id}
 	 */
-	async home({ chat, message_id }) {
+	async setting({ chat, message_id }) {
+		const settings = await Setting.findOne({ user: chat.id });
+		const value = settings.purge_old_pages ? 1 : 0;
+
 		await this.bot.editMessageText(
 			`\u{23E9} *Delete previous page results*
             \nBy default previous results are removed during pagination to ease chat scrolling, use this section to change this behaviour.`,
@@ -19,9 +23,9 @@ module.exports = class PaginationSettings extends Settings {
 					inline_keyboard: [
 						[
 							{
-								text: "\u{2705} Enabled",
+								text: this.toggleFeedbackText(value),
 								callback_data: JSON.stringify({
-									type: "pagination_settings_false",
+									type: `page_setting_${value}`,
 								}),
 							},
 						],
@@ -29,7 +33,7 @@ module.exports = class PaginationSettings extends Settings {
 							{
 								text: "\u{1F519} Back",
 								callback_data: JSON.stringify({
-									type: "index_settings",
+									type: "index_setting",
 								}),
 							},
 						],
@@ -45,18 +49,23 @@ module.exports = class PaginationSettings extends Settings {
 	 * @param  {} message
 	 */
 	async resolve(data, message) {
+		const chatId = message.chat.id;
 		try {
 			switch (data.type) {
-				case `pagination_${this.type}`:
-					await this.home(message, data);
+				case `page_${this.type}`:
+					await this.setting(message);
 					break;
 				default:
-					if (data.type.match(/(true|false)$/)) {
-						this.defaultReply(message.chat.id);
-					}
+					const match = data.type.match(/\d$/);
+					if (!match || !match[0]) return;
+					await Setting.updateOne(
+						{ user: chatId },
+						{ $set: { purge_old_pages: !Boolean(parseInt(match[0])) } }
+					);
+					await this.setting(message);
 			}
 		} catch (error) {
-			errorHandler(this.bot, message.chat.id, error);
+			errorHandler(this.bot, chatId, error);
 		}
 	}
 };

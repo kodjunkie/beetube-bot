@@ -1,6 +1,7 @@
 const _ = require("lodash");
-const axios = require("axios");
 const Provider = require(".");
+const axios = require("axios");
+const Setting = require("../models/setting");
 const Paginator = require("../models/paginator");
 const errorHandler = require("../utils/error-handler");
 const { keyboard, keypad } = require("../utils/bot-helper");
@@ -152,7 +153,8 @@ module.exports = class Torrent extends Provider {
 			},
 		];
 
-		if (page > 1) {
+		const settings = await Setting.findOne({ user: chat.id });
+		if ((!settings || settings.purge_old_pages) && page > 1) {
 			pagination.unshift({
 				text: keypad.previous,
 				callback_data: JSON.stringify({
@@ -204,7 +206,7 @@ module.exports = class Torrent extends Provider {
 			});
 
 		await this.bot.deleteMessage(chat.id, message_id);
-		await Paginator.bulkWrite(pages);
+		if (!settings || settings.purge_old_pages) await Paginator.bulkWrite(pages);
 	}
 
 	/**
@@ -225,7 +227,7 @@ module.exports = class Torrent extends Provider {
 			message_id,
 			async reply => {
 				this.bot.removeReplyListener(listenerId);
-				await this.searchQueryValidator(reply, message);
+				await this.searchQueryValidator(reply, message, page);
 			}
 		);
 	}
