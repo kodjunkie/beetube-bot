@@ -1,16 +1,28 @@
-const Settings = require(".");
+const Base = require(".");
+const Setting = require("../models/setting");
 const errorHandler = require("../utils/error-handler");
 
-module.exports = class MusicSettings extends Settings {
+module.exports = class MusicSetting extends Base {
 	/**
 	 * Music settings
 	 * @param  {} {chat
 	 * @param  {} message_id}
 	 */
-	async home({ chat, message_id }) {
+	async setting({ chat, message_id }) {
+		const settings = await Setting.findOne({ user: chat.id });
+		const value = settings.chat_music_download ? 1 : 0;
+
 		await this.bot.editMessageText(
 			`\u{2B07} <b>Download music from chat</b>
-            \nEnabling this will allow you download music directly from chat (<em>experimental</em>)`,
+            \nEnabling this will allow you download music directly from chat (<em>experimental</em>)
+			\n\u{2705} Supported extensions
+			- \t .mp3
+			- \t .flac
+			- \t .wma
+			- \t .wav
+			- \t .ogg
+			- \t .aiff
+			- \t .alac`,
 			{
 				message_id,
 				chat_id: chat.id,
@@ -19,9 +31,9 @@ module.exports = class MusicSettings extends Settings {
 					inline_keyboard: [
 						[
 							{
-								text: "\u{274C} Disabled",
+								text: this.toggleFeedbackText(value),
 								callback_data: JSON.stringify({
-									type: "music_settings_false",
+									type: `music_setting_${value}`,
 								}),
 							},
 						],
@@ -29,7 +41,7 @@ module.exports = class MusicSettings extends Settings {
 							{
 								text: "\u{1F519} Back",
 								callback_data: JSON.stringify({
-									type: "index_settings",
+									type: "index_setting",
 								}),
 							},
 						],
@@ -45,18 +57,24 @@ module.exports = class MusicSettings extends Settings {
 	 * @param  {} message
 	 */
 	async resolve(data, message) {
+		const chatId = message.chat.id;
 		try {
 			switch (data.type) {
 				case `music_${this.type}`:
-					await this.home(message);
+					await this.setting(message);
 					break;
 				default:
-					if (data.type.match(/(true|false)$/)) {
-						this.defaultReply(message.chat.id);
-					}
+					/* const match = data.type.match(/\d$/);
+					if (!match || !match[0]) return;
+					await Setting.updateOne(
+						{ user: chatId },
+						{ $set: { chat_music_download: !Boolean(parseInt(match[0])) } }
+					);
+					await this.setting(message); */
+					await this.defaultReply(chatId);
 			}
 		} catch (error) {
-			errorHandler(this.bot, message.chat.id, error);
+			errorHandler(this.bot, chatId, error);
 		}
 	}
 };
