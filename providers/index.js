@@ -54,6 +54,7 @@ module.exports = class Provider {
 			await Paginator.deleteMany({ _id: { $in: IDs } });
 		}
 
+		// TODO: Sanitize method="search" query and enforce the 64 bytes callback data limit
 		await this[method](message, data);
 	}
 
