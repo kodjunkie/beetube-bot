@@ -52,14 +52,7 @@ module.exports = class Torrent extends Provider {
 				chat.id,
 				`\u{1F30D} <b>${torrent.name}</b>
 					\n\u{2B06} Seeds: ${torrent.seeds} \u{2B07} leeches: ${torrent.leeches}
-					\n${
-						torrent.description
-							? `<b>Description:</b> <em>${torrent.description.substr(
-									0,
-									300
-							  )}...</em>`
-							: `<em>${torrent.magnetic_link}</em>`
-					}`,
+					\n<em>${torrent.magnetic_link}</em>`,
 				options
 			);
 		});
@@ -114,14 +107,7 @@ module.exports = class Torrent extends Provider {
 						chat.id,
 						`\u{1F30D} <b>${torrent.name}</b>
 					\n\u{2B06} Seeds: ${torrent.seeds} \u{2B07} leeches: ${torrent.leeches}
-					\n${
-						torrent.description
-							? `<b>Description:</b> <em>${torrent.description.substr(
-									0,
-									300
-							  )}...</em>`
-							: `<em>${torrent.magnetic_link}</em>`
-					}`,
+					\n<em>${torrent.magnetic_link}</em>`,
 						options
 					)
 					.then(msg => {
@@ -170,14 +156,7 @@ module.exports = class Torrent extends Provider {
 				chat.id,
 				`\u{1F30D} <b>${paging.name}</b>
 					\n\u{2B06} Seeds: ${paging.seeds} \u{2B07} leeches: ${paging.leeches}
-					\n${
-						paging.description
-							? `<b>Description:</b> <em>${paging.description.substr(
-									0,
-									300
-							  )}...</em>`
-							: `<em>${paging.magnetic_link}</em>`
-					}`,
+					\n<em>${paging.magnetic_link}</em>`,
 				{
 					parse_mode: "html",
 					reply_markup: JSON.stringify({

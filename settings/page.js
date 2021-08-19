@@ -2,7 +2,7 @@ const Base = require(".");
 const Setting = require("../models/setting");
 const errorHandler = require("../utils/error-handler");
 
-module.exports = class PaginationSettings extends Base {
+module.exports = class PageSetting extends Base {
 	/**
 	 * Pagination settings
 	 * @param  {} {chat
