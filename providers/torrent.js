@@ -132,7 +132,7 @@ module.exports = class Torrent extends Provider {
 			{
 				text: keypad.next,
 				callback_data: JSON.stringify({
-					type: `paginate_search_${this.type}`,
+					type: `page_srch_${this.type}`,
 					page: page + 1,
 					query,
 				}),
@@ -144,7 +144,7 @@ module.exports = class Torrent extends Provider {
 			pagination.unshift({
 				text: keypad.previous,
 				callback_data: JSON.stringify({
-					type: `paginate_search_${this.type}`,
+					type: `page_srch_${this.type}`,
 					page: page - 1,
 					query,
 				}),
@@ -219,13 +219,13 @@ module.exports = class Torrent extends Provider {
 	async resolve(data, message) {
 		try {
 			switch (data.type) {
-				case `list_${this.type}`:
+				case `ls_${this.type}`:
 					await this.list(message);
 					break;
-				case `search_${this.type}`:
+				case `srch_${this.type}`:
 					await this.interactiveSearch(message, data.page);
 					break;
-				case `paginate_search_${this.type}`:
+				case `page_srch_${this.type}`:
 					await this.paginate(message, data, "search");
 					break;
 			}
