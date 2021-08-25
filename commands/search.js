@@ -12,13 +12,13 @@ module.exports = bot => async message => {
 					{
 						text: "\u{1F3AC} Movie",
 						callback_data: JSON.stringify({
-							type: "search_movie",
+							type: "srch_movie",
 						}),
 					},
 					{
 						text: "\u{1F4C0} Music",
 						callback_data: JSON.stringify({
-							type: "search_music",
+							type: "srch_music",
 						}),
 					},
 				],
@@ -26,13 +26,13 @@ module.exports = bot => async message => {
 					{
 						text: "\u{1F30D} Torrent",
 						callback_data: JSON.stringify({
-							type: "search_torrent",
+							type: "srch_torrent",
 						}),
 					},
 					{
 						text: "\u{1F3A1} Anime",
 						callback_data: JSON.stringify({
-							type: "search_anime",
+							type: "srch_anime",
 						}),
 					},
 				],
