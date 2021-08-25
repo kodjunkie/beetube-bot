@@ -66,13 +66,13 @@ module.exports = class Provider {
 	async resolve(data, message) {
 		try {
 			switch (data.type) {
-				case `list_${this.type}`:
+				case `ls_${this.type}`:
 					await this.list(message);
 					break;
-				case `paginate_list_${this.type}`:
+				case `page_ls_${this.type}`:
 					await this.paginate(message, data.page, "list");
 					break;
-				case `search_${this.type}`:
+				case `srch_${this.type}`:
 					await this.interactiveSearch(message);
 					break;
 			}

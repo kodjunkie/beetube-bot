@@ -85,7 +85,7 @@ module.exports = class Movie extends Provider {
 			{
 				text: keypad.next,
 				callback_data: JSON.stringify({
-					type: `paginate_list_${this.type}`,
+					type: `page_ls_${this.type}`,
 					page: page + 1,
 				}),
 			},
@@ -96,7 +96,7 @@ module.exports = class Movie extends Provider {
 			pagination.unshift({
 				text: keypad.previous,
 				callback_data: JSON.stringify({
-					type: `paginate_list_${this.type}`,
+					type: `page_ls_${this.type}`,
 					page: page - 1,
 				}),
 			});

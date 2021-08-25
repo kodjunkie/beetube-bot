@@ -75,7 +75,7 @@ module.exports = class Music extends Provider {
 				{
 					text: keypad.next,
 					callback_data: JSON.stringify({
-						type: `paginate_list_${this.type}`,
+						type: `page_ls_${this.type}`,
 						page: page + 1,
 						genre,
 					}),
@@ -86,7 +86,7 @@ module.exports = class Music extends Provider {
 				pagination.unshift({
 					text: keypad.previous,
 					callback_data: JSON.stringify({
-						type: `paginate_list_${this.type}`,
+						type: `page_ls_${this.type}`,
 						page: page - 1,
 						genre,
 					}),
@@ -123,7 +123,7 @@ module.exports = class Music extends Provider {
 			const keyboardLayout = data.map(gnr => ({
 				text: gnr.name,
 				callback_data: JSON.stringify({
-					type: `list_${this.type}`,
+					type: `ls_${this.type}`,
 					genre: gnr.name,
 					page: 1,
 				}),
@@ -205,7 +205,7 @@ module.exports = class Music extends Provider {
 			{
 				text: keypad.next,
 				callback_data: JSON.stringify({
-					type: `paginate_search_${this.type}`,
+					type: `page_srch_${this.type}`,
 					page: page + 1,
 					query,
 				}),
@@ -217,7 +217,7 @@ module.exports = class Music extends Provider {
 			pagination.unshift({
 				text: keypad.previous,
 				callback_data: JSON.stringify({
-					type: `paginate_search_${this.type}`,
+					type: `page_srch_${this.type}`,
 					page: page - 1,
 					query,
 				}),
@@ -281,16 +281,16 @@ module.exports = class Music extends Provider {
 	async resolve(data, message) {
 		try {
 			switch (data.type) {
-				case `list_${this.type}`:
+				case `ls_${this.type}`:
 					await this.list(message, data);
 					break;
-				case `paginate_list_${this.type}`:
+				case `page_ls_${this.type}`:
 					await this.paginate(message, data, "list");
 					break;
-				case `search_${this.type}`:
+				case `srch_${this.type}`:
 					await this.interactiveSearch(message, data.page);
 					break;
-				case `paginate_search_${this.type}`:
+				case `page_srch_${this.type}`:
 					await this.paginate(message, data, "search");
 					break;
 			}
