@@ -28,8 +28,9 @@ A telegram bot :robot: for music, videos, movies, EDM tracks, torrent downloads 
 
 ## Features
 
-- Browse and download `movies`, `music`, `anime` and `torrent`
-- Ability to browse `music` by different genres
+- Browse, search and download `movies`, `music`, `anime` and `torrent`
+- Ability to browse `music` sorted by genre
+- Ability to download `music` directly from chat
 - Ability to paginate all returned results
 - Supports personalized settings
 
@@ -74,7 +75,8 @@ $ git clone https://github.com/kodjunkie/beetube-bot.git
 $ cd beetube-bot
 $ cp .env.example .env # Update .env accordingly
 
-# To boot-up first time only or whenever docker file is modified (builds the container)
+# To boot-up first time only
+# Or whenever docker file is modified (builds the container)
 $ docker compose up --build
 
 # To boot-up without building the container (regular use)
