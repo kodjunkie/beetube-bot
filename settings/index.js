@@ -21,19 +21,6 @@ module.exports = class Base {
 	}
 
 	/**
-	 * @param  {} chatId
-	 */
-	defaultReply(chatId) {
-		const botChannel = process.env.BOT_CHANNEL;
-		this.bot.sendMessage(
-			chatId,
-			`\u{1F41D} You need to join [@${botChannel}](https://t.me/${botChannel}) to use this feature, it is exclusive only to our channel subscribers.
-			\nBeing a part of the community makes you aware of new *updates*, *features* and *bugfixes* happening on \`${process.env.BOT_NAME}\` bot \u{1F680} \u{1F680}`,
-			keyboard
-		);
-	}
-
-	/**
 	 * @param  {} value
 	 */
 	toggleFeedbackText(value) {

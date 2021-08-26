@@ -13,16 +13,17 @@ module.exports = class MusicSetting extends Base {
 		const value = settings.chat_music_download ? 1 : 0;
 
 		await this.bot.editMessageText(
-			`\u{2B07} <b>Download music from chat</b>
-            \nEnabling this will allow you download music directly from chat (<em>experimental</em>)
-			\n\u{2705} Supported extensions
-			- \t .mp3
-			- \t .flac
-			- \t .wma
-			- \t .wav
-			- \t .ogg
-			- \t .aiff
-			- \t .alac`,
+			`\u{2B07} <b>Download music via chat</b> \u{1F6A7}
+            \nEnabling this will allow you download music directly from chat (<em>experimental</em>).
+			\n<b>Note:</b> The actual size is compressed and you can't download more than <b><em>50Mb</em></b> file size via chat.
+			\n\u{2705} Supported formats
+			- \t MPEG-1/2 Audio Layer III (MP3)
+			- \t Free Lossless Audio Codec (FLAC)
+			- \t Windows Media Audio (WMA)
+			- \t Waveform Audio (WAV)
+			- \t Ogg Vorbis Audio (OGG)
+			- \t Audio Interchange File Format (AIFF)
+			- \t Apple Lossless Audio Codec (ALAC)`,
 			{
 				message_id,
 				chat_id: chat.id,
@@ -64,14 +65,13 @@ module.exports = class MusicSetting extends Base {
 					await this.setting(message);
 					break;
 				default:
-					/* const match = data.type.match(/\d$/);
+					const match = data.type.match(/\d$/);
 					if (!match || !match[0]) return;
 					await Setting.updateOne(
 						{ user: chatId },
 						{ $set: { chat_music_download: !Boolean(parseInt(match[0])) } }
 					);
-					await this.setting(message); */
-					await this.defaultReply(chatId);
+					await this.setting(message);
 			}
 		} catch (error) {
 			errorHandler(this.bot, chatId, error);

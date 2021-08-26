@@ -13,12 +13,12 @@ module.exports = class PageSetting extends Base {
 		const value = settings.purge_old_pages ? 1 : 0;
 
 		await this.bot.editMessageText(
-			`\u{23E9} *Delete previous page results*
-            \nBy default previous results are removed during pagination to ease chat scrolling, use this section to change this behaviour.`,
+			`\u{23E9} <b>Auto delete old messages</b>
+            \nBy default previous messages are deleted during pagination to ease chat scrolling, use this section to change this behaviour.`,
 			{
 				message_id,
 				chat_id: chat.id,
-				parse_mode: "Markdown",
+				parse_mode: "html",
 				reply_markup: JSON.stringify({
 					inline_keyboard: [
 						[
