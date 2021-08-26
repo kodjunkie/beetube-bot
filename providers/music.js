@@ -29,9 +29,7 @@ module.exports = class Music extends Provider {
 		const response = await axios.get(`${this.endpoint}/list`, { params });
 		const data = response.data.data;
 
-		if (data.length < 1) {
-			return this.emptyAPIResponse(chat.id, message_id);
-		}
+		if (data.length < 1) return this.emptyAPIResponse(chat.id, message_id);
 
 		const genre = params.genre || false;
 		const page = params.page;
@@ -45,9 +43,7 @@ module.exports = class Music extends Provider {
 			_.map(data, music => {
 				const options = { parse_mode: "html" };
 				options.reply_markup = JSON.stringify({
-					inline_keyboard: [
-						[{ text: `${keypad.download} (${music.size})`, url: music.url }],
-					],
+					inline_keyboard: [this.getDlButton(settings, music)],
 				});
 
 				promises.push(
@@ -97,15 +93,7 @@ module.exports = class Music extends Provider {
 				.sendMessage(chat.id, `\u{1F4BF} <b>${paging.name}</b>`, {
 					parse_mode: "html",
 					reply_markup: JSON.stringify({
-						inline_keyboard: [
-							[
-								{
-									text: `${keypad.download} (${paging.size})`,
-									url: paging.url,
-								},
-							],
-							pagination,
-						],
+						inline_keyboard: [this.getDlButton(settings, paging), pagination],
 					}),
 				})
 				.then(msg => {
@@ -163,21 +151,19 @@ module.exports = class Music extends Provider {
 		const response = await axios.get(`${this.endpoint}/search`, { params });
 		const data = response.data.data;
 
-		if (data.length < 1) {
+		if (data.length < 1)
 			return this.emptyAPIResponse(chat.id, message_id, "No results found.");
-		}
 
 		const page = params.page;
 		const pages = [],
 			promises = [],
-			paging = data.pop();
+			paging = data.pop(),
+			settings = await Setting.findOne({ user: chat.id });
 
 		_.map(data, music => {
 			const options = { parse_mode: "html" };
 			options.reply_markup = JSON.stringify({
-				inline_keyboard: [
-					[{ text: `${keypad.download} (${music.size})`, url: music.url }],
-				],
+				inline_keyboard: [this.getDlButton(settings, music)],
 			});
 
 			promises.push(
@@ -212,7 +198,6 @@ module.exports = class Music extends Provider {
 			},
 		];
 
-		const settings = await Setting.findOne({ user: chat.id });
 		if ((!settings || settings.purge_old_pages) && page > 1) {
 			pagination.unshift({
 				text: keypad.previous,
@@ -228,10 +213,7 @@ module.exports = class Music extends Provider {
 			.sendMessage(chat.id, `\u{1F4BF} <b>${paging.name}</b>`, {
 				parse_mode: "html",
 				reply_markup: JSON.stringify({
-					inline_keyboard: [
-						[{ text: `${keypad.download} (${paging.size})`, url: paging.url }],
-						pagination,
-					],
+					inline_keyboard: [this.getDlButton(settings, paging), pagination],
 				}),
 			})
 			.then(msg => {
@@ -274,6 +256,68 @@ module.exports = class Music extends Provider {
 	}
 
 	/**
+	 * Get the download button
+	 * @param  {} settings
+	 * @param  {} music
+	 */
+	getDlButton(settings, music) {
+		let button = { text: `${keypad.download} (${music.size})`, url: music.url };
+		const supportedExt = ["mp3", "flac", "wma", "wav", "ogg", "aiff", "alac"];
+		const ext = decodeURIComponent(music.url)
+			.split(".")
+			.pop();
+
+		if (!music.size || !supportedExt.includes(ext)) return [button];
+
+		let size = music.size.split(".");
+		if (size.length < 2) size = size.split(" ");
+		size = parseInt(size[0]);
+
+		if (settings && settings.chat_music_download && size < 50) {
+			const url = new URL(music.url);
+			button = {
+				text: `${keypad.download} (${music.size})`,
+				callback_data: JSON.stringify({
+					type: `dl_${this.type}`,
+					info: `${music.name
+						.replace(/[^\w\s]/gi, "")
+						.replace(/_/, "")
+						.substr(0, 13)}_${url.host.split(".").shift()}_${music.key}`,
+				}),
+			};
+		}
+
+		return [button];
+	}
+
+	/**
+	 * Send audio file to chat
+	 * @param  {} message
+	 * @param  {} data
+	 */
+	async download(message, data) {
+		const chatId = message.chat.id;
+		const { message_id } = await this.bot.sendMessage(
+			chatId,
+			"\u{2B07} Preparing the music for download",
+			keyboard
+		);
+
+		const [name, sub, key] = data.info.split("_");
+		const url = new URL(`https://${sub}.zippyshare.com/downloadAudio`);
+		url.searchParams.append("key", key);
+		url.searchParams.append("time", "");
+		const music = await axios.get(url.href, { responseType: "stream" });
+
+		await this.bot.sendAudio(chatId, music.data, keyboard, {
+			filename: `${name} - ${key}.m4a`,
+			contentType: "audio/m4a",
+		});
+
+		await this.bot.deleteMessage(chatId, message_id);
+	}
+
+	/**
 	 * Task resolver
 	 * @param  {} data
 	 * @param  {} message
@@ -293,6 +337,8 @@ module.exports = class Music extends Provider {
 				case `page_srch_${this.type}`:
 					await this.paginate(message, data, "search");
 					break;
+				case `dl_${this.type}`:
+					await this.download(message, data);
 			}
 		} catch (error) {
 			errorHandler(this.bot, message.chat.id, error);
