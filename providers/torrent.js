@@ -48,13 +48,7 @@ module.exports = class Torrent extends Provider {
 				],
 			});
 
-			await this.bot.sendMessage(
-				chat.id,
-				`\u{1F30D} <b>${torrent.name}</b>
-					\n\u{2B06} Seeds: ${torrent.seeds} \u{2B07} leeches: ${torrent.leeches}
-					\n<em>${torrent.magnetic_link}</em>`,
-				options
-			);
+			await this.bot.sendMessage(chat.id, this.getText(torrent), options);
 		});
 
 		await this.bot.deleteMessage(chat.id, message_id);
@@ -103,13 +97,7 @@ module.exports = class Torrent extends Provider {
 
 			promises.push(
 				this.bot
-					.sendMessage(
-						chat.id,
-						`\u{1F30D} <b>${torrent.name}</b>
-					\n\u{2B06} Seeds: ${torrent.seeds} \u{2B07} leeches: ${torrent.leeches}
-					\n<em>${torrent.magnetic_link}</em>`,
-						options
-					)
+					.sendMessage(chat.id, this.getText(torrent), options)
 					.then(msg => {
 						pages.push({
 							insertOne: {
@@ -152,26 +140,20 @@ module.exports = class Torrent extends Provider {
 		}
 
 		await this.bot
-			.sendMessage(
-				chat.id,
-				`\u{1F30D} <b>${paging.name}</b>
-					\n\u{2B06} Seeds: ${paging.seeds} \u{2B07} leeches: ${paging.leeches}
-					\n<em>${paging.magnetic_link}</em>`,
-				{
-					parse_mode: "html",
-					reply_markup: JSON.stringify({
-						inline_keyboard: [
-							[
-								{
-									text: `\u{1F9F2} ${keypad.download} (${paging.size})`,
-									url: paging.url,
-								},
-							],
-							pagination,
+			.sendMessage(chat.id, this.getText(paging), {
+				parse_mode: "html",
+				reply_markup: JSON.stringify({
+					inline_keyboard: [
+						[
+							{
+								text: `\u{1F9F2} ${keypad.download} (${paging.size})`,
+								url: paging.url,
+							},
 						],
-					}),
-				}
-			)
+						pagination,
+					],
+				}),
+			})
 			.then(msg => {
 				pages.push({
 					insertOne: {
@@ -209,6 +191,26 @@ module.exports = class Torrent extends Provider {
 				await this.searchQueryValidator(reply, message, page);
 			}
 		);
+	}
+
+	/**
+	 * @param  {} torrent
+	 */
+	getText(torrent) {
+		let description = torrent.description;
+		if (description) {
+			let limit = 300;
+			if (description.length > limit)
+				description = `<b>Description:</b> <em>${description.substr(
+					0,
+					limit
+				)}...</em>`;
+			else description = `<b>Description:</b> <em>${description}</em>`;
+		} else description = `<em>${torrent.magnetic_link}</em>`;
+
+		return `\u{1F30D} <b>${torrent.name}</b>
+		\n\u{2B06} Seeds: ${torrent.seeds} \u{2B07} leeches: ${torrent.leeches}
+		\n${description}`;
 	}
 
 	/**
