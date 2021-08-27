@@ -4,11 +4,11 @@
 
 </div>
 
-<h1 align="center">Beetube :bee: Bot</h1>
+<h2 align="center">Beetube :bee: Bot</h2>
 
 <div align="center">
 
-A telegram bot :robot: for music, videos, movies, EDM tracks, torrent downloads and more.
+A telegram bot :robot: for music, videos, movies, EDM tracks, torrent downloads, files and more.
 
 [![https://t.me/beetube_bot](https://img.shields.io/badge/🤖%20Telegram-Bot-neon.svg)](https://t.me/beetube_bot) [![https://t.me/beetubers](https://img.shields.io/badge/💬%20Telegram-Channel-blue.svg)](https://t.me/beetubers) [![Beetube CI](https://github.com/kodjunkie/beetube-bot/workflows/Beetube%20CI/badge.svg)](https://github.com/kodjunkie/beetube-bot/actions) <a href="https://github.com/kodjunkie/beetube-bot/blob/master/LICENSE"><img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License: MIT" height="20"></a>
 
@@ -36,16 +36,16 @@ A telegram bot :robot: for music, videos, movies, EDM tracks, torrent downloads 
 
 ## Installation
 
-**NOTE:** By default it's been setup for easy deployment on [Heroku](https://heroku.com/), you can select either Github or [Heroku](https://heroku.com/) CLI deployment method.
+**NOTE:** By default it's been setup for easy deployment on <a href="https://heroku.com/" target="_blank">Heroku</a>, you can select either Github or Heroku CLI deployment method.
 
 ### Requirements
 
-- Node >= `v14.x`
-- Mongo DB
+- Nodejs >= `v14.x`
+- MongoDB (database)
 
 ### Telegram Setup (required)
 
-1.  Create a new bot via [@BotFather](https://telegram.me/BotFather) and note the `token`
+1.  Create a new bot via <a href="https://telegram.me/BotFather" target="_blank">@BotFather</a> and note the `token`
 2.  Type `/setcommands`
 3.  Select the bot you just created
 4.  Copy and paste the texts below as the bot's commands
@@ -94,7 +94,7 @@ $ npm test
 
 ## Deployed
 
-Checkout the deployed version [here](https://t.me/Beetube_bot)
+Checkout the deployed version <a href="https://t.me/Beetube_bot" target="_blank">here</a>
 
 ## Contribution
 
@@ -102,11 +102,11 @@ All contributions of any kind are welcome.
 
 ## License
 
-This project is opened under the [MIT 2.0 License](https://github.com/kodjunkie/beetube-bot/blob/master/LICENSE) which allows very broad use for both academic and commercial purposes.
+This project is opened under the <a href="https://github.com/kodjunkie/beetube-bot/blob/master/LICENSE" target="_blank">MIT 2.0 License</a> which allows very broad use for both academic and commercial purposes.
 
 ## Credits
 
-| External APIs                                                     | Uses           |
-| ----------------------------------------------------------------- | -------------- |
-| [kodjunkie/node-raspar](https://github.com/kodjunkie/node-raspar) | Music, Torrent |
-| [Go-phie/gophie](https://github.com/Go-phie/gophie)               | Movie, Anime   |
+| External APIs                                                                                | Uses           |
+| -------------------------------------------------------------------------------------------- | -------------- |
+| <a href="https://github.com/kodjunkie/node-raspar" target="_blank">kodjunkie/node-raspar</a> | Music, Torrent |
+| <a href="https://github.com/Go-phie/gophie" target="_blank">Go-phie/gophie</a>               | Movie, Anime   |
