@@ -261,22 +261,22 @@ module.exports = class Music extends Provider {
 	 * @param  {} music
 	 */
 	getDlButton(settings, music) {
-		let button = { text: `${keypad.download} (${music.size})`, url: music.url };
-		const supportedExt = ["mp3", "flac", "wma", "wav", "ogg", "aiff", "alac"];
+		const size = music.size;
+		let button = { text: `${keypad.download} (${size})`, url: music.url };
+		const supportedExts = ["mp3", "flac", "wma", "wav", "ogg", "aiff", "alac"];
 		const ext = decodeURIComponent(music.url)
 			.split(".")
 			.pop();
 
-		if (!music.size || !supportedExt.includes(ext)) return [button];
-
-		let size = music.size.split(".");
-		if (size.length < 2) size = size.split(" ");
-		size = parseInt(size[0]);
-
-		if (settings && settings.chat_music_download && size < 50) {
+		if (!size || !supportedExts.includes(ext.toLowerCase())) return [button];
+		/*
+		 * Ensure the size of the file is not more than 50MB
+		 * @see https://core.telegram.org/bots/api#sendaudio
+		 */
+		if (settings && settings.chat_music_download && parseFloat(size) <= 50) {
 			const url = new URL(music.url);
 			button = {
-				text: `${keypad.download} (${music.size})`,
+				text: `${keypad.download} (${size})`,
 				callback_data: JSON.stringify({
 					type: `dl_${this.type}`,
 					info: `${music.name
