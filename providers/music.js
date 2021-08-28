@@ -303,16 +303,29 @@ module.exports = class Music extends Provider {
 			keyboard
 		);
 
-		const [name, sub, key] = data.info.split("_");
+		let [name, sub, key] = data.info.split("_");
+		name = name + " - " + key;
+
 		const url = new URL(`https://${sub}.zippyshare.com/downloadAudio`);
 		url.searchParams.append("key", key);
 		url.searchParams.append("time", "");
 		const music = await axios.get(url.href, { responseType: "stream" });
 
-		await this.bot.sendAudio(chatId, music.data, keyboard, {
-			filename: `${name} - ${key}.m4a`,
-			contentType: "audio/m4a",
-		});
+		await this.bot.sendAudio(
+			chatId,
+			music.data,
+			{
+				...keyboard,
+				title: name,
+				caption: `Downloaded via \u{1F41D} [${process.env.BOT_NAME} bot](https://t.me/${process.env.TG_BOT_NAME})`,
+				reply_to_message_id: message.message_id,
+				allow_sending_without_reply: true,
+			},
+			{
+				filename: `${name}.m4a`,
+				contentType: "audio/m4a",
+			}
+		);
 
 		await this.bot.deleteMessage(chatId, message_id);
 	}
