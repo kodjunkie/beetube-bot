@@ -19,10 +19,9 @@ module.exports = bot => async message => {
 			? `[${tgUser.first_name}](tg://user?id=${tgUser.id})`
 			: `@${tgUser.username}`;
 
-		const text = `Hi ${username} \u{1F680} \u{1F680} 
-		\nWelcome to \u{1F41D} ${botName} bot\n\`we offer free \u{1F4C0} music, \u{1F3AC} movies, \u{1F30D} torrent, \u{1F3B5} EDM tracks, \u{1F4F9} anime downloads and more...\`
-		\nTo stay updated on new *updates*, *features* and *bugfixes* happening on \u{1F41D} ${botName} join
-		\nOfficial channel: [@${botChannel}](https://t.me/${botChannel})`;
+		const text = `Hi ${username} \u{1F680}
+		\nWelcome to \u{1F41D} ${botName}\n\`we offer free music, movies, anime, torrent, EDM tracks, series downloads, files, and more.\`
+		\nTo stay up to date on new *features*, *bug fixes*, and *enhancements* happening here join our official channel [@${botChannel}](https://t.me/${botChannel})`;
 
 		await bot.sendMessage(chatId, text, keyboard);
 	} catch (error) {
