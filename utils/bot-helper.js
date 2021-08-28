@@ -23,7 +23,7 @@ exports.keypad = {
 
 exports.settings = {
 	text: `\u{2699} *Settings*
-	\nUse this section to apply personalized tweaks to \u{1F41D} \`${process.env.BOT_NAME}\` bot`,
+	\nUse this section to apply personalized custom tweaks to \u{1F41D} ${process.env.BOT_NAME}`,
 	keyboard: {
 		parse_mode: "Markdown",
 		reply_markup: JSON.stringify({
