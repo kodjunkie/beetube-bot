@@ -38,12 +38,12 @@ module.exports = class Music extends Provider {
 
 		if (genre) {
 			const promises = [],
-				paging = data.pop();
+				pager = data.pop();
 
 			_.map(data, music => {
 				const options = { parse_mode: "html" };
 				options.reply_markup = JSON.stringify({
-					inline_keyboard: [this.getDlButton(settings, music)],
+					inline_keyboard: [this.getDlButton(music, settings)],
 				});
 
 				promises.push(
@@ -90,10 +90,10 @@ module.exports = class Music extends Provider {
 			}
 
 			await this.bot
-				.sendMessage(chat.id, `\u{1F4BF} <b>${paging.name}</b>`, {
+				.sendMessage(chat.id, `\u{1F4BF} <b>${pager.name}</b>`, {
 					parse_mode: "html",
 					reply_markup: JSON.stringify({
-						inline_keyboard: [this.getDlButton(settings, paging), pagination],
+						inline_keyboard: [this.getDlButton(pager, settings), pagination],
 					}),
 				})
 				.then(msg => {
@@ -157,13 +157,13 @@ module.exports = class Music extends Provider {
 		const page = params.page;
 		const pages = [],
 			promises = [],
-			paging = data.pop(),
+			pager = data.pop(),
 			settings = await Setting.findOne({ user: chat.id });
 
 		_.map(data, music => {
 			const options = { parse_mode: "html" };
 			options.reply_markup = JSON.stringify({
-				inline_keyboard: [this.getDlButton(settings, music)],
+				inline_keyboard: [this.getDlButton(music, settings)],
 			});
 
 			promises.push(
@@ -210,10 +210,10 @@ module.exports = class Music extends Provider {
 		}
 
 		await this.bot
-			.sendMessage(chat.id, `\u{1F4BF} <b>${paging.name}</b>`, {
+			.sendMessage(chat.id, `\u{1F4BF} <b>${pager.name}</b>`, {
 				parse_mode: "html",
 				reply_markup: JSON.stringify({
-					inline_keyboard: [this.getDlButton(settings, paging), pagination],
+					inline_keyboard: [this.getDlButton(pager, settings), pagination],
 				}),
 			})
 			.then(msg => {
@@ -257,10 +257,10 @@ module.exports = class Music extends Provider {
 
 	/**
 	 * Get the download button
-	 * @param  {} settings
 	 * @param  {} music
+	 * @param  {} settings
 	 */
-	getDlButton(settings, music) {
+	getDlButton(music, settings) {
 		const size = music.size;
 		let button = { text: `${keypad.download} (${size})`, url: music.url };
 		const supportedExts = ["mp3", "flac", "wma", "wav", "ogg", "aiff", "alac"];
