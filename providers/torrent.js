@@ -1,5 +1,8 @@
 const _ = require("lodash");
 const Provider = require(".");
+const {
+	message: { textLimit },
+} = require("../config");
 const axios = require("axios");
 const Setting = require("../models/setting");
 const Paginator = require("../models/paginator");
@@ -199,11 +202,10 @@ module.exports = class Torrent extends Provider {
 	getText(torrent) {
 		let description = torrent.description;
 		if (description) {
-			let limit = 300;
-			if (description.length > limit)
+			if (description.length > textLimit)
 				description = `<b>Description:</b> <em>${description.substr(
 					0,
-					limit
+					textLimit
 				)}...</em>`;
 			else description = `<b>Description:</b> <em>${description}</em>`;
 		} else description = `<em>${torrent.magnetic_link}</em>`;

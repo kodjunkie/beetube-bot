@@ -1,5 +1,8 @@
 const _ = require("lodash");
 const Provider = require(".");
+const {
+	message: { textLimit },
+} = require("../config");
 const axios = require("axios");
 const Setting = require("../models/setting");
 const Paginator = require("../models/paginator");
@@ -29,13 +32,11 @@ module.exports = class Movie extends Provider {
 			params: { page, engine: "fzmovies" },
 		});
 
-		if (data.length < 1) {
-			return this.emptyAPIResponse(chat.id, message_id);
-		}
+		if (data.length < 1) return this.emptyAPIResponse(chat.id, message_id);
 
 		const pages = [],
 			promises = [],
-			paging = data.pop();
+			pager = data.pop();
 
 		_.map(data, movie => {
 			const options = { parse_mode: "html" };
@@ -52,17 +53,7 @@ module.exports = class Movie extends Provider {
 
 			promises.push(
 				this.bot
-					.sendMessage(
-						chat.id,
-						`<a href="${movie.CoverPhotoLink}">\u{1F3AC}</a> <b>${
-							movie.Title
-						}</b>${
-							movie.Description
-								? `\n\n<b>Description:</b> <em>${movie.Description}</em>`
-								: ""
-						}`,
-						options
-					)
+					.sendMessage(chat.id, this.getText(movie), options)
 					.then(msg => {
 						pages.push({
 							insertOne: {
@@ -103,33 +94,20 @@ module.exports = class Movie extends Provider {
 		}
 
 		await this.bot
-			.sendMessage(
-				chat.id,
-				`<a href="${paging.CoverPhotoLink}">\u{1F3AC}</a> <b>${
-					paging.Title
-				}</b>${
-					paging.Description
-						? `\n\n<b>Description:</b> <em>${paging.Description.slice(
-								0,
-								-6
-						  )}</em>`
-						: ""
-				}`,
-				{
-					parse_mode: "html",
-					reply_markup: JSON.stringify({
-						inline_keyboard: [
-							[
-								{
-									text: `${keypad.download} (${paging.Size})`,
-									url: paging.DownloadLink,
-								},
-							],
-							pagination,
+			.sendMessage(chat.id, this.getText(pager), {
+				parse_mode: "html",
+				reply_markup: JSON.stringify({
+					inline_keyboard: [
+						[
+							{
+								text: `${keypad.download} (${pager.Size})`,
+								url: pager.DownloadLink,
+							},
 						],
-					}),
-				}
-			)
+						pagination,
+					],
+				}),
+			})
 			.then(msg => {
 				pages.push({
 					insertOne: {
@@ -184,17 +162,7 @@ module.exports = class Movie extends Provider {
 					],
 				});
 
-				await this.bot.sendMessage(
-					chat.id,
-					`<a href="${movie.CoverPhotoLink}">\u{1F3AC}</a> <b>${
-						movie.Title
-					}</b>${
-						movie.Description
-							? `\n\n<b>Description:</b> <em>${movie.Description}</em>`
-							: ""
-					}`,
-					options
-				);
+				await this.bot.sendMessage(chat.id, this.getText(movie), options);
 			}
 		});
 
@@ -221,5 +189,22 @@ module.exports = class Movie extends Provider {
 				await this.searchQueryValidator(reply, message);
 			}
 		);
+	}
+
+	/**
+	 * @param  {} movie
+	 */
+	getText(movie) {
+		let description = movie.Description;
+		if (description) {
+			if (description.length > textLimit)
+				description = `\n\n<b>Description:</b> <em>${description.substr(
+					0,
+					textLimit
+				)}...</em>`;
+			else description = `\n\n<b>Description:</b> <em>${description}</em>`;
+		} else description = "";
+
+		return `<a href="${movie.CoverPhotoLink}">\u{1F3AC}</a> <b>${movie.Title}</b>${description}`;
 	}
 };

@@ -21,7 +21,7 @@ module.exports = bot => async message => {
 
 		const text = `Hi ${username} \u{1F680}
 		\n\u{1F41D} ${botName} offers free music, movies, anime, torrent, EDM tracks, series downloads, files, and more.
-		\nTo stay up to date on new *features*, *bug fixes*, and *enhancements* happening here join our official channel [@${botChannel}](https://t.me/${botChannel})`;
+		\nTo stay up to date on new *features*, *bug fixes*, and *enhancements* happening here, join our official channel [@${botChannel}](https://t.me/${botChannel})`;
 
 		await bot.sendMessage(chatId, text, keyboard);
 	} catch (error) {

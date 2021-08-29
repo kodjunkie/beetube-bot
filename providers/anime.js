@@ -1,5 +1,8 @@
 const _ = require("lodash");
 const Provider = require(".");
+const {
+	message: { textLimit },
+} = require("../config");
 const axios = require("axios");
 const Setting = require("../models/setting");
 const Paginator = require("../models/paginator");
@@ -37,7 +40,7 @@ module.exports = class Anime extends Provider {
 
 		const pages = [],
 			promises = [],
-			paging = data.pop();
+			pager = data.pop();
 
 		_.map(data, anime => {
 			const options = { parse_mode: "html" };
@@ -49,7 +52,7 @@ module.exports = class Anime extends Provider {
 							text: keypad.share,
 							url: `https://t.me/share/url?url=${encodeURIComponent(
 								anime.DownloadLink
-							)}&text=Downloaded%20from%20@${botTGname}`,
+							)}&text=Downloaded%20via%20@${botTGname}`,
 						},
 					],
 				],
@@ -57,20 +60,7 @@ module.exports = class Anime extends Provider {
 
 			promises.push(
 				this.bot
-					.sendMessage(
-						chat.id,
-						`<a href="${anime.CoverPhotoLink}">\u{1F3A1}</a> <b>${
-							anime.Title
-						}</b>${
-							anime.Description
-								? `\n\n<b>Description:</b> <em>${anime.Description.substr(
-										0,
-										300
-								  )}...</em>`
-								: ""
-						}`,
-						options
-					)
+					.sendMessage(chat.id, this.getText(anime), options)
 					.then(msg => {
 						pages.push({
 							insertOne: {
@@ -111,36 +101,23 @@ module.exports = class Anime extends Provider {
 		}
 
 		await this.bot
-			.sendMessage(
-				chat.id,
-				`<a href="${paging.CoverPhotoLink}">\u{1F3A1}</a> <b>${
-					paging.Title
-				}</b>${
-					paging.Description
-						? `\n\n<b>Description:</b> <em>${paging.Description.substr(
-								0,
-								300
-						  )}...</em>`
-						: ""
-				}`,
-				{
-					parse_mode: "html",
-					reply_markup: JSON.stringify({
-						inline_keyboard: [
-							[
-								{ text: keypad.download, url: paging.DownloadLink },
-								{
-									text: keypad.share,
-									url: `https://t.me/share/url?url=${encodeURIComponent(
-										paging.DownloadLink
-									)}&text=Downloaded%20from%20@${botTGname}`,
-								},
-							],
-							pagination,
+			.sendMessage(chat.id, this.getText(pager), {
+				parse_mode: "html",
+				reply_markup: JSON.stringify({
+					inline_keyboard: [
+						[
+							{ text: keypad.download, url: pager.DownloadLink },
+							{
+								text: keypad.share,
+								url: `https://t.me/share/url?url=${encodeURIComponent(
+									pager.DownloadLink
+								)}&text=Downloaded%20via%20@${botTGname}`,
+							},
 						],
-					}),
-				}
-			)
+						pagination,
+					],
+				}),
+			})
 			.then(msg => {
 				pages.push({
 					insertOne: {
@@ -191,24 +168,13 @@ module.exports = class Anime extends Provider {
 							text: keypad.share,
 							url: `https://t.me/share/url?url=${encodeURIComponent(
 								anime.DownloadLink
-							)}&text=Downloaded%20from%20@${botTGname}`,
+							)}&text=Downloaded%20via%20@${botTGname}`,
 						},
 					],
 				],
 			});
 
-			await this.bot.sendMessage(
-				chat.id,
-				`<a href="${anime.CoverPhotoLink}">\u{1F3A1}</a> <b>${anime.Title}</b>${
-					anime.Description
-						? `\n\n<b>Description:</b> <em>${anime.Description.substr(
-								0,
-								300
-						  )}...</em>`
-						: ""
-				}`,
-				options
-			);
+			await this.bot.sendMessage(chat.id, this.getText(anime), options);
 		});
 
 		await this.bot.deleteMessage(chat.id, message_id);
@@ -234,5 +200,22 @@ module.exports = class Anime extends Provider {
 				await this.searchQueryValidator(reply, message);
 			}
 		);
+	}
+
+	/**
+	 * @param  {} anime
+	 */
+	getText(anime) {
+		let description = anime.Description;
+		if (description) {
+			if (description.length > textLimit)
+				description = `\n\n<b>Description:</b> <em>${description.substr(
+					0,
+					textLimit
+				)}...</em>`;
+			else description = `\n\n<b>Description:</b> <em>${description}</em>`;
+		} else description = "";
+
+		return `<a href="${anime.CoverPhotoLink}">\u{1F3A1}</a> <b>${anime.Title}</b>${description}`;
 	}
 };
