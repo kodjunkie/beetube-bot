@@ -5,7 +5,7 @@
 module.exports = bot => async message => {
 	const chatId = message.chat.id;
 	const options = {
-		parse_mode: "Markdown",
+		parse_mode: "html",
 		reply_markup: JSON.stringify({
 			inline_keyboard: [
 				[

@@ -6,11 +6,13 @@ const Paginator = require("../models/paginator");
 const errorHandler = require("../utils/error-handler");
 const { keyboard, keypad } = require("../utils/bot-helper");
 
+const env = process.env;
+
 module.exports = class Music extends Provider {
 	constructor(bot) {
 		super(bot);
 		this.type = "music";
-		this.endpoint = process.env.RASPAR_API;
+		this.endpoint = env.RASPAR_API;
 	}
 
 	/**
@@ -317,7 +319,7 @@ module.exports = class Music extends Provider {
 			{
 				...keyboard,
 				title: name,
-				caption: `Downloaded via \u{1F41D} [${process.env.BOT_NAME} bot](https://t.me/${process.env.TG_BOT_NAME})`,
+				caption: `Downloaded via \u{1F41D} [${env.BOT_NAME} bot](https://t.me/${env.TG_BOT_NAME})`,
 				reply_to_message_id: message.message_id,
 				allow_sending_without_reply: true,
 			},
