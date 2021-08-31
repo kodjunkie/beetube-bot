@@ -283,7 +283,8 @@ module.exports = class Music extends Provider {
 					type: `dl_${this.type}`,
 					info: `${music.name
 						.replace(/[^\w\s]/gi, "")
-						.replace(/_/, "")
+						.replace(/\s\s/g, " ")
+						.replace("_", "")
 						.substr(0, 13)}_${url.host.split(".").shift()}_${music.key}`,
 				}),
 			};
