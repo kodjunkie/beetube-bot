@@ -20,8 +20,8 @@ A telegram 🤖 bot for music, videos, movies, EDM tracks, torrent downloads, fi
     - [Telegram setup](#installation)
     - [Install on system](#installation)
     - [Install via docker](#installation)
-  - [Tests](#tests)
   - [Deployed](#deployed)
+  - [Tests](#tests)
   - [Contribution](#contribution)
   - [License (MIT)](#license)
   - [Credits](#credits)
@@ -86,15 +86,15 @@ $ docker compose up
 $ docker compose down
 ```
 
+## Deployed
+
+Checkout the deployed version <a href="https://t.me/Beetube_bot" target="_blank">here</a>
+
 ## Tests
 
 ```bash
 $ npm test
 ```
-
-## Deployed
-
-Checkout the deployed version <a href="https://t.me/Beetube_bot" target="_blank">here</a>
 
 ## Contribution
 
