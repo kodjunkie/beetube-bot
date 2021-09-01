@@ -1,16 +1,16 @@
 const _ = require("lodash");
-const Provider = require(".");
 const {
 	message: { textLimit },
 } = require("../config");
 const axios = require("axios");
+const AbstractProvider = require(".");
 const Setting = require("../models/setting");
 const Paginator = require("../models/paginator");
 const { keyboard, keypad } = require("../utils/bot-helper");
 
 const botTGname = process.env.TG_BOT_NAME;
 
-module.exports = class Anime extends Provider {
+module.exports = class Anime extends AbstractProvider {
 	constructor(bot) {
 		super(bot);
 		this.type = "anime";

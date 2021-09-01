@@ -1,7 +1,7 @@
 const errorHandler = require("../utils/error-handler");
-const { settings, keyboard } = require("../utils/bot-helper");
+const { settings } = require("../utils/bot-helper");
 
-module.exports = class Base {
+module.exports = class MainSetting {
 	constructor(bot) {
 		this.bot = bot;
 		this.type = "setting";
