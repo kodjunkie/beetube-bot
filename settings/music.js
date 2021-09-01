@@ -1,8 +1,8 @@
-const Base = require(".");
+const MainSetting = require(".");
 const Setting = require("../models/setting");
 const errorHandler = require("../utils/error-handler");
 
-module.exports = class MusicSetting extends Base {
+module.exports = class MusicSetting extends MainSetting {
 	/**
 	 * Music settings
 	 * @param  {} {chat

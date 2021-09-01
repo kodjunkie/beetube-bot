@@ -7,7 +7,6 @@ TelegramBot.Promise = require("bluebird").config({
 const config = require("./config");
 const mongoose = require("mongoose");
 
-// Commands
 const listCommand = require("./commands/list");
 const aboutCommand = require("./commands/about");
 const startCommand = require("./commands/start");
@@ -15,7 +14,6 @@ const searchCommand = require("./commands/search");
 const keyboardCommand = require("./commands/keyboard");
 const settingsCommand = require("./commands/settings");
 
-// Handlers
 const botErrorHandler = require("./handlers/bot-error");
 const callbackQueryHandler = require("./handlers/callback-query");
 
@@ -38,7 +36,7 @@ mongoose
 		bot.on("polling_error", botErrorHandler);
 		bot.on("error", botErrorHandler);
 
-		// Successful connection
+		// On successful connection
 		console.log("\u{1F41D} Listening for commands");
 	})
 	.catch(error => console.error(error));

@@ -3,7 +3,7 @@ const Paginator = require("../models/paginator");
 const { keyboard } = require("../utils/bot-helper");
 const errorHandler = require("../utils/error-handler");
 
-module.exports = class Provider {
+module.exports = class AbstractProvider {
 	/**
 	 * Constructor
 	 * @param  {} bot

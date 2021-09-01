@@ -1,15 +1,15 @@
 const _ = require("lodash");
-const Provider = require(".");
 const {
 	message: { textLimit },
 } = require("../config");
 const axios = require("axios");
+const AbstractProvider = require(".");
 const Setting = require("../models/setting");
 const Paginator = require("../models/paginator");
 const errorHandler = require("../utils/error-handler");
 const { keyboard, keypad } = require("../utils/bot-helper");
 
-module.exports = class Torrent extends Provider {
+module.exports = class Torrent extends AbstractProvider {
 	constructor(bot) {
 		super(bot);
 		this.type = "torrent";
