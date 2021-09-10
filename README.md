@@ -88,7 +88,7 @@ $ docker compose down
 
 ## Deployed
 
-Checkout the deployed version <a href="https://t.me/Beetube_bot" target="_blank">here</a>
+The deployed version can be found on telegram as <a href="https://t.me/beetube_bot" target="_blank">@beetube_bot</a>
 
 ## Tests
 
