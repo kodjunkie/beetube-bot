@@ -1,5 +1,5 @@
 {
-	"name": "beetube",
+	"name": "beetube-bot",
 	"version": "1.0.0",
 	"description": "A telegram 🤖 bot for music, movies, anime, torrent, EDM tracks, series downloads, files, and more.",
 	"keywords": [
@@ -49,7 +49,7 @@
 		"eslint-config-prettier": "^6.15.0",
 		"eslint-plugin-node": "^11.1.0",
 		"eslint-plugin-prettier": "^3.4.1",
-		"jest": "^27.1.1",
+		"jest": "^27.2.0",
 		"nodemon": "^2.0.12",
 		"prettier": "^1.19.1"
 	}
