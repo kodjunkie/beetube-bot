@@ -33,7 +33,7 @@ module.exports = class Music extends AbstractProvider {
 
 		if (data.length < 1) return this.emptyAPIResponse(chat.id, message_id);
 
-		const genre = params.genre || false;
+		const genre = params.genre || "";
 		const page = params.page;
 		const pages = [];
 		const settings = await Setting.findOne({ user: chat.id });
@@ -114,7 +114,7 @@ module.exports = class Music extends AbstractProvider {
 				text: gnr.name,
 				callback_data: JSON.stringify({
 					type: `ls_${this.type}`,
-					genre: gnr.name,
+					genre: gnr.name.substr(0, 18), // Ensures we don't exceed the 64 bytes limit
 					page: 1,
 				}),
 			}));
@@ -145,7 +145,7 @@ module.exports = class Music extends AbstractProvider {
 		const query = params.query;
 		const { message_id } = await this.bot.sendMessage(
 			chat.id,
-			`\u{1F4E1} Searching for \`${query}\``,
+			`\u{1F4E1} Searching for _${query}_`,
 			keyboard
 		);
 
@@ -195,7 +195,7 @@ module.exports = class Music extends AbstractProvider {
 				callback_data: JSON.stringify({
 					type: `page_srch_${this.type}`,
 					page: page + 1,
-					query,
+					query: query.substr(0, 16), // Ensures we don't exceed the 64 bytes limit,
 				}),
 			},
 		];
@@ -206,7 +206,7 @@ module.exports = class Music extends AbstractProvider {
 				callback_data: JSON.stringify({
 					type: `page_srch_${this.type}`,
 					page: page - 1,
-					query,
+					query: query.substr(0, 16), // Ensures we don't exceed the 64 bytes limit,
 				}),
 			});
 		}
@@ -285,7 +285,7 @@ module.exports = class Music extends AbstractProvider {
 						.replace(/[^\w\s]/gi, "")
 						.replace(/\s\s/g, " ")
 						.replace("_", "")
-						.substr(0, 13)}_${url.host.split(".").shift()}_${music.key}`,
+						.substr(0, 16)}_${url.host.split(".").shift()}_${music.key}`,
 				}),
 			};
 		}

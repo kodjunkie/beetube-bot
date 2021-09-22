@@ -58,7 +58,7 @@ module.exports = class Torrent extends AbstractProvider {
 	}
 
 	/**
-	 * Search for torrent
+	 * Search torrent
 	 * @param  {} message
 	 * @param  {} params
 	 */
@@ -66,7 +66,7 @@ module.exports = class Torrent extends AbstractProvider {
 		const query = params.query;
 		const { message_id } = await this.bot.sendMessage(
 			chat.id,
-			`\u{1F4E1} Searching for \`${query}\``,
+			`\u{1F4E1} Searching for _${query}_`,
 			keyboard
 		);
 
@@ -83,7 +83,7 @@ module.exports = class Torrent extends AbstractProvider {
 		const page = params.page;
 		const pages = [],
 			promises = [],
-			paging = data.pop();
+			pager = data.pop();
 
 		_.map(data, torrent => {
 			const options = { parse_mode: "html" };
@@ -125,7 +125,7 @@ module.exports = class Torrent extends AbstractProvider {
 				callback_data: JSON.stringify({
 					type: `page_srch_${this.type}`,
 					page: page + 1,
-					query,
+					query: query.substr(0, 14), // Ensures we don't exceed the 64 bytes limit
 				}),
 			},
 		];
@@ -137,20 +137,20 @@ module.exports = class Torrent extends AbstractProvider {
 				callback_data: JSON.stringify({
 					type: `page_srch_${this.type}`,
 					page: page - 1,
-					query,
+					query: query.substr(0, 14), // Ensures we don't exceed the 64 bytes limit
 				}),
 			});
 		}
 
 		await this.bot
-			.sendMessage(chat.id, this.getText(paging), {
+			.sendMessage(chat.id, this.getText(pager), {
 				parse_mode: "html",
 				reply_markup: JSON.stringify({
 					inline_keyboard: [
 						[
 							{
-								text: `\u{1F9F2} ${keypad.download} (${paging.size})`,
-								url: paging.url,
+								text: `\u{1F9F2} ${keypad.download} (${pager.size})`,
+								url: pager.url,
 							},
 						],
 						pagination,
