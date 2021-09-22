@@ -132,7 +132,7 @@ module.exports = class Movie extends AbstractProvider {
 	async search({ chat }, params) {
 		const { message_id } = await this.bot.sendMessage(
 			chat.id,
-			`\u{1F4E1} Searching for \`${params.query}\``,
+			`\u{1F4E1} Searching for _${params.query}_`,
 			keyboard
 		);
 
