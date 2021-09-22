@@ -54,7 +54,6 @@ module.exports = class AbstractProvider {
 			await Paginator.deleteMany({ _id: { $in: IDs } });
 		}
 
-		// TODO: Sanitize method="search" query and enforce the 64 bytes callback data limit
 		await this[method](message, data);
 	}
 
@@ -87,7 +86,7 @@ module.exports = class AbstractProvider {
 	 */
 	async searchQueryValidator(reply, message, page = 1) {
 		const query = reply.text;
-		if (query && query.length >= 2) await this.search(message, { query, page });
+		if (query && query.length > 1) await this.search(message, { query, page });
 		else
 			this.bot.sendMessage(
 				message.chat.id,
