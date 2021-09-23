@@ -4,7 +4,7 @@ const errorHandler = require("../utils/error-handler");
 
 module.exports = class MusicSetting extends MainSetting {
 	/**
-	 * Music settings
+	 * Music setting
 	 * @param  {} {chat
 	 * @param  {} message_id}
 	 */
@@ -14,8 +14,8 @@ module.exports = class MusicSetting extends MainSetting {
 
 		await this.bot.editMessageText(
 			`\u{2B07} <b>Download music via chat</b> \u{1F6A7}
-            \nEnabling this will allow you download music directly from chat (<em>experimental</em>).
-			\n<b>Note:</b> The actual size is compressed and you can't download more than <b><em>50Mb</em></b> file size via chat.
+            \nEnabling this will allow you download music directly from chat.
+			\n<b>Note:</b> The actual size is compressed and you can't download a music file of more than <em>200Mb</em> via chat.
 			\n\u{2705} Supported formats
 			- \t MPEG-1/2 Audio Layer III (MP3)
 			- \t Free Lossless Audio Codec (FLAC)
