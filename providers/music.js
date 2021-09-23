@@ -274,8 +274,10 @@ module.exports = class Music extends AbstractProvider {
 		/*
 		 * Ensure the size of the file is not more than 50MB
 		 * @see https://core.telegram.org/bots/api#sendaudio
+		 *
+		 * NOTE: The limit is temporarily set to 200MB as the returned file is compressed.
 		 */
-		if (settings && settings.chat_music_download && parseFloat(size) <= 50) {
+		if (settings && settings.chat_music_download && parseFloat(size) <= 200) {
 			const url = new URL(music.url);
 			button = {
 				text: `${keypad.download} (${size})`,
