@@ -4,7 +4,7 @@
 
 </div>
 
-<h2 align="center">Beetube :bee: Bot</h2>
+<h2 align="center">Beetube Bot</h2>
 
 <div align="center">
 
