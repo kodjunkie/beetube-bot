@@ -1,10 +1,10 @@
 <div align="center">
 
-<img src="./assets/logo-black.png" alt="Beetube" height="100" width="auto"></a>
+<img src="./assets/logo.png" alt="Beetube" height="100" width="auto"></a>
 
 </div>
 
-<h2 align="center">Beetube :bee: Bot</h2>
+<h2 align="center">Beetube Bot</h2>
 
 <div align="center">
 
