@@ -100,9 +100,11 @@ The deployed version can be found on telegram as <a href="https://t.me/beetube_b
 
 ## Liked it?
 
-Hope you liked this project, don't forget to give it a star ⭐.
+Hope you liked this project, don't forget to give it a star ⭐
 
-[![Stargazers over time](https://starchart.cc/kodjunkie/beetube-bot.svg)](https://starchart.cc/kodjunkie/beetube-bot)
+<a href="https://starchart.cc/kodjunkie/beetube-bot">
+    <img src="https://starchart.cc/kodjunkie/beetube-bot.svg" width="600px">
+</a>
 
 ## Tests
 
