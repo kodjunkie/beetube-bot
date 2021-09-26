@@ -17,12 +17,12 @@ A telegram 🤖 bot for music, videos, movies, EDM tracks, torrent downloads, fi
 - [Beetube :bee:](#beetube)
   - [Features](#features)
   - [Installation](#installation)
-    - [Telegram setup](#installation)
-    - [Install on system](#installation)
-    - [Install via docker](#installation)
+    - [Telegram setup](#telegram+setup)
+    - [Install on system](#install+system)
+    - [Install via docker](#install+docker)
   - [Deployed](#deployed)
+  - [Liked it?](#liked+it)
   - [Tests](#tests)
-  - [Contribution](#contribution)
   - [License (MIT)](#license)
   - [Credits](#credits)
 
@@ -43,6 +43,8 @@ A telegram 🤖 bot for music, videos, movies, EDM tracks, torrent downloads, fi
 - Nodejs >= `v14.x`
 - MongoDB (database)
 
+<a name="telegram+setup"></a>
+
 ### Telegram Setup (required)
 
 1.  Create a new bot via <a href="https://telegram.me/BotFather" target="_blank">@BotFather</a> and note the `token`
@@ -57,6 +59,8 @@ A telegram 🤖 bot for music, videos, movies, EDM tracks, torrent downloads, fi
   about - about this bot
 ```
 
+<a name="install+system"></a>
+
 ### Install on Local Machine
 
 ```bash
@@ -67,6 +71,8 @@ $ npm install
 # Start mongo db daemon
 $ npm start
 ```
+
+<a name="install+docker"></a>
 
 ### Installation via Docker Compose
 
@@ -90,21 +96,29 @@ $ docker compose down
 
 The deployed version can be found on telegram as <a href="https://t.me/beetube_bot" target="_blank">@beetube_bot</a>
 
+<a name="liked+it"></a>
+
+## Liked it?
+
+Hope you liked this project, don't forget to give it a star ⭐
+
+<a href="https://starchart.cc/kodjunkie/beetube-bot">
+    <img src="https://starchart.cc/kodjunkie/beetube-bot.svg" width="600px">
+</a>
+
 ## Tests
 
 ```bash
 $ npm test
 ```
 
-## Contribution
-
-All contributions of any kind are welcome.
-
 ## License
 
 This project is opened under the <a href="https://github.com/kodjunkie/beetube-bot/blob/master/LICENSE" target="_blank">MIT 2.0 License</a> which allows very broad use for both academic and commercial purposes.
 
 ## Credits
+
+Here's a list of the third-party APIs used to build this awesome project ❤️
 
 | External APIs                                                                                | Uses           |
 | -------------------------------------------------------------------------------------------- | -------------- |
