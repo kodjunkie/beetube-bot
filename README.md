@@ -1,12 +1,10 @@
 <div align="center">
-
-<img src="./assets/logo.png" alt="Beetube" height="100" width="auto"></a>
-
+  <img src="./assets/logo.png" alt="Beetube" height="100" width="auto"></a>
 </div>
 
-<h2 align="center">Beetube Bot</h2>
-
 <div align="center">
+
+<h2>Beetube Bot</h2>
 
 A telegram 🤖 bot for music, videos, movies, EDM tracks, torrent downloads, files and more.
 
@@ -102,9 +100,11 @@ The deployed version can be found on telegram as <a href="https://t.me/beetube_b
 
 Hope you liked this project, don't forget to give it a star ⭐
 
-<a href="https://starchart.cc/kodjunkie/beetube-bot">
+<div align="center">
+  <a href="https://starchart.cc/kodjunkie/beetube-bot">
     <img src="https://starchart.cc/kodjunkie/beetube-bot.svg" width="600px">
-</a>
+  </a>
+</div>
 
 ## Tests
 
