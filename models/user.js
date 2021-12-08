@@ -22,7 +22,7 @@ const UserSchema = new Schema(
 	{ timestamps: true, _id: false }
 );
 
-// First check if the user exists else create a new user
+// Return the user if exists else create a new user
 UserSchema.statics.firstOrCreate = async function(tgUser) {
 	let user = await this.findById(tgUser.id);
 	if (!user && !tgUser.is_bot) {
