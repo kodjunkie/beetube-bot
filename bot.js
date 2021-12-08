@@ -36,7 +36,7 @@ mongoose
 		bot.on("polling_error", botErrorHandler);
 		bot.on("error", botErrorHandler);
 
-		// On successful connection
+		// Successful connection
 		console.log("\u{1F41D} Listening for commands");
 	})
 	.catch(error => console.error(error));
