@@ -123,4 +123,3 @@ Here's a list of the third-party APIs used to build this awesome project ❤️
 | External APIs                                                                                | Uses           |
 | -------------------------------------------------------------------------------------------- | -------------- |
 | <a href="https://github.com/kodjunkie/node-raspar" target="_blank">kodjunkie/node-raspar</a> | Music, Torrent |
-| <a href="https://github.com/Go-phie/gophie" target="_blank">Go-phie/gophie</a>               | Movie, Anime   |
