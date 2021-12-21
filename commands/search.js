@@ -21,18 +21,10 @@ module.exports = bot => async message => {
 							type: "srch_music",
 						}),
 					},
-				],
-				[
 					{
 						text: "\u{1F30D} Torrent",
 						callback_data: JSON.stringify({
 							type: "srch_torrent",
-						}),
-					},
-					{
-						text: "\u{1F3A1} Anime",
-						callback_data: JSON.stringify({
-							type: "srch_anime",
 						}),
 					},
 				],

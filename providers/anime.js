@@ -14,7 +14,7 @@ module.exports = class Anime extends AbstractProvider {
 	constructor(bot) {
 		super(bot);
 		this.type = "anime";
-		this.endpoint = process.env.GOPHIE_API;
+		this.endpoint = "";
 	}
 
 	/**
