@@ -17,6 +17,7 @@ services:
       - database
     volumes:
       - ./:/home/src/bot
+      - ./docker/node/npm:/home/node/.npm
 
   # Database
   database:
@@ -35,3 +36,4 @@ services:
       MONGO_INITDB_DATABASE: ${MONGODB_DB_NAME}
     volumes:
       - ./docker/mongo/init.sh:/docker-entrypoint-initdb.d/init.sh
+      - ./docker/mongo/data:/data/db
