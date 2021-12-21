@@ -12,7 +12,7 @@ module.exports = class Movie extends AbstractProvider {
 	constructor(bot) {
 		super(bot);
 		this.type = "movie";
-		this.endpoint = process.env.GOPHIE_API;
+		this.endpoint = "";
 	}
 
 	/**
@@ -21,6 +21,13 @@ module.exports = class Movie extends AbstractProvider {
 	 * @param  {} page=1
 	 */
 	async list({ chat }, page = 1) {
+		await this.bot.sendMessage(
+			chat.id,
+			"\u{1F3AC} Movies is getting upgraded, it'll be back shortly.",
+			keyboard
+		);
+		return;
+
 		const { message_id } = await this.bot.sendMessage(
 			chat.id,
 			"\u{1F4E1} Fetching latest movies",
@@ -174,6 +181,13 @@ module.exports = class Movie extends AbstractProvider {
 	 * @param  {} message
 	 */
 	async interactiveSearch(message) {
+		await this.bot.sendMessage(
+			message.chat.id,
+			"\u{1F3AC} Movies is getting upgraded, it'll be back shortly.",
+			keyboard
+		);
+		return;
+
 		const chatId = message.chat.id;
 		const { message_id } = await this.bot.sendMessage(
 			chatId,
