@@ -22,7 +22,6 @@ A telegram 🤖 bot for music, videos, movies, EDM tracks, torrent downloads, fi
   - [Liked it?](#liked+it)
   - [Tests](#tests)
   - [License (MIT)](#license)
-  - [Credits](#credits)
 
 ## Features
 
@@ -40,6 +39,7 @@ A telegram 🤖 bot for music, videos, movies, EDM tracks, torrent downloads, fi
 
 - Nodejs >= `v14.x`
 - MongoDB (database)
+- Have <a href="https://github.com/kodjunkie/node-raspar" target="_blank">node-raspar</a> installed
 
 <a name="telegram+setup"></a>
 
@@ -115,11 +115,3 @@ $ npm test
 ## License
 
 This project is opened under the <a href="https://github.com/kodjunkie/beetube-bot/blob/master/LICENSE" target="_blank">MIT 2.0 License</a> which allows very broad use for both academic and commercial purposes.
-
-## Credits
-
-Here's a list of the third-party APIs used to build this awesome project ❤️
-
-| External APIs                                                                                | Uses           |
-| -------------------------------------------------------------------------------------------- | -------------- |
-| <a href="https://github.com/kodjunkie/node-raspar" target="_blank">kodjunkie/node-raspar</a> | Music, Torrent |
