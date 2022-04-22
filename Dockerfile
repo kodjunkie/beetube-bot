@@ -1,10 +1,10 @@
-FROM node:lts
+FROM node:lts-slim
 
 # Install system dependencies
-RUN npm install -g pm2
+RUN npm install -g pm2 nodemon
 
 # App setup
-WORKDIR /home/src/bot
+WORKDIR /home/src/beetube
 
 COPY ./ ./
 
