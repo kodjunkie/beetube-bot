@@ -34,7 +34,7 @@ A telegram 🤖 bot for music, videos, movies, EDM tracks, torrent downloads, fi
 
 ## Installation
 
-**NOTE:** By default it's been setup for easy deployment on <a href="https://heroku.com/" target="_blank">Heroku</a>, you can select either Github or Heroku CLI deployment method.
+> Beetube by default have been setup for easy deployment on <a href="https://heroku.com/" target="_blank">Heroku</a>, you can select either Github or Heroku CLI deployment method.
 
 ### Requirements
 
@@ -127,6 +127,9 @@ Hope you liked this project, don't forget to give it a star ⭐
 
 ```bash
 $ npm test
+
+# or via docker
+$ docker exec -it beetube npm test
 ```
 
 ## License
