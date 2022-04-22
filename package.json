@@ -3,13 +3,14 @@
 	"version": "1.0.0",
 	"description": "A telegram 🤖 bot for music, movies, anime, torrent, EDM tracks, series downloads, files, and more.",
 	"keywords": [
-		"Telegram",
-		"Bot",
-		"Download",
-		"Free",
-		"Movies",
-		"Music",
-		"Torrent"
+		"telegram",
+		"bot",
+		"download",
+		"free",
+		"movies",
+		"music",
+		"torrent",
+		"anime"
 	],
 	"main": "bot.js",
 	"scripts": {
@@ -50,7 +51,6 @@
 		"eslint-plugin-node": "^11.1.0",
 		"eslint-plugin-prettier": "^3.4.1",
 		"jest": "^27.2.3",
-		"nodemon": "^2.0.13",
 		"prettier": "^1.19.1"
 	}
 }
