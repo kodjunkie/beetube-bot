@@ -99,10 +99,8 @@ $ cp .env.example .env # Update .env accordingly
 # To boot-up first time only
 # Or whenever docker file is modified (builds the container)
 $ docker compose up --build
-#
 # To boot-up without building the container (regular use)
 $ docker compose up
-#
 # To shut-down
 $ docker compose down
 ```
@@ -128,7 +126,7 @@ Hope you liked this project, don't forget to give it a star ⭐
 ```bash
 $ npm test
 
-# or via docker
+# via docker
 $ docker exec -it beetube npm test
 ```
 
