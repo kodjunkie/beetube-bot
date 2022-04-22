@@ -1,13 +1,11 @@
-version: "3.8"
-
+# Beetube services
 services:
-  # Beetube
-  beetube:
+  beetube-bot:
     container_name: beetube
     build: ./
     user: "node"
     command: npm run dev
-    working_dir: /home/src/bot
+    working_dir: /home/src/beetube
     restart: on-failure
     depends_on:
       - database
@@ -16,14 +14,14 @@ services:
     links:
       - database
     volumes:
-      - ./:/home/src/bot
+      - ./:/home/src/beetube
       - ./docker/node/npm:/home/node/.npm
 
   # Database
   database:
     container_name: database
     image: mongo:latest
-    restart: always
+    restart: on-failure
     ports:
       - 27017:27017
     env_file:
@@ -36,4 +34,3 @@ services:
       MONGO_INITDB_DATABASE: ${MONGODB_DB_NAME}
     volumes:
       - ./docker/mongo/init.sh:/docker-entrypoint-initdb.d/init.sh
-      - ./docker/mongo/data:/data/db

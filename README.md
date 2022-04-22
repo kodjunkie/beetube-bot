@@ -18,6 +18,7 @@ A telegram 🤖 bot for music, videos, movies, EDM tracks, torrent downloads, fi
     - [Telegram setup](#telegram+setup)
     - [Install on system](#install+system)
     - [Install via docker](#install+docker)
+    - [Install via docker compose](#install+docker+compose)
   - [Deployed](#deployed)
   - [Liked it?](#liked+it)
   - [Tests](#tests)
@@ -33,7 +34,7 @@ A telegram 🤖 bot for music, videos, movies, EDM tracks, torrent downloads, fi
 
 ## Installation
 
-**NOTE:** By default it's been setup for easy deployment on <a href="https://heroku.com/" target="_blank">Heroku</a>, you can select either Github or Heroku CLI deployment method.
+> Beetube by default have been setup for easy deployment on <a href="https://heroku.com/" target="_blank">Heroku</a>, you can select either Github or Heroku CLI deployment method.
 
 ### Requirements
 
@@ -65,6 +66,7 @@ A telegram 🤖 bot for music, videos, movies, EDM tracks, torrent downloads, fi
 $ git clone https://github.com/kodjunkie/beetube-bot.git
 $ cd beetube-bot
 $ cp .env.example .env # Update .env accordingly
+# install dependencies
 $ npm install
 # Start mongo db daemon
 $ npm start
@@ -72,20 +74,33 @@ $ npm start
 
 <a name="install+docker"></a>
 
+### Installation via Docker
+
+```bash
+$ git clone https://github.com/kodjunkie/beetube-bot.git
+$ cd beetube-bot
+$ cp .env.example .env # Update .env accordingly
+#
+# build the container
+$ docker build -t beetube-bot .
+# run the container
+$ docker run --name beetube --env-file=.env -it beetube-bot
+```
+
+<a name="install+docker+compose"></a>
+
 ### Installation via Docker Compose
 
 ```bash
 $ git clone https://github.com/kodjunkie/beetube-bot.git
 $ cd beetube-bot
 $ cp .env.example .env # Update .env accordingly
-
+#
 # To boot-up first time only
 # Or whenever docker file is modified (builds the container)
 $ docker compose up --build
-
 # To boot-up without building the container (regular use)
 $ docker compose up
-
 # To shut-down
 $ docker compose down
 ```
@@ -110,6 +125,9 @@ Hope you liked this project, don't forget to give it a star ⭐
 
 ```bash
 $ npm test
+
+# via docker
+$ docker exec -it beetube npm test
 ```
 
 ## License
