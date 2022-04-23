@@ -34,3 +34,4 @@ services:
       MONGO_INITDB_DATABASE: ${MONGODB_DB_NAME}
     volumes:
       - ./docker/mongo/init.sh:/docker-entrypoint-initdb.d/init.sh
+      - ./docker/mongo/data:/data/db

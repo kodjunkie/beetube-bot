@@ -12,7 +12,6 @@ module.exports = class Movie extends AbstractProvider {
 	constructor(bot) {
 		super(bot);
 		this.type = "movie";
-		this.endpoint = "";
 	}
 
 	/**
@@ -21,13 +20,6 @@ module.exports = class Movie extends AbstractProvider {
 	 * @param  {} page=1
 	 */
 	async list({ chat }, page = 1) {
-		await this.bot.sendMessage(
-			chat.id,
-			"\u{1F3AC} Movies is getting upgraded, it'll be back shortly.",
-			keyboard
-		);
-		return;
-
 		const { message_id } = await this.bot.sendMessage(
 			chat.id,
 			"\u{1F4E1} Fetching latest movies",
@@ -35,11 +27,14 @@ module.exports = class Movie extends AbstractProvider {
 		);
 
 		this.bot.sendChatAction(chat.id, "typing");
-		const { data } = await axios.get(`${this.endpoint}/list`, {
-			params: { page, engine: "fzmovies" },
+		const {
+			data: { data },
+		} = await axios.get(`${this.endpoint}/list`, {
+			params: { page, driver: "netnaija" },
 		});
 
-		if (data.length < 1) return this.emptyAPIResponse(chat.id, message_id);
+		if (data && data.length < 1)
+			return this.emptyAPIResponse(chat.id, message_id);
 
 		const pages = [],
 			promises = [],
@@ -51,8 +46,8 @@ module.exports = class Movie extends AbstractProvider {
 				inline_keyboard: [
 					[
 						{
-							text: `${keypad.download} (${movie.Size})`,
-							url: movie.DownloadLink,
+							text: keypad.download,
+							url: movie.url,
 						},
 					],
 				],
@@ -107,8 +102,8 @@ module.exports = class Movie extends AbstractProvider {
 					inline_keyboard: [
 						[
 							{
-								text: `${keypad.download} (${pager.Size})`,
-								url: pager.DownloadLink,
+								text: keypad.download,
+								url: pager.url,
 							},
 						],
 						pagination,
@@ -144,26 +139,28 @@ module.exports = class Movie extends AbstractProvider {
 		);
 
 		this.bot.sendChatAction(chat.id, "typing");
-		const { data } = await axios.get(`${this.endpoint}/search`, {
+		const {
+			data: { data },
+		} = await axios.get(`${this.endpoint}/search`, {
 			params: {
 				query: params.query.replace(" ", "+"),
-				engine: "fzmovies",
+				driver: "netnaija",
 			},
 		});
 
-		if (data.length < 1) {
+		if (data && data.length < 1) {
 			return this.emptyAPIResponse(chat.id, message_id, "No results found.");
 		}
 
 		_.map(data, async movie => {
-			if (movie.Size && movie.CoverPhotoLink) {
+			if (movie.Size && movie.banner) {
 				const options = { parse_mode: "html" };
 				options.reply_markup = JSON.stringify({
 					inline_keyboard: [
 						[
 							{
-								text: `${keypad.download} (${movie.Size})`,
-								url: movie.DownloadLink,
+								text: keypad.download,
+								url: movie.url,
 							},
 						],
 					],
@@ -181,13 +178,6 @@ module.exports = class Movie extends AbstractProvider {
 	 * @param  {} message
 	 */
 	async interactiveSearch(message) {
-		await this.bot.sendMessage(
-			message.chat.id,
-			"\u{1F3AC} Movies is getting upgraded, it'll be back shortly.",
-			keyboard
-		);
-		return;
-
 		const chatId = message.chat.id;
 		const { message_id } = await this.bot.sendMessage(
 			chatId,
@@ -209,7 +199,7 @@ module.exports = class Movie extends AbstractProvider {
 	 * @param  {} movie
 	 */
 	getText(movie) {
-		let description = movie.Description;
+		let description = movie.description;
 		if (description) {
 			if (description.length > textLimit)
 				description = `\n\n<b>Description:</b> <em>${description.substr(
@@ -219,6 +209,6 @@ module.exports = class Movie extends AbstractProvider {
 			else description = `\n\n<b>Description:</b> <em>${description}</em>`;
 		} else description = "";
 
-		return `<a href="${movie.CoverPhotoLink}">\u{1F3AC}</a> <b>${movie.Title}</b>${description}`;
+		return `<a href="${movie.banner}">\u{1F3AC}</a> <b>${movie.name}</b>${description}`;
 	}
 };

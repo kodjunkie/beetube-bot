@@ -29,7 +29,7 @@ mongoose
 		bot.onText(/search$/i, searchCommand(bot));
 		bot.onText(/settings$/i, settingsCommand(bot));
 		bot.onText(/\/keyboard/, keyboardCommand(bot));
-		bot.onText(/(?<Provider>(Movie|Music|Torrent)$)/, listCommand(bot));
+		bot.onText(/(?<Provider>(Movie|Music|Torrent|Anime)$)/, listCommand(bot));
 
 		// Handlers
 		bot.on("callback_query", callbackQueryHandler(bot));

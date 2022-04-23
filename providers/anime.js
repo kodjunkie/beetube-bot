@@ -8,13 +8,12 @@ const Setting = require("../models/setting");
 const Paginator = require("../models/paginator");
 const { keyboard, keypad } = require("../utils/bot-helper");
 
-const botTGname = process.env.TG_BOT_NAME;
+const botTGname = process.env.TELEGRAM_BOT_NAME;
 
 module.exports = class Anime extends AbstractProvider {
 	constructor(bot) {
 		super(bot);
 		this.type = "anime";
-		this.endpoint = "";
 	}
 
 	/**
@@ -30,11 +29,13 @@ module.exports = class Anime extends AbstractProvider {
 		);
 
 		this.bot.sendChatAction(chat.id, "typing");
-		const { data } = await axios.get(`${this.endpoint}/list`, {
-			params: { page, engine: "animeout" },
+		const {
+			data: { data },
+		} = await axios.get(`${this.endpoint}/list`, {
+			params: { page, driver: "zoro" },
 		});
 
-		if (data.length < 1) {
+		if (data && data.length < 1) {
 			return this.emptyAPIResponse(chat.id, message_id);
 		}
 
@@ -47,11 +48,11 @@ module.exports = class Anime extends AbstractProvider {
 			options.reply_markup = JSON.stringify({
 				inline_keyboard: [
 					[
-						{ text: keypad.download, url: anime.DownloadLink },
+						{ text: "Watch", url: anime.url },
 						{
 							text: keypad.share,
 							url: `https://t.me/share/url?url=${encodeURIComponent(
-								anime.DownloadLink
+								anime.url
 							)}&text=Downloaded%20via%20@${botTGname}`,
 						},
 					],
@@ -106,11 +107,11 @@ module.exports = class Anime extends AbstractProvider {
 				reply_markup: JSON.stringify({
 					inline_keyboard: [
 						[
-							{ text: keypad.download, url: pager.DownloadLink },
+							{ text: "Watch", url: pager.url },
 							{
 								text: keypad.share,
 								url: `https://t.me/share/url?url=${encodeURIComponent(
-									pager.DownloadLink
+									pager.url
 								)}&text=Downloaded%20via%20@${botTGname}`,
 							},
 						],
@@ -147,14 +148,16 @@ module.exports = class Anime extends AbstractProvider {
 		);
 
 		this.bot.sendChatAction(chat.id, "typing");
-		const { data } = await axios.get(`${this.endpoint}/search`, {
+		const {
+			data: { data },
+		} = await axios.get(`${this.endpoint}/search`, {
 			params: {
 				query: params.query.replace(" ", "+"),
-				engine: "animeout",
+				driver: "zoro",
 			},
 		});
 
-		if (data.length < 1) {
+		if (data && data.length < 1) {
 			return this.emptyAPIResponse(chat.id, message_id, "No results found.");
 		}
 
@@ -163,11 +166,11 @@ module.exports = class Anime extends AbstractProvider {
 			options.reply_markup = JSON.stringify({
 				inline_keyboard: [
 					[
-						{ text: keypad.download, url: anime.DownloadLink },
+						{ text: "Watch", url: anime.url },
 						{
 							text: keypad.share,
 							url: `https://t.me/share/url?url=${encodeURIComponent(
-								anime.DownloadLink
+								anime.url
 							)}&text=Downloaded%20via%20@${botTGname}`,
 						},
 					],
@@ -206,7 +209,7 @@ module.exports = class Anime extends AbstractProvider {
 	 * @param  {} anime
 	 */
 	getText(anime) {
-		let description = anime.Description;
+		let description = anime.description;
 		if (description) {
 			if (description.length > textLimit)
 				description = `\n\n<b>Description:</b> <em>${description.substr(
@@ -216,6 +219,6 @@ module.exports = class Anime extends AbstractProvider {
 			else description = `\n\n<b>Description:</b> <em>${description}</em>`;
 		} else description = "";
 
-		return `<a href="${anime.CoverPhotoLink}">\u{1F3A1}</a> <b>${anime.Title}</b>${description}`;
+		return `<a href="${anime.banner}">\u{1F3A1}</a> <b>${anime.name}</b>${description}`;
 	}
 };

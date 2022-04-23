@@ -12,7 +12,6 @@ module.exports = class Music extends AbstractProvider {
 	constructor(bot) {
 		super(bot);
 		this.type = "music";
-		this.endpoint = env.RASPAR_API;
 	}
 
 	/**
@@ -114,7 +113,7 @@ module.exports = class Music extends AbstractProvider {
 				text: gnr.name,
 				callback_data: JSON.stringify({
 					type: `ls_${this.type}`,
-					genre: gnr.name.substr(0, 18), // Ensures we don't exceed the 64 bytes limit
+					genre: gnr.name.substr(0, 18), // Ensure we don't exceed the 64 bytes limit
 					page: 1,
 				}),
 			}));
@@ -308,10 +307,10 @@ module.exports = class Music extends AbstractProvider {
 			keyboard
 		);
 
-		let [name, sub, key] = data.info.split("_");
+		let [name, subdomain, key] = data.info.split("_");
 		name = name + " - " + key;
 
-		const url = new URL(`https://${sub}.zippyshare.com/downloadAudio`);
+		const url = new URL(`https://${subdomain}.zippyshare.com/downloadAudioHQ`);
 		url.searchParams.append("key", key);
 		url.searchParams.append("time", "");
 		const music = await axios.get(url.href, { responseType: "stream" });
@@ -322,7 +321,7 @@ module.exports = class Music extends AbstractProvider {
 			{
 				...keyboard,
 				title: name,
-				caption: `Downloaded via \u{1F41D} [${env.BOT_NAME} bot](https://t.me/${env.TG_BOT_NAME})`,
+				caption: `Downloaded via \u{1F41D} [${env.BOT_NAME} bot](https://t.me/${env.TELEGRAM_BOT_NAME})`,
 				reply_to_message_id: message.message_id,
 				allow_sending_without_reply: true,
 			},
