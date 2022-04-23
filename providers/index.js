@@ -10,6 +10,7 @@ module.exports = class AbstractProvider {
 	 */
 	constructor(bot) {
 		this.bot = bot;
+		this.endpoint = process.env.RASPAR_API;
 	}
 
 	/**

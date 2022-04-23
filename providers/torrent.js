@@ -13,7 +13,6 @@ module.exports = class Torrent extends AbstractProvider {
 	constructor(bot) {
 		super(bot);
 		this.type = "torrent";
-		this.endpoint = process.env.RASPAR_API;
 	}
 
 	/**
