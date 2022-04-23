@@ -11,7 +11,7 @@ module.exports = bot => async cbq => {
 		bot.answerCallbackQuery(cbq.id);
 
 		const data = JSON.parse(cbq.data);
-		let name = data.type.match(/(movie|music|torrent)$/);
+		let name = data.type.match(/(movie|music|torrent|anime)$/);
 		if (name && name[0]) {
 			const Provider = require(`../providers/${name[0]}`);
 			await new Provider(bot).resolve(data, message);
