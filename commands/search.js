@@ -21,6 +21,8 @@ module.exports = bot => async message => {
 							type: "srch_music",
 						}),
 					},
+				],
+				[
 					{
 						text: "\u{1F30D} Torrent",
 						callback_data: JSON.stringify({
