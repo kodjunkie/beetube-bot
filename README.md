@@ -49,7 +49,7 @@ A telegram 🤖 bot for music, videos, movies, EDM tracks, torrent downloads, fi
 
 - Nodejs >= `v14.x`
 - MongoDB (database)
-- Have <a href="https://github.com/kodjunkie/node-raspar" target="_blank">node-raspar</a> deployed and note the URI / address.
+- Have <a href="https://github.com/kodjunkie/node-raspar" target="_blank">node-raspar</a> deployed and note the `URI / address`.
 
 <a name="telegram+setup"></a>
 
