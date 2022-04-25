@@ -13,16 +13,25 @@ A telegram 🤖 bot for music, videos, movies, EDM tracks, torrent downloads, fi
 </div>
 
 - [Beetube :bee:](#beetube)
+  - [Demo](#demo)
   - [Features](#features)
   - [Installation](#installation)
     - [Telegram setup](#telegram+setup)
     - [Install on system](#install+system)
     - [Install via docker](#install+docker)
     - [Install via docker compose](#install+docker+compose)
-  - [Deployed](#deployed)
   - [Liked it?](#liked+it)
   - [Tests](#tests)
   - [License (MIT)](#license)
+
+## Demo
+
+<p align="center">
+  <a href="https://t.me/beetube_bot">
+    <img src="./assets/demo-one.gif" width="320" alt="Beetube Demo 1" />
+    <img src="./assets/demo-two.gif" width="320" alt="Beetube Demo 2" />
+  </a>
+</p>
 
 ## Features
 
@@ -104,10 +113,6 @@ $ docker compose up
 # To shut-down
 $ docker compose down
 ```
-
-## Deployed
-
-The deployed version can be found on telegram as <a href="https://t.me/beetube_bot" target="_blank">@beetube_bot</a>
 
 <a name="liked+it"></a>
 
