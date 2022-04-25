@@ -26,12 +26,10 @@ A telegram 🤖 bot for music, videos, movies, EDM tracks, torrent downloads, fi
 
 ## Demo
 
-The deployed version can be found on telegram as <a href="https://t.me/beetube_bot" target="_blank">@beetube_bot</a>
-
 <p align="center">
   <a href="https://t.me/beetube_bot">
     <img src="./assets/demo-one.gif" width="320" alt="Beetube Demo 1" />
-    <img src="./assets/demo-one.gif" width="320" alt="Beetube Demo 2" />
+    <img src="./assets/demo-two.gif" width="320" alt="Beetube Demo 2" />
   </a>
 </p>
 
