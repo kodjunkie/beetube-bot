@@ -148,18 +148,21 @@ module.exports = class Anime extends AbstractProvider {
 		);
 
 		this.bot.sendChatAction(chat.id, "typing");
+		const query = params.query.replace(" ", "+");
 		const {
 			data: { data },
 		} = await axios.get(`${this.endpoint}/search`, {
-			params: {
-				query: params.query.replace(" ", "+"),
-				driver: "zoro",
-			},
+			params: { query, driver: "zoro" },
 		});
 
 		if (data && data.length < 1) {
 			return this.emptyAPIResponse(chat.id, message_id, "No results found.");
 		}
+
+		const page = params.page;
+		const pages = [],
+			promises = [],
+			pager = data.pop();
 
 		_.map(data, async anime => {
 			const options = { parse_mode: "html" };
@@ -177,10 +180,82 @@ module.exports = class Anime extends AbstractProvider {
 				],
 			});
 
-			await this.bot.sendMessage(chat.id, this.getText(anime), options);
+			promises.push(
+				this.bot
+					.sendMessage(chat.id, this.getText(anime), options)
+					.then(msg => {
+						pages.push({
+							insertOne: {
+								document: {
+									_id: msg.message_id,
+									type: this.type,
+									user: msg.chat.id,
+								},
+							},
+						});
+					})
+			);
 		});
 
+		await Promise.all(promises);
+		/*
+		 * Ensure all messages are sent before pagination
+		 */
+		const pagination = [
+			{
+				text: keypad.next,
+				callback_data: JSON.stringify({
+					type: `page_srch_${this.type}`,
+					page: page + 1,
+					query,
+				}),
+			},
+		];
+
+		const settings = await Setting.findOne({ user: chat.id });
+		if ((!settings || settings.purge_old_pages) && page > 1) {
+			pagination.unshift({
+				text: keypad.previous,
+				callback_data: JSON.stringify({
+					type: `page_srch_${this.type}`,
+					page: page - 1,
+					query,
+				}),
+			});
+		}
+
+		await this.bot
+			.sendMessage(chat.id, this.getText(pager), {
+				parse_mode: "html",
+				reply_markup: JSON.stringify({
+					inline_keyboard: [
+						[
+							{ text: "Watch", url: pager.url },
+							{
+								text: keypad.share,
+								url: `https://t.me/share/url?url=${encodeURIComponent(
+									pager.url
+								)}&text=Downloaded%20via%20@${botTGname}`,
+							},
+						],
+						pagination,
+					],
+				}),
+			})
+			.then(msg => {
+				pages.push({
+					insertOne: {
+						document: {
+							_id: msg.message_id,
+							type: this.type,
+							user: msg.chat.id,
+						},
+					},
+				});
+			});
+
 		await this.bot.deleteMessage(chat.id, message_id);
+		if (!settings || settings.purge_old_pages) await Paginator.bulkWrite(pages);
 	}
 
 	/**
