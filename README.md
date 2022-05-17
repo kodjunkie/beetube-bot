@@ -49,7 +49,7 @@ A telegram 🤖 bot for music, videos, movies, EDM tracks, torrent downloads, fi
 
 - Nodejs >= `v14.x`
 - MongoDB (database)
-- Have <a href="https://github.com/kodjunkie/node-raspar" target="_blank">node-raspar</a> deployed and note the server `uri / address`
+- Have <a href="https://github.com/kodjunkie/node-raspar" target="_blank">node-raspar</a> deployed and note the server `address` / `uri`
 
 <a name="telegram+setup"></a>
 
@@ -74,10 +74,11 @@ A telegram 🤖 bot for music, videos, movies, EDM tracks, torrent downloads, fi
 ```bash
 $ git clone https://github.com/kodjunkie/beetube-bot.git
 $ cd beetube-bot
-$ cp .env.example .env # Update .env accordingly
+$ cp .env.example .env # update .env accordingly
 # install dependencies
 $ npm install
-# Start mongo db daemon
+# have mongodb daemon running
+# start the bot
 $ npm start
 ```
 
@@ -88,7 +89,7 @@ $ npm start
 ```bash
 $ git clone https://github.com/kodjunkie/beetube-bot.git
 $ cd beetube-bot
-$ cp .env.example .env # Update .env accordingly
+$ cp .env.example .env # update .env accordingly
 #
 # build the container
 $ docker build -t beetube-bot .
@@ -103,7 +104,7 @@ $ docker run --name beetube --env-file=.env -it beetube-bot
 ```bash
 $ git clone https://github.com/kodjunkie/beetube-bot.git
 $ cd beetube-bot
-$ cp .env.example .env # Update .env accordingly
+$ cp .env.example .env # update .env accordingly
 #
 # To boot-up first time only
 # Or whenever docker file is modified (builds the container)
