@@ -75,6 +75,9 @@ module.exports = class AbstractProvider {
 				case `srch_${this.type}`:
 					await this.interactiveSearch(message);
 					break;
+				case `page_srch_${this.type}`:
+					await this.paginate(message, data, "search");
+					break;
 			}
 		} catch (error) {
 			errorHandler(this.bot, message.chat.id, error);

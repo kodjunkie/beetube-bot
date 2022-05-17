@@ -43,14 +43,7 @@ module.exports = class Movie extends AbstractProvider {
 		_.map(data, movie => {
 			const options = { parse_mode: "html" };
 			options.reply_markup = JSON.stringify({
-				inline_keyboard: [
-					[
-						{
-							text: keypad.download,
-							url: movie.url,
-						},
-					],
-				],
+				inline_keyboard: [[{ text: keypad.download, url: movie.url }]],
 			});
 
 			promises.push(
@@ -100,12 +93,7 @@ module.exports = class Movie extends AbstractProvider {
 				parse_mode: "html",
 				reply_markup: JSON.stringify({
 					inline_keyboard: [
-						[
-							{
-								text: keypad.download,
-								url: pager.url,
-							},
-						],
+						[{ text: keypad.download, url: pager.url }],
 						pagination,
 					],
 				}),
@@ -139,38 +127,96 @@ module.exports = class Movie extends AbstractProvider {
 		);
 
 		this.bot.sendChatAction(chat.id, "typing");
+		const query = params.query.replace(" ", "+");
 		const {
 			data: { data },
 		} = await axios.get(`${this.endpoint}/search`, {
-			params: {
-				query: params.query.replace(" ", "+"),
-				driver: "netnaija",
-			},
+			params: { query, driver: "netnaija" },
 		});
 
 		if (data && data.length < 1) {
 			return this.emptyAPIResponse(chat.id, message_id, "No results found.");
 		}
 
-		_.map(data, async movie => {
-			if (movie.Size && movie.banner) {
-				const options = { parse_mode: "html" };
-				options.reply_markup = JSON.stringify({
-					inline_keyboard: [
-						[
-							{
-								text: keypad.download,
-								url: movie.url,
-							},
-						],
-					],
-				});
+		const page = params.page;
+		const pages = [],
+			promises = [],
+			pager = data.pop();
 
-				await this.bot.sendMessage(chat.id, this.getText(movie), options);
-			}
+		_.map(data, async movie => {
+			const options = { parse_mode: "html" };
+			options.reply_markup = JSON.stringify({
+				inline_keyboard: [[{ text: keypad.download, url: movie.url }]],
+			});
+
+			promises.push(
+				this.bot
+					.sendMessage(chat.id, this.getText(movie), options)
+					.then(msg => {
+						pages.push({
+							insertOne: {
+								document: {
+									_id: msg.message_id,
+									type: this.type,
+									user: msg.chat.id,
+								},
+							},
+						});
+					})
+			);
 		});
 
+		await Promise.all(promises);
+		/*
+		 * Ensure all messages are sent before pagination
+		 */
+		const pagination = [
+			{
+				text: keypad.next,
+				callback_data: JSON.stringify({
+					type: `page_srch_${this.type}`,
+					page: page + 1,
+					query,
+				}),
+			},
+		];
+
+		const settings = await Setting.findOne({ user: chat.id });
+		if ((!settings || settings.purge_old_pages) && page > 1) {
+			pagination.unshift({
+				text: keypad.previous,
+				callback_data: JSON.stringify({
+					type: `page_srch_${this.type}`,
+					page: page - 1,
+					query,
+				}),
+			});
+		}
+
+		await this.bot
+			.sendMessage(chat.id, this.getText(pager), {
+				parse_mode: "html",
+				reply_markup: JSON.stringify({
+					inline_keyboard: [
+						[{ text: keypad.download, url: pager.url }],
+						pagination,
+					],
+				}),
+			})
+			.then(msg => {
+				pages.push({
+					insertOne: {
+						document: {
+							_id: msg.message_id,
+							type: this.type,
+							user: msg.chat.id,
+						},
+					},
+				});
+			});
+
 		await this.bot.deleteMessage(chat.id, message_id);
+		if (!settings || settings.purge_old_pages) await Paginator.bulkWrite(pages);
 	}
 
 	/**

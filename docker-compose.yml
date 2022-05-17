@@ -15,7 +15,8 @@ services:
       - database
     volumes:
       - ./:/home/src/beetube
-      - ./docker/node/npm:/home/node/.npm
+      - ./docker/tmp:/tmp
+      - ./docker/tmp:/home/node/.npm
 
   # Database
   database:
