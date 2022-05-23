@@ -1,35 +1,28 @@
-require("dotenv").config();
 const TelegramBot = require("node-telegram-bot-api");
 TelegramBot.Promise = require("bluebird").config({
 	cancellation: true,
 });
-
+require("dotenv").config();
+const botErrorHandler = require("./handlers/bot-error");
+const callbackQueryHandler = require("./handlers/callback-query");
 const config = require("./config");
 const mongoose = require("mongoose");
 
-const listCommand = require("./commands/list");
-const aboutCommand = require("./commands/about");
-const startCommand = require("./commands/start");
-const searchCommand = require("./commands/search");
-const keyboardCommand = require("./commands/keyboard");
-const settingsCommand = require("./commands/settings");
+const env = process.env;
+const commands = require("./commands");
 
-const botErrorHandler = require("./handlers/bot-error");
-const callbackQueryHandler = require("./handlers/callback-query");
-
-// Configurations
-const bot = new TelegramBot(process.env.BOT_TOKEN, config.bot);
+const bot = new TelegramBot(env.BOT_TOKEN, config.bot);
 
 mongoose
-	.connect(process.env.MONGODB_URI, config.mongodb)
+	.connect(env.MONGODB_URI, config.mongodb)
 	.then(() => {
 		// Commands
-		bot.onText(/\/start/, startCommand(bot));
-		bot.onText(/about$/i, aboutCommand(bot));
-		bot.onText(/search$/i, searchCommand(bot));
-		bot.onText(/settings$/i, settingsCommand(bot));
-		bot.onText(/\/keyboard/, keyboardCommand(bot));
-		bot.onText(/(?<Provider>(Movie|Music|Torrent|Anime)$)/, listCommand(bot));
+		bot.onText(/\/start/, commands.start(bot));
+		bot.onText(/about$/i, commands.about(bot));
+		bot.onText(/search$/i, commands.search(bot));
+		bot.onText(/settings$/i, commands.settings(bot));
+		bot.onText(/\/keyboard/, commands.keyboard(bot));
+		bot.onText(/(?<Provider>(Movie|Music|Torrent|Anime)$)/, commands.list(bot));
 
 		// Handlers
 		bot.on("callback_query", callbackQueryHandler(bot));
@@ -37,6 +30,6 @@ mongoose
 		bot.on("error", botErrorHandler);
 
 		// Successful connection
-		console.log("\u{1F41D} Listening for commands");
+		console.log(`\u{1F41D} ${env.BOT_NAME} started successfully`);
 	})
 	.catch(error => console.error(error));

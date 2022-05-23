@@ -12,9 +12,9 @@ module.exports = bot => async message => {
 		chatId,
 		`\u{2139} *About this bot*
 		\n\u{1F41D} \`${env.BOT_NAME}\` is an open source telegram bot developed to give users access to unlimited free downloads within telegram. 
-		\n\`If you find this bot useful, feel free to give us \u{2B50}\u{2B50}\u{2B50}\u{2B50}\u{2B50}\`
+		\n\`If you find this bot useful, feel free to give us a \u{2B50} on Github.\`
 		\nWant to contribute to the development of this project? PRs are always welcome.
-		\nOfficial channel: @${env.BOT_CHANNEL}\nGithub: [kodjunkie/beetube-bot](${homepage})\nFor bug report create an [issue](${bugs.url})\nTo keep track on development [click here](https://github.com/kodjunkie/beetube-bot/projects/1)`,
+		\nOfficial channel: @${env.BOT_CHANNEL}\nGithub: [kodjunkie/beetube-bot](${homepage})\nFor bug report create an [issue](${bugs.url})`,
 		keyboard
 	);
 };

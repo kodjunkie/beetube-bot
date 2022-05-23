@@ -11,7 +11,7 @@ module.exports = bot => async message => {
 	try {
 		bot.sendChatAction(chatId, "typing");
 
-		// Remove obsolete records
+		// Remove obsolete page records
 		// TODO: Refactor into a separate script
 		// Can be run periodically using supervisor / cron
 		await Paginator.removeObsoleteRecords();
