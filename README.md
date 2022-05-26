@@ -28,8 +28,8 @@ A telegram 🤖 bot for music, videos, movies, EDM tracks, torrent downloads, fi
 
 <p align="center">
   <a href="https://t.me/beetube_bot">
-    <img src="https://github.com/kodjunkie/beetube-bot/blob/master/assets/demo-one.gif" width="320" alt="Beetube Demo 1" />
-    <img src="https://github.com/kodjunkie/beetube-bot/blob/master/assets/demo-two.gif" width="320" alt="Beetube Demo 2" />
+    <img src="https://github.com/kodjunkie/beetube-bot/raw/master/assets/demo-one.gif" width="320" alt="Beetube Demo 1" />
+    <img src="https://github.com/kodjunkie/beetube-bot/raw/master/assets/demo-two.gif" width="320" alt="Beetube Demo 2" />
   </a>
 </p>
 
