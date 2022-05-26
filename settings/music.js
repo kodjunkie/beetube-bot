@@ -1,14 +1,14 @@
-const MainSetting = require(".");
+const AbstractSettings = require(".");
 const Setting = require("../models/setting");
 const errorHandler = require("../utils/error-handler");
 
-module.exports = class MusicSetting extends MainSetting {
+module.exports = class MusicSettings extends AbstractSettings {
 	/**
-	 * Music setting
+	 * Music settings
 	 * @param  {} {chat
 	 * @param  {} message_id}
 	 */
-	async setting({ chat, message_id }) {
+	async settings({ chat, message_id }) {
 		const settings = await Setting.findOne({ user: chat.id });
 		const value = settings.chat_music_download ? 1 : 0;
 
@@ -62,7 +62,7 @@ module.exports = class MusicSetting extends MainSetting {
 		try {
 			switch (data.type) {
 				case `music_${this.type}`:
-					await this.setting(message);
+					await this.settings(message);
 					break;
 				default:
 					const match = data.type.match(/\d$/);
@@ -71,7 +71,7 @@ module.exports = class MusicSetting extends MainSetting {
 						{ user: chatId },
 						{ $set: { chat_music_download: !Boolean(parseInt(match[0])) } }
 					);
-					await this.setting(message);
+					await this.settings(message);
 			}
 		} catch (error) {
 			errorHandler(this.bot, chatId, error);

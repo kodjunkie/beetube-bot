@@ -1,7 +1,7 @@
 const errorHandler = require("../utils/error-handler");
 const { settings } = require("../utils/bot-helper");
 
-module.exports = class MainSetting {
+module.exports = class AbstractSettings {
 	constructor(bot) {
 		this.bot = bot;
 		this.type = "setting";
@@ -12,7 +12,7 @@ module.exports = class MainSetting {
 	 * @param  {} {chat
 	 * @param  {} message_id}
 	 */
-	async setting({ chat, message_id }) {
+	async settings({ chat, message_id }) {
 		await this.bot.editMessageText(settings.text, {
 			...settings.keyboard,
 			message_id,
@@ -36,7 +36,7 @@ module.exports = class MainSetting {
 		try {
 			switch (data.type) {
 				case `index_${this.type}`:
-					await this.setting(message);
+					await this.settings(message);
 					break;
 			}
 		} catch (error) {
