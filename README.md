@@ -1,10 +1,10 @@
 <div align="center">
-  <img src="./assets/logo.png" alt="Beetube" height="100" width="auto"></a>
+  <img src="./assets/logo-coloured.png" alt="Beetube" height="200" width="auto"></a>
 </div>
 
-<div align="center">
+---
 
-<h2>Beetube Bot</h2>
+<div align="center">
 
 A telegram 🤖 bot for music, videos, movies, EDM tracks, torrent downloads, files and more.
 
@@ -26,12 +26,10 @@ A telegram 🤖 bot for music, videos, movies, EDM tracks, torrent downloads, fi
 
 ## Demo
 
-<p align="center">
-  <a href="https://t.me/beetube_bot">
-    <img src="https://github.com/kodjunkie/beetube-bot/raw/master/assets/demo-one.gif" width="320" alt="Beetube Demo 1" />
-    <img src="https://github.com/kodjunkie/beetube-bot/raw/master/assets/demo-two.gif" width="320" alt="Beetube Demo 2" />
-  </a>
-</p>
+The deployed version can be found on telegram as <a href="https://t.me/beetube_bot" target="_blank">@beetube_bot</a>
+
+- [View Demo 1](https://github.com/kodjunkie/beetube-bot/blob/master/assets/demo-one.gif)
+- [View Demo 2](https://github.com/kodjunkie/beetube-bot/blob/master/assets/demo-two.gif)
 
 ## Features
 
@@ -43,13 +41,13 @@ A telegram 🤖 bot for music, videos, movies, EDM tracks, torrent downloads, fi
 
 ## Installation
 
-> Beetube by default have been setup for easy deployment on <a href="https://heroku.com/" target="_blank">Heroku</a>, you can select either Github or Heroku CLI deployment method.
+> Beetube by default have been setup for easy deployment on <a href="https://heroku.com/" target="_blank">heroku</a>
 
 ### Requirements
 
 - Nodejs >= `v14.x`
 - MongoDB (database)
-- Have <a href="https://github.com/kodjunkie/node-raspar" target="_blank">node-raspar</a> deployed and note the server `address` / `uri`
+- Have <a href="https://github.com/kodjunkie/node-raspar" target="_blank">node-raspar</a> deployed and note the server `address`
 
 <a name="telegram+setup"></a>
 
