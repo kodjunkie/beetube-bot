@@ -1,6 +1,8 @@
 <div align="center">
-  <img src="./assets/logo-coloured.png" alt="Beetube" height="100" width="auto"></a>
+  <img src="./assets/logo-coloured.png" alt="Beetube" height="200" width="auto"></a>
 </div>
+
+---
 
 <div align="center">
 
@@ -39,13 +41,13 @@ The deployed version can be found on telegram as <a href="https://t.me/beetube_b
 
 ## Installation
 
-> Beetube by default have been setup for easy deployment on <a href="https://heroku.com/" target="_blank">Heroku</a>.
+> Beetube by default have been setup for easy deployment on <a href="https://heroku.com/" target="_blank">heroku</a>
 
 ### Requirements
 
 - Nodejs >= `v14.x`
 - MongoDB (database)
-- Have <a href="https://github.com/kodjunkie/node-raspar" target="_blank">node-raspar</a> deployed and note the server `address` / `uri`
+- Have <a href="https://github.com/kodjunkie/node-raspar" target="_blank">node-raspar</a> deployed and note the server `address`
 
 <a name="telegram+setup"></a>
 
