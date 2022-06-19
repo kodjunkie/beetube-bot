@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="./assets/logo-coloured.png" alt="Beetube" height="200" width="auto"></a>
+  <img src="./assets/logo-coloured.png" alt="Beetube" height="200" width="auto" />
 </div>
 
 ---
