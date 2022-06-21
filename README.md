@@ -37,7 +37,7 @@ The deployed version can be found on telegram as <a href="https://t.me/beetube_b
 - Ability to browse `music` sorted by genre
 - Ability to download `music` directly from chat
 - Ability to paginate all returned results
-- Supports personalized settings
+- Supports personalized configuration
 
 ## Installation
 
