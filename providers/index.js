@@ -72,10 +72,10 @@ module.exports = class AbstractProvider {
 				case `page_ls_${this.type}`:
 					await this.paginate(message, data.page, "list");
 					break;
-				case `srch_${this.type}`:
+				case `find_${this.type}`:
 					await this.interactiveSearch(message);
 					break;
-				case `page_srch_${this.type}`:
+				case `page_find_${this.type}`:
 					await this.paginate(message, data, "search");
 					break;
 			}
