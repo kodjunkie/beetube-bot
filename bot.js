@@ -20,14 +20,13 @@ mongoose
 		bot.onText(/search$/i, commands.search(bot));
 		bot.onText(/settings$/i, commands.settings(bot));
 		bot.onText(/\/keyboard/, commands.keyboard(bot));
-		bot.onText(/(?<Provider>(Movie|Music|Torrent|Anime)$)/, commands.list(bot));
+		bot.onText(/(?<provider>(Movie|Music|Torrent|Anime)$)/, commands.list(bot));
 
 		// Handlers
 		bot.on("callback_query", handlers.callbackQuery(bot));
 		bot.on("polling_error", handlers.botError);
 		bot.on("error", handlers.botError);
 
-		// Successful connection
-		console.log(`\u{1F41D} ${env.BOT_NAME} started successfully`);
+		console.info(`\u{1F41D} ${env.BOT_NAME} started successfully`);
 	})
 	.catch(error => console.error(error));

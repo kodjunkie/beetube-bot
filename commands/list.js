@@ -3,10 +3,10 @@
  */
 const errorHandler = require("../utils/error-handler");
 
-module.exports = bot => async (message, match) => {
+module.exports = bot => async (message, { groups }) => {
 	const chatId = message.chat.id;
 	try {
-		const provider = match.groups.Provider.trim();
+		const provider = groups.provider.trim();
 		if (!provider) return;
 
 		switch (provider) {
