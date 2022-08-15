@@ -266,7 +266,7 @@ module.exports = class Anime extends AbstractProvider {
 		const chatId = message.chat.id;
 		const { message_id } = await this.bot.sendMessage(
 			chatId,
-			"\u{1F50D} Tell me the title of the anime you want",
+			"\u{1F50D} Tell me the title of the anime",
 			{ reply_markup: JSON.stringify({ force_reply: true }) }
 		);
 

@@ -22,7 +22,7 @@ module.exports = class Music extends AbstractProvider {
 	async list({ chat }, params) {
 		const { message_id } = await this.bot.sendMessage(
 			chat.id,
-			"\u{1F4E1} Fetching latest music",
+			"\u{1F4E1} Fetching latest songs",
 			keyboard
 		);
 
