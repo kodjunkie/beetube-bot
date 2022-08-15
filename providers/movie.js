@@ -174,7 +174,7 @@ module.exports = class Movie extends AbstractProvider {
 			{
 				text: keypad.next,
 				callback_data: JSON.stringify({
-					type: `page_srch_${this.type}`,
+					type: `page_find_${this.type}`,
 					page: page + 1,
 					query,
 				}),
@@ -186,7 +186,7 @@ module.exports = class Movie extends AbstractProvider {
 			pagination.unshift({
 				text: keypad.previous,
 				callback_data: JSON.stringify({
-					type: `page_srch_${this.type}`,
+					type: `page_find_${this.type}`,
 					page: page - 1,
 					query,
 				}),

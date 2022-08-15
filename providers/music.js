@@ -192,7 +192,7 @@ module.exports = class Music extends AbstractProvider {
 			{
 				text: keypad.next,
 				callback_data: JSON.stringify({
-					type: `page_srch_${this.type}`,
+					type: `page_find_${this.type}`,
 					page: page + 1,
 					query: query.substr(0, 16), // Ensures we don't exceed the 64 bytes limit,
 				}),
@@ -203,7 +203,7 @@ module.exports = class Music extends AbstractProvider {
 			pagination.unshift({
 				text: keypad.previous,
 				callback_data: JSON.stringify({
-					type: `page_srch_${this.type}`,
+					type: `page_find_${this.type}`,
 					page: page - 1,
 					query: query.substr(0, 16), // Ensures we don't exceed the 64 bytes limit,
 				}),
@@ -348,10 +348,10 @@ module.exports = class Music extends AbstractProvider {
 				case `page_ls_${this.type}`:
 					await this.paginate(message, data, "list");
 					break;
-				case `srch_${this.type}`:
+				case `find_${this.type}`:
 					await this.interactiveSearch(message, data.page);
 					break;
-				case `page_srch_${this.type}`:
+				case `page_find_${this.type}`:
 					await this.paginate(message, data, "search");
 					break;
 				case `dl_${this.type}`:
