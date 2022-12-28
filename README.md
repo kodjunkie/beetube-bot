@@ -14,6 +14,7 @@ A telegram 🤖 bot for music, videos, movies, EDM tracks, torrent downloads, fi
 
 <details>
  <summary><b>Table of Content</b></summary>
+
 - [Demo](#demo)
 - [Features](#features)
 - [Installation](#installation)
@@ -24,6 +25,7 @@ A telegram 🤖 bot for music, videos, movies, EDM tracks, torrent downloads, fi
 - [Liked it?](#liked+it)
 - [Tests](#tests)
 - [License (MIT)](#license)
+
 </details>
 
 ## Demo
