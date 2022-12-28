@@ -13,17 +13,17 @@ A telegram 🤖 bot for music, videos, movies, EDM tracks, torrent downloads, fi
 </div>
 
 <details>
- <summary><b>:bee: Table of Content</b></summary>
-  - [Demo](#demo)
-  - [Features](#features)
-  - [Installation](#installation)
-    - [Telegram setup](#telegram+setup)
-    - [Install on system](#install+system)
-    - [Install via docker](#install+docker)
-    - [Install via docker compose](#install+docker+compose)
-  - [Liked it?](#liked+it)
-  - [Tests](#tests)
-  - [License (MIT)](#license)
+ <summary><b>Table of Content</b></summary>
+- [Demo](#demo)
+- [Features](#features)
+- [Installation](#installation)
+  - [Telegram setup](#telegram+setup)
+  - [Install on system](#install+system)
+  - [Install via docker](#install+docker)
+  - [Install via docker compose](#install+docker+compose)
+- [Liked it?](#liked+it)
+- [Tests](#tests)
+- [License (MIT)](#license)
 </details>
 
 ## Demo
