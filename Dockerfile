@@ -1,7 +1,7 @@
 FROM node:lts-slim
 
 # Install system dependencies
-RUN npm install -g pm2 nodemon
+RUN npm install -g pm2
 
 # App setup
 WORKDIR /home/src/beetube
